@@ -77,7 +77,9 @@
 </script>
 
 
-    <script> yiliaConfig.jquery_ui = [false]; </script>
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
 
 
 
@@ -136,11 +138,9 @@
                         
                             <li><a href="/">首页</a></li>
                         
-                            <li><a href="/archives/">全部</a></li>
+                            <li><a href="/archives/">历史文章</a></li>
                         
-                            <li><a href="/categories/">分类</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
                         
                             <li><a href="/about/">关于我</a></li>
                         
@@ -162,24 +162,12 @@
                 
                 
                 
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
-                    
-                    </div>
-                </section>
-                
 
                 
                 
-                <section class="switch-part switch-part4">
+                <section class="switch-part switch-part3">
                 
-                    <div id="js-aboutme">专注于前端</div>
+                    <div id="js-aboutme">/about</div>
                 </section>
                 
             </div>
@@ -209,11 +197,9 @@
                 
                     <li><a href="/">首页</a></li>
                 
-                    <li><a href="/archives/">全部</a></li>
+                    <li><a href="/archives/">历史文章</a></li>
                 
-                    <li><a href="/categories/">分类</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
                 
                     <li><a href="/about/">关于我</a></li>
                 
@@ -267,6 +253,10 @@
 
         <div class="article-info info-on-archive">
           
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/work/">工作相关</a>
+    </div>
+
 
           
     <div class="article-tag tagcloud">
@@ -354,7 +344,7 @@ MathJax.Hub.Queue(function() {
     
         var oOpenInNew = {
             
-            
+             title: "a.article-title, .article-more-link a", 
             
             
             
@@ -370,6 +360,23 @@ MathJax.Hub.Queue(function() {
         }
     
 </script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "我藏起来了" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "又回来啦" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
