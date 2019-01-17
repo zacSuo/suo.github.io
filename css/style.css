@@ -2415,13 +2415,13 @@ pre .javascript .function {
 .bdsharebuttonbox .bds_copy {
   background: #8f8f8f !important;
 }
-.bdsharebuttonbox .bds_mail {
-  background: #6fc0e4 !important;
+.bdsharebuttonbox .bds_database {
+  background: #2e8b57 !important;
 }
 .bdsharebuttonbox .bds_weixin {
   background: #8cdc49 !important;
 }
-.bdsharebuttonbox .bds_more {
+.bdsharebuttonbox .bds_qzone {
   background: #8cbcf5 !important;
 }
 .bdsharebuttonbox .bds_twi {
