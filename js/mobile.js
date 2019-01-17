@@ -1,6 +1,6 @@
 define([], function(){
     var _isShow = false;
-    var $tag, $aboutme, $friends;
+    var $tag, $aboutme, $friends,$topics;
 
     var ctn,radio,scaleW,idx,basicwrap;
 
@@ -24,6 +24,10 @@ define([], function(){
         if($friends){
             document.getElementById("js-mobile-friends").innerHTML = $friends.innerHTML;
         }
+        if($topics)
+        {
+            document.getElementById("js-mobile-topics").innerHTML = $topics.innerHTML;
+        }
     }
     //第三步 -- 根据数据渲染DOM
     var renderDOM = function(){
@@ -34,16 +38,32 @@ define([], function(){
         $tag = document.getElementById("js-tagcloud");
         $aboutme = document.getElementById("js-aboutme");
         $friends = document.getElementById("js-friends");
+        $topics = document.getElementById("js-topics");
+
         function menuList(name) {
             return $("link.menu-list").attr(name);
         };
         var tagStr = $tag?'<span class="viewer-title">'+ menuList("tags") + '</span><div class="viewer-div tagcloud" id="js-mobile-tagcloud"></div>':"";
         var friendsStr = $friends?'<span class="viewer-title">'+ menuList("friends") + '</span><div class="viewer-div friends" id="js-mobile-friends"></div>':"";
         var aboutmeStr = $aboutme?'<span class="viewer-title">'+ menuList("about") + '</span><div class="viewer-div aboutme" id="js-mobile-aboutme"></div>':"";
+        var topicsStr = "";
+        if($topics != null){
+            var iCount = $topics.children.length;
+            for(var i=0;i<iCount;i++){
+                var tmpItem = $topics.children[i].children[0];
+                topicsStr += '<span class="viewer-title"><a href="' + tmpItem.href + '">' + tmpItem.text.trim() + '</a></span>'  ;
+                var jCount = $topics.children[i].children[1].children.length;
+                for(var j=0;j<jCount;j++){
+                    tmpItem = $topics.children[i].children[1].children[j];
+                    topicsStr += '<span class="viewer-title">' + tmpItem.innerHTML.trim() + '</span>'  ;
+                }
+            }
+            topicsStr += '<div class="viewer-div topics" id="js-mobile-topics"></div>'
+        }
 
         $viewer.innerHTML = '<div id="viewer-box">\
         <div class="viewer-box-l">\
-            <div class="viewer-box-wrap">'+aboutmeStr+friendsStr+tagStr+'</div>\
+            <div class="viewer-box-wrap">'+aboutmeStr+friendsStr+tagStr+topicsStr+'</div>\
         </div>\
         <div class="viewer-box-r"></div>\
         </div>';

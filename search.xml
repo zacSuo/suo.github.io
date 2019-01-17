@@ -288,9 +288,9 @@
       
         <tags>
             
-            <tag> 户口 </tag>
-            
             <tag> 身份证 </tag>
+            
+            <tag> 户口 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -321,11 +321,11 @@
       
         <tags>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 亲人关系 </tag>
             
@@ -591,9 +591,9 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 沟通 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
             <tag> 听人说 </tag>
             
