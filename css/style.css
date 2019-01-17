@@ -293,6 +293,10 @@ a {
   #container .header-author.fixed a {
     color: #fff;
   }
+  #container .topic-node-mobile {
+    position: absolute;
+    top: -8px;
+  }
   #container .overlay .slider-trigger {
     position: absolute;
     z-index: 101;
