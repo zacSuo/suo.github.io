@@ -293,10 +293,6 @@ a {
   #container .header-author.fixed a {
     color: #fff;
   }
-  #container .topic-node-mobile {
-    position: absolute;
-    top: -8px;
-  }
   #container .overlay .slider-trigger {
     position: absolute;
     z-index: 101;
@@ -1118,6 +1114,14 @@ color
 }
 .post-list li:hover a {
   color: #88acdb;
+}
+.topic-chapter-mobile {
+  margin: 0.5em 0.5em;
+  list-style: none;
+}
+.topic-node-mobile {
+  margin: 0.5em 1.5em;
+  list-style: none;
 }
 .ui-tooltip {
   padding: 6px;

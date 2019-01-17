@@ -26,7 +26,7 @@ define([], function(){
         }
         if($topics)
         {
-            document.getElementById("js-mobile-topics").innerHTML = $topics.innerHTML.replace(/topic-node/g,"topic-node-mobile");
+            document.getElementById("js-mobile-topics").innerHTML = $topics.innerHTML.replace(/topic-node/g,"topic-node-mobile").replace(/topic-chapter/g,"topic-chapter-mobile");
         }
     }
     //第三步 -- 根据数据渲染DOM
@@ -51,14 +51,15 @@ define([], function(){
             var iCount = $topics.children.length;
             for(var i=0;i<iCount;i++){
                 var tmpItem = $topics.children[i].children[0];
-                topicsStr += '<span class="viewer-title"><a href="' + tmpItem.href + '">' + tmpItem.text.trim() + '</a></span>'  ;
+                topicsStr += '<li class="topic-chapter-mobile"><a href="' + tmpItem.pathname + '/">' + tmpItem.text.trim() + '</a><ul>'  ;
                 var jCount = $topics.children[i].children[1].children.length;
                 for(var j=0;j<jCount;j++){
-                    tmpItem = $topics.children[i].children[1].children[j];
-                    topicsStr += '<span class="viewer-title">' + tmpItem.innerHTML.trim() + '</span>'  ;
+                    tmpItem = $topics.children[i].children[1].children[j].children[0];
+                    topicsStr += '<li class="topic-node-mobile"><a href="' +  tmpItem.pathname + '/">' + tmpItem.text.trim() + '</a></li>'  ;
                 }
+                topicsStr += '</ul>'
             }
-            topicsStr += '<div class="viewer-div topics" id="js-mobile-topics"></div>'
+            topicsStr += '</div>'
         }
 */
         $viewer.innerHTML = '<div id="viewer-box">\
