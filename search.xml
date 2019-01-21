@@ -391,9 +391,9 @@
       
         <tags>
             
-            <tag> 身份证 </tag>
-            
             <tag> 户口 </tag>
+            
+            <tag> 身份证 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -424,11 +424,11 @@
       
         <tags>
             
+            <tag> 户口 </tag>
+            
             <tag> 身份证 </tag>
             
             <tag> 出生证明 </tag>
-            
-            <tag> 户口 </tag>
             
             <tag> 亲人关系 </tag>
             
@@ -628,13 +628,13 @@
       
         <tags>
             
-            <tag> 算法 </tag>
-            
             <tag> AI </tag>
             
             <tag> 人工智能 </tag>
             
             <tag> 李开复 </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -727,9 +727,9 @@
       
         <tags>
             
-            <tag> 数学之美 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数学之美 </tag>
             
             <tag> 搜索引擎 </tag>
             
