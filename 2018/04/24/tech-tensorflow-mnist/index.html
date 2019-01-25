@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="阿东和他的朋友们">
+
+
+
+<meta name="description" content="mnist本身是将数字手写体图像，归一化后信息合成的文件，分训练集和测试集两部分，每部分包含图片和标签两个文件，本文使用C++写的Demo将文件解码，并通过opencv将数据存储为常规的图像文件">
+<meta name="keywords" content="人工智能,ai,tensorflow,mnist,opencv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow开发 之mnist文件解析">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2018/04/24/tech-tensorflow-mnist/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="mnist本身是将数字手写体图像，归一化后信息合成的文件，分训练集和测试集两部分，每部分包含图片和标签两个文件，本文使用C++写的Demo将文件解码，并通过opencv将数据存储为常规的图像文件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190124114552686.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/2019012411555929.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190124115621785.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190124115638142.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190124115841654.png">
+<meta property="og:updated_time" content="2018-04-24T11:47:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow开发 之mnist文件解析">
+<meta name="twitter:description" content="mnist本身是将数字手写体图像，归一化后信息合成的文件，分训练集和测试集两部分，每部分包含图片和标签两个文件，本文使用C++写的Demo将文件解码，并通过opencv将数据存储为常规的图像文件">
+<meta name="twitter:image" content="https://www.zhenxiangsimple.com/img/tech/20190124114552686.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>tensorflow开发 之mnist文件解析 | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?253fda6573a8fb62674df37f55677a8b";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">阿东和他的朋友们</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/tech/">技术相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/money/">金融理财</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通交流</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">传记小说</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/baby/"> 宝宝成长</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/eating/">吃饭</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/vaccine/">疫苗</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/care/">照顾</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/cert/">证件</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/sports/">运动健康</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech-tensorflow-mnist" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/04/24/tech-tensorflow-mnist/" class="article-date">
+      <time datetime="2018-04-24T11:47:36.000Z" itemprop="datePublished">2018年04月24日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      tensorflow开发 之mnist文件解析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mnist/">mnist</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv/">opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/">tensorflow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>&emsp;&emsp;mnist本身是将数字手写体图像，归一化后信息合成的文件，分训练集和测试集两部分，每部分包含图片和标签两个文件，本文使用C++写的Demo将文件解码，并通过opencv将数据存储为常规的图像文件。源码下载地址：<a href="https://github.com/zacSuo/mnist" target="_blank" rel="noopener">https://github.com/zacSuo/mnist</a></p>
+<ul>
+<li>t10k-images.idx3-ubyte</li>
+<li>t10k-labels.idx1-ubyte </li>
+<li>train-images.idx3-ubyte</li>
+<li>train-labels.idx1-ubyte</li>
+</ul>
+<h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><ul>
+<li>visual studio 2012及以上版本</li>
+<li>opencv 2.4及以上版本<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2>启动前先通过项目属性，设置本地opencv的路径。<br><img src="/img/tech/20190124114552686.png" width="200px" height="100px"></li>
+</ul>
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><p>&emsp;&emsp;在目录的两个文件夹，分别将测试集（test_images）和训练集（train_images）的图片保存到其中。<br><img src="/img/tech/2019012411555929.png" width="200px" height="100px"><img src="/img/tech/20190124115621785.png" width="200px" height="100px"><img src="/img/tech/20190124115638142.png" width="200px" height="100px"><br><img src="/img/tech/20190124115841654.png" width="400px" height="200px"></p>
+<h1 id="程序说明"><a href="#程序说明" class="headerlink" title="程序说明"></a>程序说明</h1><h2 id="解码图像"><a href="#解码图像" class="headerlink" title="解码图像"></a>解码图像</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read_Mnist</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span> filename, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Mat&gt; &amp;vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number_of_images = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="function">ifstream <span class="title">file</span><span class="params">(filename, <span class="built_in">std</span>::ios::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (file.is_open()) &#123;</span><br><span class="line">        <span class="keyword">int</span> magic_number = <span class="number">0</span>;       </span><br><span class="line">        <span class="keyword">int</span> n_rows = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n_cols = <span class="number">0</span>;</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;magic_number, <span class="keyword">sizeof</span>(magic_number));</span><br><span class="line">        magic_number = ReverseInt(magic_number);</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;number_of_images, <span class="keyword">sizeof</span>(number_of_images));</span><br><span class="line">        number_of_images = ReverseInt(number_of_images);</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;n_rows, <span class="keyword">sizeof</span>(n_rows));</span><br><span class="line">        n_rows = ReverseInt(n_rows);</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;n_cols, <span class="keyword">sizeof</span>(n_cols));</span><br><span class="line">        n_cols = ReverseInt(n_cols);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number_of_images; ++i) &#123;</span><br><span class="line">            cv::Mat tp = cv::Mat::zeros(n_rows, n_cols, CV_8UC1);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n_rows; ++r) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; n_cols; ++c) &#123;</span><br><span class="line">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> temp = <span class="number">0</span>;</span><br><span class="line">                    file.read((<span class="keyword">char</span>*)&amp;temp, <span class="keyword">sizeof</span>(temp));</span><br><span class="line">                    tp.at&lt;uchar&gt;(r, c) = (<span class="keyword">int</span>)temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            vec.push_back(tp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        file.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> number_of_images;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解码图像对应数值"><a href="#解码图像对应数值" class="headerlink" title="解码图像对应数值"></a>解码图像对应数值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read_Mnist_Label</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span> filename, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="function">ifstream <span class="title">file</span><span class="params">(filename, <span class="built_in">std</span>::ios::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (file.is_open()) &#123;</span><br><span class="line">        <span class="keyword">int</span> magic_number = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> number_of_images = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n_rows = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n_cols = <span class="number">0</span>;</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;magic_number, <span class="keyword">sizeof</span>(magic_number));</span><br><span class="line">        magic_number = ReverseInt(magic_number);</span><br><span class="line">        file.read((<span class="keyword">char</span>*)&amp;number_of_images, <span class="keyword">sizeof</span>(number_of_images));</span><br><span class="line">        number_of_images = ReverseInt(number_of_images);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number_of_images; ++i) &#123;</span><br><span class="line">            <span class="keyword">unsigned</span> <span class="keyword">char</span> temp = <span class="number">0</span>;</span><br><span class="line">            file.read((<span class="keyword">char</span>*)&amp;temp, <span class="keyword">sizeof</span>(temp));</span><br><span class="line">            vec[i] = (<span class="keyword">int</span>)temp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        file.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成图像文件"><a href="#生成图像文件" class="headerlink" title="生成图像文件"></a>生成图像文件</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">decodeDatabase</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span> filenameImages,<span class="built_in">std</span>::<span class="built_in">string</span> filenameLabels,<span class="built_in">std</span>::<span class="built_in">string</span> imagesPathSave)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// read MNIST image into OpenCV Mat vector</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Mat&gt; vec_train_images;</span><br><span class="line">    <span class="keyword">int</span> number_of_train_images = read_Mnist(filenameImages, vec_train_images);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read MNIST label into int vector</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec_train_labels(number_of_train_images);</span><br><span class="line">    read_Mnist_Label(filenameLabels, vec_train_labels);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec_train_images.size() != vec_train_labels.size()) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"parse MNIST train file error"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// save images</span></span><br><span class="line">    <span class="keyword">int</span> count_digits[<span class="number">10</span>];</span><br><span class="line">    <span class="built_in">std</span>::fill(&amp;count_digits[<span class="number">0</span>], &amp;count_digits[<span class="number">0</span>] + <span class="number">10</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vec_train_images.size(); i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> number = vec_train_labels[i];</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> image_name = GetImageName(number, count_digits);</span><br><span class="line">        image_name = imagesPathSave + image_name + <span class="string">".jpg"</span>;</span><br><span class="line"></span><br><span class="line">        cv::imwrite(image_name, vec_train_images[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="每个数值各选20张图像合并成一个图像文件"><a href="#每个数值各选20张图像合并成一个图像文件" class="headerlink" title="每个数值各选20张图像合并成一个图像文件"></a>每个数值各选20张图像合并成一个图像文件</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mergeSomeImages</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> images_path = <span class="string">".././mnistFile/train_images/"</span>;</span><br><span class="line">    <span class="keyword">int</span> width = <span class="number">28</span> * <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">int</span> height = <span class="number">28</span> * <span class="number">10</span>;</span><br><span class="line">    cv::<span class="function">Mat <span class="title">dst</span><span class="params">(height, width, CV_8UC1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">20</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = (j<span class="number">-1</span>) * <span class="number">28</span>;</span><br><span class="line">            <span class="keyword">int</span> y = i * <span class="number">28</span>;</span><br><span class="line">            cv::Mat part = dst(cv::Rect(x, y, <span class="number">28</span>, <span class="number">28</span>));</span><br><span class="line"></span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">string</span> str = <span class="built_in">std</span>::to_string(j);</span><br><span class="line">            <span class="keyword">if</span> (j &lt; <span class="number">10</span>)</span><br><span class="line">                str = <span class="string">"0000"</span> + str;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                str = <span class="string">"000"</span> + str;</span><br><span class="line"></span><br><span class="line">            str = <span class="built_in">std</span>::to_string(i) + <span class="string">"_"</span> + str + <span class="string">".jpg"</span>;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">string</span> input_image = images_path + str;</span><br><span class="line"></span><br><span class="line">            cv::Mat src = cv::imread(input_image, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">                <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"read image error: %s\n"</span>, input_image.c_str());</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            src.copyTo(part);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> output_image = images_path + <span class="string">"result.png"</span>;</span><br><span class="line">    cv::imwrite(output_image, dst);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之mnist文件解析</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
+        <p><span>发布时间:</span>2018-04-24, 19:47:36</p>
+        <p><span>最后更新:</span>2018-04-24, 19:47:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/24/tech-tensorflow-mnist/" title="tensorflow开发 之mnist文件解析">https://www.zhenxiangsimple.com/2018/04/24/tech-tensorflow-mnist/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2018/04/24/tech-tensorflow-mnist/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/12/02/books-三体/">
+                    三体
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用说明"><span class="toc-number">1.</span> <span class="toc-text">使用说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境要求"><span class="toc-number">1.1.</span> <span class="toc-text">环境要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行结果"><span class="toc-number">1.3.</span> <span class="toc-text">执行结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#程序说明"><span class="toc-number">2.</span> <span class="toc-text">程序说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解码图像"><span class="toc-number">2.1.</span> <span class="toc-text">解码图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解码图像对应数值"><span class="toc-number">2.2.</span> <span class="toc-text">解码图像对应数值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成图像文件"><span class="toc-number">2.3.</span> <span class="toc-text">生成图像文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#每个数值各选20张图像合并成一个图像文件"><span class="toc-number">2.4.</span> <span class="toc-text">每个数值各选20张图像合并成一个图像文件</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"tensorflow开发 之mnist文件解析　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'https://www.zhenxiangsimple.com/2018/04/24/tech-tensorflow-mnist/';
+            this.page.identifier = '2018/04/24/tech-tensorflow-mnist/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/12/02/books-三体/" title="上一篇: 三体">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech-tensorflow-hello-world/">tensorflow开发 之hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books-活着/">活着</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self-不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books-月亮与六便士/">月亮与六便士</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books-乌合之众/">乌合之众</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby-身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books-反脆弱·做一个内心强大的人/">反脆弱·做一个内心强大的人</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books-冰与火之歌/">冰与火之歌</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-AI·未来/">AI·未来</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-好好说话2/">好好说话2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books-如何说客户才会听，如何听客户才肯说/">如何说客户才会听，如何听客户才肯说</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books-数学之美/">数学之美</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech-md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-一本书读懂·金融常识/">一本书读懂·金融常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-心理学入门/">心理学入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books-创能量·28位传奇企业家的口述创业史/">创能量·28位传奇企业家的口述创业史</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books-三体/">三体</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2019 阿东和他的朋友们<i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+            <div class="footer-right">
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

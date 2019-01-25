@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="阿东和他的朋友们">
+
+
+
+<meta name="description" content="科学运算比较流行的AnaConda也可以，AnaConda含有非常多的科学计算库，不过由于virtualenv是tensorflow官网推荐的python环境管理包，所以用virtualenv作为管理包">
+<meta name="keywords" content="人工智能,ai,tensorflow,环境搭建,virtualenv,python,pip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow开发 之 搭建开发环境（Windows、Ubuntu）">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/01/23/tech-tensorflow-环境配置/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="科学运算比较流行的AnaConda也可以，AnaConda含有非常多的科学计算库，不过由于virtualenv是tensorflow官网推荐的python环境管理包，所以用virtualenv作为管理包">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123210634108.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123210519611.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123224845199.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123205942147.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123230213177.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123232454285.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123234643182.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123234809589.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123214412206.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123214609156.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123214914538.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123214954654.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123220318126.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123215559264.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123234603459.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123223952676.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123224212888.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/20190123223039611.png">
+<meta property="og:image" content="https://www.zhenxiangsimple.com/img/tech/2019012322332869.png">
+<meta property="og:updated_time" content="2019-01-23T15:49:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow开发 之 搭建开发环境（Windows、Ubuntu）">
+<meta name="twitter:description" content="科学运算比较流行的AnaConda也可以，AnaConda含有非常多的科学计算库，不过由于virtualenv是tensorflow官网推荐的python环境管理包，所以用virtualenv作为管理包">
+<meta name="twitter:image" content="https://www.zhenxiangsimple.com/img/tech/20190123210634108.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>tensorflow开发 之 搭建开发环境（Windows、Ubuntu） | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?253fda6573a8fb62674df37f55677a8b";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">阿东和他的朋友们</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/tech/">技术相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/money/">金融理财</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通交流</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">传记小说</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/baby/"> 宝宝成长</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/eating/">吃饭</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/vaccine/">疫苗</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/care/">照顾</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/baby/cert/">证件</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/sports/">运动健康</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech-tensorflow-环境配置" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/01/23/tech-tensorflow-环境配置/" class="article-date">
+      <time datetime="2019-01-23T15:49:09.000Z" itemprop="datePublished">2019年01月23日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      tensorflow开发 之 搭建开发环境（Windows、Ubuntu）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai/">ai</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pip/">pip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/">tensorflow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virtualenv/">virtualenv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="A-Windows系统（win7及以上）"><a href="#A-Windows系统（win7及以上）" class="headerlink" title="A. Windows系统（win7及以上）"></a>A. Windows系统（win7及以上）</h1><h2 id="Python-amp-pip"><a href="#Python-amp-pip" class="headerlink" title="Python &amp; pip"></a>Python &amp; pip</h2><p>&emsp;&emsp;这个到处都有说，不再多说<br><img src="/img/tech/20190123210634108.png" alt="## 安装pip"></p>
+<h2 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h2><h3 id="1-安装环境管理包："><a href="#1-安装环境管理包：" class="headerlink" title="1. 安装环境管理包："></a>1. 安装环境管理包：</h3><p>&emsp;&emsp;科学运算比较流行的AnaConda也可以，AnaConda含有非常多的科学计算库，不过由于virtualenv是tensorflow官网推荐的python环境管理包，所以用virtualenv作为管理包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -U pip virtualenv</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/tech/20190123210519611.png" width="200px" height="100px"></p>
+<h3 id="2-创建虚拟环境："><a href="#2-创建虚拟环境：" class="headerlink" title="2. 创建虚拟环境："></a>2. 创建虚拟环境：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv --system-site-packages -p python ./venv</span><br></pre></td></tr></table></figure>
+<p><img src="/img/tech/20190123224845199.png" width="200px" height="100px"></p>
+<h3 id="3-验证虚拟环境："><a href="#3-验证虚拟环境：" class="headerlink" title="3. 验证虚拟环境："></a>3. 验证虚拟环境：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.\Scripts\activate //激活虚拟环境         </span><br><span class="line">pip install --upgrade pip   //更新最新pip</span><br><span class="line">pip list                //展示venv中已安装的软件包</span><br><span class="line">deactivate  //退出虚拟环境</span><br></pre></td></tr></table></figure>
+<p><img src="/img/tech/20190123205942147.png" width="200px" height="100px"></p>
+<h2 id="TensorFlow包"><a href="#TensorFlow包" class="headerlink" title="TensorFlow包"></a>TensorFlow包</h2><h3 id="1-可用版本"><a href="#1-可用版本" class="headerlink" title="1. 可用版本"></a>1. 可用版本</h3><p>&emsp;&emsp;可以用的tensorflow包及对应意义，本文使用第一个tensorflow版本：</p>
+<ul>
+<li>tensorflow：仅支持 CPU 的当前版本（建议新手使用）</li>
+<li>tensorflow-gpu：支持 GPU 的当前版本（Ubuntu 和 Windows）</li>
+<li>tf-nightly：仅支持 CPU 的每夜版（不稳定）</li>
+<li>tf-nightly-gpu：支持 GPU 的每夜版（不稳定，Ubuntu 和 Windows）<h3 id="2-安装（比较久）"><a href="#2-安装（比较久）" class="headerlink" title="2. 安装（比较久）"></a>2. 安装（比较久）</h3>&emsp;&emsp;要安装很多依赖包，我安装等了1个多小时。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade tensorflow</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/img/tech/20190123230213177.png" width="200px" height="100px"><img src="/img/tech/20190123232454285.png" width="200px" height="100px"><img src="/img/tech/20190123234643182.png" width="200px" height="100px"></p>
+<h3 id="3-验证安装"><a href="#3-验证安装" class="headerlink" title="3. 验证安装"></a>3. 验证安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/tech/20190123234809589.png" alt="在这里插入图片描述"></p>
+<hr>
+<h1 id="B-Ubuntu系统（16-04及以上）"><a href="#B-Ubuntu系统（16-04及以上）" class="headerlink" title="B. Ubuntu系统（16.04及以上）"></a>B. Ubuntu系统（16.04及以上）</h1><p>&emsp;&emsp;由于tensorflow对windows和ubuntu做了相对友好的支持，所以安装流程跟Windows中一样，只是写法上linux命令不同，这里不再多说。</p>
+<h2 id="安装Python-amp-pip"><a href="#安装Python-amp-pip" class="headerlink" title="安装Python &amp; pip"></a>安装Python &amp; pip</h2><h2 id="安装virtualenv"><a href="#安装virtualenv" class="headerlink" title="安装virtualenv"></a>安装virtualenv</h2><p>&emsp;&emsp;这里启动执行可以用linux的source：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装TensorFlow包"><a href="#安装TensorFlow包" class="headerlink" title="安装TensorFlow包"></a>安装TensorFlow包</h2><hr>
+<h1 id="C-弯路介绍"><a href="#C-弯路介绍" class="headerlink" title="C. 弯路介绍"></a>C. 弯路介绍</h1><h2 id="1-“找不到”错误（python版本问题）"><a href="#1-“找不到”错误（python版本问题）" class="headerlink" title="1. “找不到”错误（python版本问题）"></a>1. “找不到”错误（python版本问题）</h2><p>Could not find a versin that satisfies the requirement tensorflow ( from version:)<br>No matching distribution found for tensorflow<br><img src="/img/tech/20190123214412206.png" alt="在这里插入图片描述"></p>
+<h2 id="2-搜索包可以找到"><a href="#2-搜索包可以找到" class="headerlink" title="2. 搜索包可以找到"></a>2. 搜索包可以找到</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip search tensorflow</span><br></pre></td></tr></table></figure>
+<p><img src="/img/tech/20190123214609156.png" width="200px" height="100px"></p>
+<h2 id="3-查看版本"><a href="#3-查看版本" class="headerlink" title="3. 查看版本"></a>3. 查看版本</h2><p>&ensp;&ensp;可能是python版本不对，tensorflow仅支持64位python，安装了32位python。tensorflow的系统要求如下：</p>
+<ul>
+<li>Ubuntu 16.04 或更高版本（64 位）</li>
+<li>macOS 10.12.6 (Sierra) 或更高版本（64 位）（不支持 GPU）</li>
+<li>Windows 7 或更高版本（64 位）（仅支持 Python 3）</li>
+<li>Raspbian 9.0 或更高版本</li>
+</ul>
+<p><img src="/img/tech/20190123214914538.png" width="200px" height="100px"><img src="/img/tech/20190123214954654.png" width="200px" height="100px"><img src="/img/tech/20190123220318126.png" width="200px" height="100px"></p>
+<h2 id="4-卸载重装python"><a href="#4-卸载重装python" class="headerlink" title="4. 卸载重装python"></a>4. 卸载重装python</h2><p>直接通过控制面板卸载了程序，然后移除了原版本的环境变量。若有安装文件，可以直接双击安装文件，选择其中的卸载选项。<br>然后在官网下载最新版本程序安装，然后重新创建virtualenv的虚拟环境（若原来版本着不需要）。<br><a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener">https://www.python.org/downloads/windows/</a></p>
+<p><img src="/img/tech/20190123215559264.png" width="200px" height="100px">&lt;img src=”/img/tech/2019012322314290.png width=200px height=50px /&gt;&lt;img src=”/img/tech/20190123221834255.png width=200px height=50px /&gt;</p>
+<h2 id="5-仅可以-Python-3-4、3-5-或-3-6"><a href="#5-仅可以-Python-3-4、3-5-或-3-6" class="headerlink" title="5. 仅可以 Python 3.4、3.5 或 3.6"></a>5. 仅可以 Python 3.4、3.5 或 3.6</h2><p>发现还是报错，去官网看到目前还没有到3.7，仅支持3.6</p>
+<p><img src="/img/tech/20190123234603459.png" width="200px" height="100px"><img src="/img/tech/20190123223952676.png" width="200px" height="100px"></p>
+<h2 id="6-重新安装3-6版本"><a href="#6-重新安装3-6版本" class="headerlink" title="6. 重新安装3.6版本"></a>6. 重新安装3.6版本</h2><p><a href="https://www.python.org/ftp/python/3.6.5/python-3.6.5-amd64.exe" target="_blank" rel="noopener">https://www.python.org/ftp/python/3.6.5/python-3.6.5-amd64.exe</a></p>
+<p><img src="/img/tech/20190123224212888.png" width="200px" height="100px"></p>
+<h2 id="7-重新创建虚拟环境（同正文）"><a href="#7-重新创建虚拟环境（同正文）" class="headerlink" title="7. 重新创建虚拟环境（同正文）"></a>7. 重新创建虚拟环境（同正文）</h2><hr>
+<h1 id="D-权限问题"><a href="#D-权限问题" class="headerlink" title="D. 权限问题"></a>D. 权限问题</h1><p>安装virtualenv时，提示拒绝访问，管理员权限打开终端即可。</p>
+<p><img src="/img/tech/20190123223039611.png" width="200px" height="100px"><img src="/img/tech/2019012322332869.png" width="200px" height="100px"></p>
+<p>参考自：<a href="https://tensorflow.google.cn/install/pip" target="_blank" rel="noopener">https://tensorflow.google.cn/install/pip</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
+        <p><span>发布时间:</span>2019-01-23, 23:49:09</p>
+        <p><span>最后更新:</span>2019-01-23, 23:49:09</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/01/23/tech-tensorflow-环境配置/" title="tensorflow开发 之 搭建开发环境（Windows、Ubuntu）">https://www.zhenxiangsimple.com/2019/01/23/tech-tensorflow-环境配置/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/01/23/tech-tensorflow-环境配置/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/01/24/tech-tensorflow-hello-world/">
+                    tensorflow开发 之hello world
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/01/21/books-活着/">
+                    活着
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#A-Windows系统（win7及以上）"><span class="toc-number">1.</span> <span class="toc-text">A. Windows系统（win7及以上）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-amp-pip"><span class="toc-number">1.1.</span> <span class="toc-text">Python &amp; pip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#virtualenv"><span class="toc-number">1.2.</span> <span class="toc-text">virtualenv</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装环境管理包："><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 安装环境管理包：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建虚拟环境："><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 创建虚拟环境：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-验证虚拟环境："><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 验证虚拟环境：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TensorFlow包"><span class="toc-number">1.3.</span> <span class="toc-text">TensorFlow包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-可用版本"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 可用版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装（比较久）"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 安装（比较久）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-验证安装"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 验证安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#B-Ubuntu系统（16-04及以上）"><span class="toc-number">2.</span> <span class="toc-text">B. Ubuntu系统（16.04及以上）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Python-amp-pip"><span class="toc-number">2.1.</span> <span class="toc-text">安装Python &amp; pip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装virtualenv"><span class="toc-number">2.2.</span> <span class="toc-text">安装virtualenv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装TensorFlow包"><span class="toc-number">2.3.</span> <span class="toc-text">安装TensorFlow包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C-弯路介绍"><span class="toc-number">3.</span> <span class="toc-text">C. 弯路介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-“找不到”错误（python版本问题）"><span class="toc-number">3.1.</span> <span class="toc-text">1. “找不到”错误（python版本问题）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-搜索包可以找到"><span class="toc-number">3.2.</span> <span class="toc-text">2. 搜索包可以找到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-查看版本"><span class="toc-number">3.3.</span> <span class="toc-text">3. 查看版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-卸载重装python"><span class="toc-number">3.4.</span> <span class="toc-text">4. 卸载重装python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-仅可以-Python-3-4、3-5-或-3-6"><span class="toc-number">3.5.</span> <span class="toc-text">5. 仅可以 Python 3.4、3.5 或 3.6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-重新安装3-6版本"><span class="toc-number">3.6.</span> <span class="toc-text">6. 重新安装3.6版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-重新创建虚拟环境（同正文）"><span class="toc-number">3.7.</span> <span class="toc-text">7. 重新创建虚拟环境（同正文）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#D-权限问题"><span class="toc-number">4.</span> <span class="toc-text">D. 权限问题</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"tensorflow开发 之 搭建开发环境（Windows、Ubuntu）　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'https://www.zhenxiangsimple.com/2019/01/23/tech-tensorflow-环境配置/';
+            this.page.identifier = '2019/01/23/tech-tensorflow-环境配置/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/01/24/tech-tensorflow-hello-world/" title="上一篇: tensorflow开发 之hello world">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/01/21/books-活着/" title="下一篇: 活着">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech-tensorflow-hello-world/">tensorflow开发 之hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books-活着/">活着</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self-不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books-月亮与六便士/">月亮与六便士</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books-乌合之众/">乌合之众</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby-身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books-反脆弱·做一个内心强大的人/">反脆弱·做一个内心强大的人</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books-冰与火之歌/">冰与火之歌</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-AI·未来/">AI·未来</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-好好说话2/">好好说话2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books-如何说客户才会听，如何听客户才肯说/">如何说客户才会听，如何听客户才肯说</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books-数学之美/">数学之美</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech-md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-一本书读懂·金融常识/">一本书读懂·金融常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-心理学入门/">心理学入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books-创能量·28位传奇企业家的口述创业史/">创能量·28位传奇企业家的口述创业史</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books-三体/">三体</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2019 阿东和他的朋友们<i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+            <div class="footer-right">
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
