@@ -4,7 +4,77 @@
   
     
     <entry>
-      <title>tensorflow开发 之hello world</title>
+      <title>tensorflow开发 之 基础概念及常用数据类型介绍</title>
+      <link href="/2019/01/30/tech-tensorflow-datatype/"/>
+      <url>/2019/01/30/tech-tensorflow-datatype/</url>
+      
+        <content type="html"><![CDATA[<h1 id="数据流图"><a href="#数据流图" class="headerlink" title="数据流图"></a>数据流图</h1><p>&emsp;&emsp;简单说就是一个特定的计算逻辑或者说算法模型。</p><center><img src="/img/tech/20190130210226.png" width="500px" height="300px"></center><h1 id="Session（会话）"><a href="#Session（会话）" class="headerlink" title="Session（会话）"></a>Session（会话）</h1><p>&emsp;&emsp;简单说就是使用实际数据和模型进行运算，使用步骤包括定义，执行和关闭三步，语法如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义</span></span><br><span class="line">sess = tf.Session(target=执行引擎[可选],graph=数据流图[可选],config=启动时配置[可选])</span><br><span class="line"><span class="comment"># 执行</span></span><br><span class="line">sess.run(带操作的变量或操作本身)</span><br><span class="line"><span class="comment"># 关闭</span></span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure></p><h1 id="Tensor（张量）"><a href="#Tensor（张量）" class="headerlink" title="Tensor（张量）"></a>Tensor（张量）</h1><p>&emsp;&emsp;简单说就是<font color="blue"><strong>同一数据类型</strong></font>的<font color="blue"><strong>多维数据</strong></font>。我们生活在3维世界中，高于3维的数据现实中比较难现象，以常用的0-3维数据为例说明如下表所示，其中有两个特点：</p><ol><li>同一数据类型（方便计算）</li><li>多维数组</li></ol><table><thead><tr><th>数组维数</th><th>名称</th><th style="text-align:left">Python示例</th></tr></thead><tbody><tr><td>0维</td><td>数量</td><td style="text-align:left">1</td></tr><tr><td>1维</td><td>向量</td><td style="text-align:left">[1,2]</td></tr><tr><td>2维</td><td>矩阵（数据表）</td><td style="text-align:left">[[1,2],[3,4]]</td></tr><tr><td>3维</td><td>数据立方</td><td style="text-align:left">[[[1,2],[3,4]],[[5,6],[7,8]]]</td></tr><tr><td>n维</td><td>n阶张量</td><td style="text-align:left">[…]</td></tr></tbody></table><h1 id="Operation（计算节点）"><a href="#Operation（计算节点）" class="headerlink" title="Operation（计算节点）"></a>Operation（计算节点）</h1><p>&emsp;&emsp;简单说就是函数计算，相当于通过函数对特定步骤的计算，常规的语法中的基础数学函数基本都有，常用的计算操作类型如下：</p><table><thead><tr><th>操作类型</th><th style="text-align:left">函数名称</th></tr></thead><tbody><tr><td>算术运算</td><td style="text-align:left">add、multiply、mod、sqrt、sin、trace、fft、argmin</td></tr><tr><td>随机运算</td><td style="text-align:left">random_normal、random_shuffle、random_gamma</td></tr><tr><td>数组运算</td><td style="text-align:left">size、rank、split、reverse、cast、one_hot、quantize</td></tr><tr><td>字符串运算</td><td style="text-align:left">substr、encode_base64、string_to_bash_bucket</td></tr><tr><td>图像运算</td><td style="text-align:left">encode_png、resize_images、hsv_to_rgb、adjust_gamma</td></tr><tr><td>逻辑控制</td><td style="text-align:left">identity、logical_and、equal、less、is_finite、is_nan</td></tr><tr><td>数据流控制</td><td style="text-align:left">enqueue、dequeue、size、take_grad、apply_grad</td></tr><tr><td>初始化</td><td style="text-align:left">zeros_initializer、random_normal_initializer、orthogonal_initializer</td></tr><tr><td>神经网络</td><td style="text-align:left">softmax、dropout、pool、bias_add、erosion2d</td></tr><tr><td>梯度裁剪</td><td style="text-align:left">clip_by_norm、clip_by_value、clip_by_global_norm</td></tr></tbody></table><h1 id="Variable（存储节点）"><a href="#Variable（存储节点）" class="headerlink" title="Variable（存储节点）"></a>Variable（存储节点）</h1><p>&emsp;&emsp;简单说就是一种变量，生成一种常驻于内存中的特殊类型的张量，用于在数据流图计算中存储特定节点的状态。数据类型有字符串、整型、浮点型和复数类型，使用的语法为：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量定义</span></span><br><span class="line">tmpVariable = tf.Variable(initial-value=初始值，dtype=数据类型[可选],name=变量名称[可选])</span><br><span class="line"><span class="comment"># 变量赋值</span></span><br><span class="line">tmpVariable.assign(<span class="number">1.0</span>) <span class="comment">#类似 tmpVariable = 1.0</span></span><br><span class="line">tmpVariable.assign_add(<span class="number">1.0</span>) <span class="comment">#类似 tmpVariable += 1.0</span></span><br><span class="line"><span class="comment"># 使用变量</span></span><br><span class="line">z = tf.matmul(x,y) <span class="comment">#类似 z = x * y</span></span><br></pre></td></tr></table></figure></p><p>实际代码示例如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量定义示例</span></span><br><span class="line">tmpStr = tf.Variable(<span class="string">"hello"</span>,tf.string)</span><br><span class="line">tmpInt = tf.Variable(<span class="number">100</span>,tf.int16)</span><br><span class="line">tmpFloat = tf.Variable(<span class="number">1.0</span>,tf.float64)</span><br><span class="line">tmpComplex = tf.Variable(<span class="number">1</span>+<span class="number">2j</span>,tf.complex64)</span><br><span class="line"><span class="comment"># 变量赋值示例</span></span><br><span class="line">my1 = tf.Variable(initial_value=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],dtype=tf.int16,name=<span class="string">'one'</span>)</span><br><span class="line">my2 = tf.Variable(initial_value=[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],dtype=tf.int16,name=<span class="string">'two'</span>)</span><br><span class="line">[my1,my2]</span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">sess.run([my1,my2])</span><br><span class="line"><span class="comment"># 相当于 my1 += my2 </span></span><br><span class="line">sess.run(my1.assign_add(my2))</span><br><span class="line"><span class="comment"># 相当于 my1 = my2 </span></span><br><span class="line">sess.run(my1.assign(my2))</span><br></pre></td></tr></table></figure></p><p>执行结果如下：<br><img src="/img/tech/20190130181751344.png" width="300px" height="150px"> <img src="/img/tech/20190130185417668.png" width="300px" height="150px"></p><h1 id="Placeholder（数据节点）"><a href="#Placeholder（数据节点）" class="headerlink" title="Placeholder（数据节点）"></a>Placeholder（数据节点）</h1><p>&emsp;&emsp;简单说就是可扩展变量，或者称为占位符，使用步骤为先进行定义，然后再进行赋值或称为填充数据，具体语法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义</span></span><br><span class="line">tmp = tf.placeholder(dtype=数据类型,shape=维度,name=变量名称[可选])</span><br><span class="line"><span class="comment"># 赋值或填充数据</span></span><br><span class="line">sess.run(tmp,feed_dict=&#123;tmp:赋值数据&#125;)</span><br></pre></td></tr></table></figure></p><p>实际代码示例如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmpHolder = tf.placeholder(dtype=tf.float64, shape=[<span class="number">2</span>],name=<span class="string">'suoxd'</span>)</span><br><span class="line">sess.run(tmpHolder,feed_dict=&#123;tmpHolder:[<span class="number">1</span>,<span class="number">2</span>]&#125;)</span><br></pre></td></tr></table></figure></p><p>执行结果如下：<br><img src="/img/tech/20190130202426199.png" alt="在这里插入图片描述"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 人工智能 </tag>
+            
+            <tag> tensorflow </tag>
+            
+            <tag> Tensor </tag>
+            
+            <tag> Operation </tag>
+            
+            <tag> Variable </tag>
+            
+            <tag> Placeholder </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>经济学故事书</title>
+      <link href="/2019/01/29/books-%E7%BB%8F%E6%B5%8E%E5%AD%A6%E6%95%85%E4%BA%8B%E4%B9%A6/"/>
+      <url>/2019/01/29/books-%E7%BB%8F%E6%B5%8E%E5%AD%A6%E6%95%85%E4%BA%8B%E4%B9%A6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="读书感受"><a href="#读书感受" class="headerlink" title="读书感受"></a>读书感受</h1><p>&emsp;&emsp;这是一本作者在各处搜集素材，然后把一些概念进行拼拼凑凑，最终拼盘整合成的东西（也不知道为什么当初买了这本书）。一直认为这种书只适合初高中学生阅读，对扩大视野和知识面有点帮助，虽然不系统，但确实对一些概念做了解释。<br>&emsp;&emsp;不建议作为经济学概念入门知识学习，毕竟所述内容多而杂且不成系统，所述概念解释又不透彻，而且部分内容生搬硬造。如果从没接触过经济学相关知识，是想对相关概念快速了解，可以买来快速阅读。<br>&emsp;&emsp;有一点比同类书籍好的是，每个概念都会讲个小故事引入，方便小白读者理解概念内容，虽然有部分故事跟概念本身关系不大，甚至跟概念的观点是相反的，但不妨这种通俗易懂的写作方式。</p><h1 id="概念摘录"><a href="#概念摘录" class="headerlink" title="概念摘录"></a>概念摘录</h1><h2 id="关于价值"><a href="#关于价值" class="headerlink" title="关于价值"></a>关于价值</h2><ol><li>使用价值：物品自身的自然属性，是客观的。</li><li>效用价值：人在消费物品时的感受，是主观的，因人而异。</li><li>交换价值：物品的社会属性，依附于商品的交换属性。</li></ol><p>&emsp;&emsp;往往效用价值比使用价值更重要，或者说更容易说服消费者购买，由于消费者很难确定物品本身的成本或其对应的客观价值，但可以明确知道自己的消费的主观感受，后者更容易具有说服力。举个例子，对于两种商品，一种是在500ml容量的杯子里放600ml的商品（超过杯口堆砌起来），另一种是在1000ml容量的杯子里放650ml的商品，如果价格一样，选择前者的人更多，更多人认为第一种的购买体验更开心，也许生活物质丰富的现代人已经不是特别在意多出来的50ml商品带来的边际收益（边际效益递减）。</p><h2 id="常用宏观经济学概念"><a href="#常用宏观经济学概念" class="headerlink" title="常用宏观经济学概念"></a>常用宏观经济学概念</h2><ul><li><h3 id="GDP（国内生产总值）"><a href="#GDP（国内生产总值）" class="headerlink" title="GDP（国内生产总值）"></a>GDP（国内生产总值）</h3><ul><li>来源：国内一年内生产出的全部最终产品和提供劳务的市场价值总和。</li><li>作用：用于衡量一个国家经济活跃程度的指标。</li></ul></li><li><h3 id="CPI（居民消费价格指数）"><a href="#CPI（居民消费价格指数）" class="headerlink" title="CPI（居民消费价格指数）"></a>CPI（居民消费价格指数）</h3><ul><li>来源：由各国根据自身国民消费比重加权得到，我国的CPI指数由食品、烟酒、衣、家用品、医疗、交通、娱乐和居住这8项得到，8项的权重和为100。</li><li>作用：反应与居民生活有关的产品及劳务价格，统计出来的物价变动指数。</li></ul></li><li><h3 id="基尼系统"><a href="#基尼系统" class="headerlink" title="基尼系统"></a>基尼系统</h3><ul><li>来源：全名收入中，不平均分配的那部分占总收入的百分比，最大为1表示全部收入被一人占有，最小为0表示所有人分配完全平均。</li><li>作用：定量测定收入分配的差异程度，或者说贫富差距。</li></ul></li><li><h3 id="恩格尔系数"><a href="#恩格尔系数" class="headerlink" title="恩格尔系数"></a>恩格尔系数</h3><ul><li>来源：食品支出占消费总支出的比例，59%以上为贫困状态，50%-59%可以达到温饱，40%-50%为小康家庭，30%-40%为富裕状态，30%以下几位富豪，这个比例应该是几年前的了，现在仅供参考。</li><li>作用：用于衡量一个国家和地区的生活水平。原理是一个人通常会优先吃饱，如果还有盈余才会开始其它层面的消费。</li></ul></li><li><h3 id="幸福指数"><a href="#幸福指数" class="headerlink" title="幸福指数"></a>幸福指数</h3><ul><li>来源：$\frac{效用}{欲望}$/是一个计算公式，效用表示从消费中得到的满足感。</li><li>作用：用于衡量幸福程度，人有钱后从消费中得到的满足感会降低，但欲望又会增加，所以很多并不幸福。</li></ul></li><li><h3 id="消费者信心指数"><a href="#消费者信心指数" class="headerlink" title="消费者信心指数"></a>消费者信心指数</h3><ul><li>来源：统计消费者对经济形势、就业、物价及利率的预期。</li><li>作用：预测经济走势和消费取向，也可以监测经济周期的变化。</li></ul></li><li><h3 id="房价收入比"><a href="#房价收入比" class="headerlink" title="房价收入比"></a>房价收入比</h3><ul><li>来源：房价占城市居民家庭收入的比例。</li><li>作用：衡量房价高低以及普通民众的购买力。3-6倍比较正常，表示不吃不喝3-6年可以全款购房，我国部分城市的区域甚至超过100。</li></ul></li></ul><h1 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h1><ol><li>如果要读一些略显专业的入门图书，建议直接选择具体专业的图书，系统了解，而不是想着找一本类似故事汇，连点成线的勾勒专业内容。</li><li>如果只是为了作为入门常识了解，可以快速通读。</li><li>如果本身具有相关基础，这本书就不要读了。</li></ol><center><img src="/img/books/经济学故事书.jpg" width="150" height="200" title="经济学故事书"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 读书笔记 </category>
+          
+          <category> 金融理财 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 经济学 </tag>
+            
+            <tag> 经济学故事书 </tag>
+            
+            <tag> 故事书 </tag>
+            
+            <tag> 年轻人 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tensorflow开发 之 hello world</title>
       <link href="/2019/01/24/tech-tensorflow-hello-world/"/>
       <url>/2019/01/24/tech-tensorflow-hello-world/</url>
       
@@ -24,9 +94,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> hello world </tag>
             
@@ -57,9 +127,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -801,9 +871,9 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 沟通 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
             <tag> 听人说 </tag>
             
@@ -1020,7 +1090,7 @@
     
     
     <entry>
-      <title>tensorflow开发 之mnist文件解析</title>
+      <title>tensorflow开发 之 mnist文件解析</title>
       <link href="/2018/04/24/tech-tensorflow-mnist/"/>
       <url>/2018/04/24/tech-tensorflow-mnist/</url>
       
@@ -1040,9 +1110,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> mnist </tag>
             
