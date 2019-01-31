@@ -251,6 +251,12 @@
                                     </li>
                                     
                                 
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/movice/">观影感受</a>
+                                    </li>
+                                    
+                                
                                 </ul></li>
                             
                         </ul>
@@ -377,7 +383,7 @@
       
           
         <h1 id="数据流图"><a href="#数据流图" class="headerlink" title="数据流图"></a>数据流图</h1><p>&emsp;&emsp;简单说就是一个特定的计算逻辑或者说算法模型。</p>
-<center><img src="/img/tech/20190130210226.png" width="500px" height="300px"></center>
+<center><img src="/img/tech/20190130210226.png" width="500px" height="300px" title="数据流图示例"></center>
 
 <h1 id="Session（会话）"><a href="#Session（会话）" class="headerlink" title="Session（会话）"></a>Session（会话）</h1><p>&emsp;&emsp;简单说就是使用实际数据和模型进行运算，使用步骤包括定义，执行和关闭三步，语法如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义</span></span><br><span class="line">sess = tf.Session(target=执行引擎[可选],graph=数据流图[可选],config=启动时配置[可选])</span><br><span class="line"><span class="comment"># 执行</span></span><br><span class="line">sess.run(带操作的变量或操作本身)</span><br><span class="line"><span class="comment"># 关闭</span></span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure></p>
 <h1 id="Tensor（张量）"><a href="#Tensor（张量）" class="headerlink" title="Tensor（张量）"></a>Tensor（张量）</h1><p>&emsp;&emsp;简单说就是<font color="blue"><strong>同一数据类型</strong></font>的<font color="blue"><strong>多维数据</strong></font>。我们生活在3维世界中，高于3维的数据现实中比较难现象，以常用的0-3维数据为例说明如下表所示，其中有两个特点：</p>
@@ -477,7 +483,7 @@
 <p>执行结果如下：<br><img src="/img/tech/20190130181751344.png" width="300px" height="150px" title="变量定义示例"> <img src="/img/tech/20190130185417668.png" width="300px" height="150px" title="变量赋值示例"></p>
 <h1 id="Placeholder（数据节点）"><a href="#Placeholder（数据节点）" class="headerlink" title="Placeholder（数据节点）"></a>Placeholder（数据节点）</h1><p>&emsp;&emsp;简单说就是可扩展变量，或者称为占位符，使用步骤为先进行定义，然后再进行赋值或称为填充数据，具体语法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义</span></span><br><span class="line">tmp = tf.placeholder(dtype=数据类型,shape=维度,name=变量名称[可选])</span><br><span class="line"><span class="comment"># 赋值或填充数据</span></span><br><span class="line">sess.run(tmp,feed_dict=&#123;tmp:赋值数据&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>实际代码示例如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmpHolder = tf.placeholder(dtype=tf.float64, shape=[<span class="number">2</span>],name=<span class="string">'suoxd'</span>)</span><br><span class="line">sess.run(tmpHolder,feed_dict=&#123;tmpHolder:[<span class="number">1</span>,<span class="number">2</span>]&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>执行结果如下：<br><img src="/img/tech/20190130202426199.png" alt="在这里插入图片描述"></p>
+<p>执行结果如下：<br><img src="/img/tech/20190130202426199.png" alt="数据节点使用示例"></p>
 
       
     </div>
@@ -503,6 +509,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/01/30/life-movice-ydbt/">
+                    观影感受 之 印度暴徒
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -595,7 +607,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/01/30/life-movice-ydbt/" title="上一篇: 观影感受 之 印度暴徒">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -607,7 +621,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech-tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books-经济学故事书/">经济学故事书</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech-tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books-活着/">活着</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self-不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books-月亮与六便士/">月亮与六便士</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books-乌合之众/">乌合之众</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby-身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books-反脆弱·做一个内心强大的人/">反脆弱·做一个内心强大的人</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books-冰与火之歌/">冰与火之歌</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-AI·未来/">AI·未来</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-好好说话2/">好好说话2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books-如何说客户才会听，如何听客户才肯说/">如何说客户才会听，如何听客户才肯说</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books-数学之美/">数学之美</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech-md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-一本书读懂·金融常识/">一本书读懂·金融常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-心理学入门/">心理学入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books-创能量·28位传奇企业家的口述创业史/">创能量·28位传奇企业家的口述创业史</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books-三体/">三体</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life-movice-ydbt/">观影感受 之 印度暴徒</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech-tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books-经济学故事书/">经济学故事书</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life-movice-hyjzjwtx/">观影感受 之 霍元甲之精武天下</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech-tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books-活着/">活着</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self-不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books-月亮与六便士/">月亮与六便士</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books-乌合之众/">乌合之众</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby-身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books-反脆弱·做一个内心强大的人/">反脆弱·做一个内心强大的人</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books-冰与火之歌/">冰与火之歌</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-AI·未来/">AI·未来</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-好好说话2/">好好说话2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books-如何说客户才会听，如何听客户才肯说/">如何说客户才会听，如何听客户才肯说</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books-数学之美/">数学之美</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech-md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-一本书读懂·金融常识/">一本书读懂·金融常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-心理学入门/">心理学入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books-创能量·28位传奇企业家的口述创业史/">创能量·28位传奇企业家的口述创业史</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books-三体/">三体</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
 
 
 
