@@ -179,9 +179,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 谢苗 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 谢苗 </tag>
             
         </tags>
       
@@ -210,9 +210,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -241,9 +241,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 韩寒 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -408,11 +408,11 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 霍元甲 </tag>
             
             <tag> 精武精神 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -441,9 +441,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> hello world </tag>
             
@@ -474,9 +474,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -915,9 +915,9 @@
       
         <tags>
             
-            <tag> 身份证 </tag>
-            
             <tag> 户口 </tag>
+            
+            <tag> 身份证 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -948,11 +948,11 @@
       
         <tags>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 亲人关系 </tag>
             
@@ -1457,9 +1457,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> mnist </tag>
             
