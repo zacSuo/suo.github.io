@@ -53,11 +53,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 舅舅 </tag>
             
             <tag> 外甥 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -84,11 +84,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -472,9 +472,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> hello world </tag>
             
@@ -505,9 +505,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -1488,9 +1488,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> ai </tag>
-            
             <tag> tensorflow </tag>
+            
+            <tag> ai </tag>
             
             <tag> mnist </tag>
             
