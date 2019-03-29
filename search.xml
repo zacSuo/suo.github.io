@@ -4,7 +4,104 @@
   
     
     <entry>
-      <title>思考，快与慢</title>
+      <title>机器学习 之 神经网络</title>
+      <link href="/2019/03/29/tech-ml-sjwl/"/>
+      <url>/2019/03/29/tech-ml-sjwl/</url>
+      
+        <content type="html"><![CDATA[<p>@[toc]</p><hr><p>&emsp;&emsp;不论神经网络的模型是否真的跟生物自身的神经网络相似，也不是特别重要，可以不用太关心，能大概理解它的一个构造思想即可。通常大家不会具体到要去通过代码实现神经网络模型，所以不必太在意其数学公式和具体计算，只需要关心其大概原理，本文就说说相关的一些概念。</p><h1 id="M-P神经元模型"><a href="#M-P神经元模型" class="headerlink" title="M-P神经元模型"></a>M-P神经元模型</h1><p>&emsp;&emsp;基本原理就是将输入样本数据，通过赋予不同权值后，将各项输入值求和得到输出值，通过数学公式简单表示如下，其中$w_{ij}$为神经元$x_i$和$y_j$之间的权重。<br>$y_j=\sum_{i=1}^{k}(x_i\times w_{ij})$</p><h1 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h1><p>&emsp;&emsp;感知机或者叫感知器是只有单层功能神经元的模型，是最简单的一种神经网络模型，相当于从输入直接到输出，没有中间隐含层神经元。</p><h1 id="BP网络"><a href="#BP网络" class="headerlink" title="BP网络"></a>BP网络</h1><p>&emsp;&emsp;英文全称是error Back Propagation，中文意思是误差逆传播，其实顾名思义就是有信息可以从输出传递到输入端，而之前简单的感知机是只有输入到输出的计算。核心包含两部分，一部分是从输入到输出对误差的计算，另一部分从输出到输入对神经元之间权重和自身阈值的迭代，其算法流程如下：</p><hr><p>输入：训练集$D={(x_k,y_k)}_{k=1}^m$，          学习率：$\eta$<br>过程：</p><ol><li>在(0,1)范围内随机初始化网络中所有连接权和阈值</li><li>repeat</li><li>&emsp;&emsp;for all $(x_k,y_k)\in D$  do</li><li>&emsp;&emsp;&emsp;&emsp;根据当前参数，计算当前样本输出$y_k$</li><li>&emsp;&emsp;&emsp;&emsp;计算输出层神经元的梯度项$g_j$</li><li>&emsp;&emsp;&emsp;&emsp;计算隐层神经元的梯度项$e_h$</li><li>&emsp;&emsp;&emsp;&emsp;更新连接权$w_{hj},v_{ih}$和阈值$\theta_j，\gamma_h$</li><li>&emsp;&emsp;end for</li><li>until 达到停止条件</li></ol><p>输出：连接权与阈值确定的多层前馈神经网络</p><hr><h1 id="全局最小"><a href="#全局最小" class="headerlink" title="全局最小"></a>全局最小</h1><p>&emsp;&emsp;对于常规的神经网络模型是使用梯度下降算法进行迭代，但梯度下降可能就会导致达到局部最小值，就好像爬山时候在有多个山头的山脉里，第一次只是先爬到了一个矮的山丘，有一些策略可以跳出局部最优达到全局最优，如下：</p><ol><li>使用多组不同的起始参数值</li><li>一定比例上接受次优解（模拟退火算法）</li><li>对梯度方向加入随机量，即使以及达到了梯度为零，那也因为随机量而还可以继续迭代</li></ol><h1 id="其它网络模型"><a href="#其它网络模型" class="headerlink" title="其它网络模型"></a>其它网络模型</h1><p>&emsp;&emsp;除了BP网络外，还有一些常用的算法如下，具体我也没了解过，供各位自行参考：</p><ol><li>RBF（Radial Basis Function） 径向基函数网络：单隐成前馈神经网络</li><li>ART（Adaptive Resonance Theory）自适应谐振理论网络</li><li>SOM（Self-Organazing Map）自组织映射网络</li><li>级联相关网络（Cascade-Correlation）</li><li>Elman网络</li><li>Boltzmann机</li><li>深度学习：很深层的神经网络</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 神经网络 </tag>
+            
+            <tag> MP模型 </tag>
+            
+            <tag> BP网络 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>机器学习 之 决策树</title>
+      <link href="/2019/03/28/tech-ml-jcs/"/>
+      <url>/2019/03/28/tech-ml-jcs/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;决策树，是使用树形结构进行决策或者判定的一种方法。本文说一下，机器学习中决策树里的一些常用计算规则或数学概念。</p><h1 id="分类方式"><a href="#分类方式" class="headerlink" title="分类方式"></a>分类方式</h1><p>&emsp;&emsp;决策树的分类是基于样品对象的某一个属性值为标准的，如果样品有多个维度的属性，则需要确定以哪些属性作为优先分类的条件，以及如何排序分类的条件，即确定一个分类属性后如何确定后面的属性，甚至如果有的属性值不存在时该如何处理等等。</p><ol><li>信息熵：$Ent(D)=-\sum_{k=1}^{|y|}p_klog_2p_k$，其中D为测试样本，$p_k$为测试样本中分类为k的比例，$|y|$是样本分类总数。</li><li>信息增益：$Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)$，其中$a$为测试样本对应的某一个维度的属性，$D^v$为测试样本中属性$a$的值为$v$的样本，|$D^v$|表示$D^v$对应的样本数量。</li><li>增益率：$Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}$，其中$IV(a)=-\sum_{v=1}^{V}\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$</li><li>基尼系数：$Gini(D,a)=1-\sum_{k=1}^{|y|}{p_k}^2$<br>&emsp;&emsp;通过计算每个属性的信息增益，选择增益最大的属性作为优先分类的属性，选择完第一个后，之后的属性维度用同样的方式继续进行计算得到次优属性。</li></ol><h1 id="执行分类"><a href="#执行分类" class="headerlink" title="执行分类"></a>执行分类</h1><h2 id="剪枝处理"><a href="#剪枝处理" class="headerlink" title="剪枝处理"></a>剪枝处理</h2><p>&emsp;&amp;emsp由于生成的决策树过程容易存在过拟合，就是对测试样本的个体属性当作了所有样本的一般属性，因此需要对它进行剪枝（去掉过于细节的模型），以简化学到的决策树。决策树的剪枝，通常提前结束树的子节点生成，或者从已生成的树上剪掉一些节点或子树，从而简化生成的决策树模型。<br>&emsp;&emsp;<strong>预剪枝</strong>：对每个节点进行划分，直到当前节点不能继续增加泛化性能未知<br>&emsp;&emsp;<strong>后剪枝</strong>：先生成一个完成的决策树，然后自底向上计算，如果子树没有增加泛化性能，则使用叶子节点代替子树</p><h2 id="连续值"><a href="#连续值" class="headerlink" title="连续值"></a>连续值</h2><p>&emsp;&emsp;如果测试样本属性为非离散，或者测量值是无规则的数据值，比如物体重量、长度等，则可以使用属性的某个中间值将属性离散化。</p><h2 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h2><p>&emsp;&emsp;如果样本在对应属性上存在缺失，则可以将当前属性等比例分配到存在的属性值中去，比如，若颜色有红色黄色两种，对应样本数量比例为8：2，则如果有当前属性缺失的样本，则将该样本设定为0.8为红色，0.2为黄色。</p><h2 id="多变量决策树"><a href="#多变量决策树" class="headerlink" title="多变量决策树"></a>多变量决策树</h2><p>&emsp;&emsp;为每个非叶子节点建立一个线性分类器，而不是仅仅作为一个划分不同方向的单个属性值。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 决策树 </tag>
+            
+            <tag> 分类 </tag>
+            
+            <tag> 剪枝 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>机器学习 之 基础概念</title>
+      <link href="/2019/03/19/tech-ml-gn/"/>
+      <url>/2019/03/19/tech-ml-gn/</url>
+      
+        <content type="html"><![CDATA[<ul><li>数据集（data set）：一组用于机器学习的数据的集合</li><li>示例（instance）：数据集中的一条数据记录</li><li>特征向量（feature vector）：一个示例在数学上的表示</li><li>训练数据（trainning data）：使用机器学习用来建立模型的数据</li><li>样本空间（sample space）：训练数据中用于作为条件的数据，即预测时的输入值</li><li>标记空间（label space）：训练数据中用于作为结果的数据，即预测时的被预测值</li><li>分类（classification）：被预测值的结果数据是离散数据</li><li>回归（regression）：被预测值是连续数据</li><li>聚类（clustering）：被预测值在训练阶段并没有被明确指定</li><li>训练（training）：使用训练数据对机器学习算法进行训练</li><li>监督学习（supervised learning）：训练阶段有明确的标记数据，即初始状态有为数据做好数据标记，分类和回归都属于监督学习</li><li>无监督学习（unsupervised learning）：跟监督学习相对的概念，聚类属于无监督学习</li><li>泛化（generalization）：使用训练得到一个可用模型的过程，对新的样本数据的适用性好可以理解为模型的泛化能力强，也就是常规理解的归纳，即从各独立的示例中总结出的一般性规律的意思</li><li>特化（specialzation）：将训练出来的模型应用于新样本的过程，就是常规的演绎，即将一般规律应用于具体的独立的示例</li><li>错误率（error rate）：分类错误的样本数占样本总数的比例</li><li>精度（accuracy）：精度 = 1 - 错误率</li><li>训练误差（trainning error）：学习器在训练集上的误差</li><li>泛化误差（generalization error）：学习器在新样板上的误差</li><li>过拟合（overfitting）：把训练样本的自身特点当做所有潜在样本的一般性质进行学习，导致泛化性能下降。</li><li>欠拟合（underfitting）：跟过拟合相对，指对训练样本的一般性质学习的不够</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 基本概念 </tag>
+            
+            <tag> 训练模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>读书笔记 之 《思考·快与慢》</title>
       <link href="/2019/03/19/books-%E6%80%9D%E8%80%83%EF%BC%8C%E5%BF%AB%E4%B8%8E%E6%85%A2/"/>
       <url>/2019/03/19/books-%E6%80%9D%E8%80%83%EF%BC%8C%E5%BF%AB%E4%B8%8E%E6%85%A2/</url>
       
@@ -37,7 +134,7 @@
     
     
     <entry>
-      <title>乔布斯全书</title>
+      <title>读书笔记 之 《乔布斯全书》</title>
       <link href="/2019/03/18/books-%E4%B9%94%E5%B8%83%E6%96%AF%E5%85%A8%E4%B9%A6/"/>
       <url>/2019/03/18/books-%E4%B9%94%E5%B8%83%E6%96%AF%E5%85%A8%E4%B9%A6/</url>
       
@@ -371,9 +468,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -1313,13 +1410,13 @@
       
         <tags>
             
-            <tag> 算法 </tag>
-            
             <tag> AI </tag>
             
             <tag> 人工智能 </tag>
             
             <tag> 李开复 </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -1412,9 +1509,9 @@
       
         <tags>
             
-            <tag> 数学之美 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数学之美 </tag>
             
             <tag> 搜索引擎 </tag>
             
