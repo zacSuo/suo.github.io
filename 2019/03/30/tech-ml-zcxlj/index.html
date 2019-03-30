@@ -405,8 +405,10 @@
 <li><p>拉普拉斯核：$k(x_i,x_j)=exp(-\frac{||x_i-x_j||}{\sigma}),\sigma&gt;0$</p>
 </li>
 <li><p>Sigmoid核：$k(x_i,x_j)=tanh(\beta{x_i}^Tx_j+\theta)$</p>
-<h1 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h1><p>&emsp;&emsp;防止过拟合现象，允许少量样本存在被误分类的情况，并引入损失函数，常见的损失函数如下，其对应关系如下图：</p>
 </li>
+</ol>
+<h1 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h1><p>&emsp;&emsp;防止过拟合现象，允许少量样本存在被误分类的情况，并引入损失函数，常见的损失函数如下，其对应关系如下图：</p>
+<ol>
 <li>hinge损失函数：$f_{hinge}(z) = max(0,1-z)$</li>
 <li>指数损失函数：$f_{exp}(z) = exp(-z)$</li>
 <li>对数损失函数：$f_{log}(z) = log(1+exp(-z))$ <center><img src="/img/tech/20190330103802640.png" width="200" height="150" title="损失函数关系示意图"></center>
