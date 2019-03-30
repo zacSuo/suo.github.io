@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>机器学习基础 之 支持向量机（SVM）</title>
+      <title>机器学习 之 支持向量机（SVM）</title>
       <link href="/2019/03/30/tech-ml-zcxlj/"/>
       <url>/2019/03/30/tech-ml-zcxlj/</url>
       
-        <content type="html"><![CDATA[<h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>&emsp;&emsp;支持向量机是一种，使用线性模型将测试样本一分为二的一种模型，通过不同方式的升级，使得模型具有较高的鲁棒性，并可以解决一些非线性分类问题，简单来讲模型的升级之路如下：</p><ol><li><strong>基本型</strong>：当训练样本线性<font color="green">可分</font>时，通过训练样本得到一个支持向量机，使用该模型将样本精确的分为两类</li><li><strong>软间隔</strong>：当训练样本<font color="blue">近似线性可分</font>时，训练样本允许一小部分样本被分类错误，通过损失函数来限定错误率。</li><li><strong>核函数</strong>：当训练样本线性<font color="red">不可分</font>时，使用一个核函数将模型映射到线性可分的空间（通常是更高甚至无限维空间），然后再在目标空间求解得到一个线性支持向量机模型，对样本分类。</li></ol><h1 id="支持向量机（SVM）基本型"><a href="#支持向量机（SVM）基本型" class="headerlink" title="支持向量机（SVM）基本型"></a>支持向量机（SVM）基本型</h1><p>&emsp;&emsp;其基本函数表达如下，对应的示意图如下图：<br>$min_{w,b}(\frac{1}{2}||W||^2)$</p><p>$s.t.  y_i(w^Tx_i + b) \ge0,i=1,2,…,m$</p><center>&lt;img src=<a href="https://img-blog.csdnimg.cn/20190330103728196.png" target="_blank" rel="noopener">https://img-blog.csdnimg.cn/20190330103728196.png</a> width=200 height=150&gt;</center><h1 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h1><p>&emsp;&emsp;数学书在求取有约束条件的优化问题时，拉格朗日乘子法和KKT条件是非常重要的两个求取方法，对于等式约束的优化问题，可以应用拉格朗日乘子法去求取最优值；如果含有不等式约束，可以应用KKT条件去求取。<br>&emsp;&emsp;对于上面的支持向量机基本型，进行拉格朗日乘子法和KKT条件的变化，变换后的拉格朗日函数如下：<br>$L(w,b,\alpha) = \frac{1}{2}||W||^2 + \sum_{i=1}^{m}\alpha_i(1-y_i(w^Tx_i+b))$</p><p>令，函数对$w,b$的微分为0，即$\frac{\partial{L}}{\partial{w}}=0,\frac{\partial{L}}{\partial{b}}=0$得到对偶问题：</p><p>$max_\alpha\sum_{i=1}^{m}\alpha_i-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}\alpha_i\alpha_jy_iy_j{x_i}^Tx_j$</p><p>$s.t. \sum_{i=1}^{m}\alpha_iy_i=0,\alpha_i\ge0,i=1,2,…,m$</p><h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>&emsp;&emsp;将样本空间映射到有线性划分的空间的函数，常用核函数有：</p><ol><li><p>线性核：$k(x_i,x_j)={x_i}^Tx_j$</p></li><li><p>多项式核：$k(x_i,x_j)=({x_i}^Tx_j)^d，d\ge1$为多项式次数</p></li><li><p>高斯核：$k(x_i,x_j)=exp(-\frac{||x_i-x_j||^2}{2\sigma^2}),\sigma&gt;0$为高斯带宽</p></li><li><p>拉普拉斯核：$k(x_i,x_j)=exp(-\frac{||x_i-x_j||}{\sigma}),\sigma&gt;0$</p></li><li><p>Sigmoid核：$k(x_i,x_j)=tanh(\beta{x_i}^Tx_j+\theta)$</p><h1 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h1><p>&emsp;&emsp;防止过拟合现象，允许少量样本存在被误分类的情况，并引入损失函数，常见的损失函数如下，其对应关系如下图：</p></li><li>hinge损失函数：$f_{hinge}(z) = max(0,1-z)$</li><li>指数损失函数：$f_{exp}(z) = exp(-z)$</li><li>对数损失函数：$f_{log}(z) = log(1+exp(-z))$ <center>&lt;img src=<a href="https://img-blog.csdnimg.cn/20190330103802640.png" target="_blank" rel="noopener">https://img-blog.csdnimg.cn/20190330103802640.png</a> width=200 height=150&gt;</center></li></ol><h1 id="支持向量回归（SVR）"><a href="#支持向量回归（SVR）" class="headerlink" title="支持向量回归（SVR）"></a>支持向量回归（SVR）</h1><p>&emsp;&emsp;将软间隔误差量化为数学表示，当误差小于约值时，认为损失为0，这有一个2倍误差的间隔带。本方法（SVR）跟支持向量机（SVM）是同一原理的分类方式，只是支持向量机的结果是离散的分类结果，比如（0、1），而回归问题相当于计算结果可以是任意的连续值。<br>&emsp;&emsp;另外使用支持向量机的思路进行回归问题的解决，跟传统的回归问题相比的不同在于，传统回归问题，是当计算值和目标值完全相同时才认为损失为0，而当前方法相当于在模型两边存在一个间隔带作为缓冲，若训练样本落入此间隔带内则被认为是预测正确的。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>&emsp;&emsp;支持向量机是一种，使用线性模型将测试样本一分为二的一种模型，通过不同方式的升级，使得模型具有较高的鲁棒性，并可以解决一些非线性分类问题，简单来讲模型的升级之路如下：</p><ol><li><strong>基本型</strong>：当训练样本线性<font color="green">可分</font>时，通过训练样本得到一个支持向量机，使用该模型将样本精确的分为两类</li><li><strong>软间隔</strong>：当训练样本<font color="blue">近似线性可分</font>时，训练样本允许一小部分样本被分类错误，通过损失函数来限定错误率。</li><li><strong>核函数</strong>：当训练样本线性<font color="red">不可分</font>时，使用一个核函数将模型映射到线性可分的空间（通常是更高甚至无限维空间），然后再在目标空间求解得到一个线性支持向量机模型，对样本分类。</li></ol><h1 id="支持向量机（SVM）基本型"><a href="#支持向量机（SVM）基本型" class="headerlink" title="支持向量机（SVM）基本型"></a>支持向量机（SVM）基本型</h1><p>&emsp;&emsp;其基本函数表达如下，对应的示意图如下图：<br>$min_{w,b}(\frac{1}{2}||W||^2)$</p><p>$s.t.  y_i(w^Tx_i + b) \ge0,i=1,2,…,m$</p><center><img src="/img/tech/20190330103728196.png" width="200" height="150" title="SVM基本型示意图"></center><h1 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h1><p>&emsp;&emsp;数学书在求取有约束条件的优化问题时，拉格朗日乘子法和KKT条件是非常重要的两个求取方法，对于等式约束的优化问题，可以应用拉格朗日乘子法去求取最优值；如果含有不等式约束，可以应用KKT条件去求取。<br>&emsp;&emsp;对于上面的支持向量机基本型，进行拉格朗日乘子法和KKT条件的变化，变换后的拉格朗日函数如下：<br>$L(w,b,\alpha) = \frac{1}{2}||W||^2 + \sum_{i=1}^{m}\alpha_i(1-y_i(w^Tx_i+b))$</p><p>令，函数对$w,b$的微分为0，即$\frac{\partial{L}}{\partial{w}}=0,\frac{\partial{L}}{\partial{b}}=0$得到对偶问题：</p><p>$max_\alpha\sum_{i=1}^{m}\alpha_i-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}\alpha_i\alpha_jy_iy_j{x_i}^Tx_j$</p><p>$s.t. \sum_{i=1}^{m}\alpha_iy_i=0,\alpha_i\ge0,i=1,2,…,m$</p><h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>&emsp;&emsp;将样本空间映射到有线性划分的空间的函数，常用核函数有：</p><ol><li><p>线性核：$k(x_i,x_j)={x_i}^Tx_j$</p></li><li><p>多项式核：$k(x_i,x_j)=({x_i}^Tx_j)^d，d\ge1$为多项式次数</p></li><li><p>高斯核：$k(x_i,x_j)=exp(-\frac{||x_i-x_j||^2}{2\sigma^2}),\sigma&gt;0$为高斯带宽</p></li><li><p>拉普拉斯核：$k(x_i,x_j)=exp(-\frac{||x_i-x_j||}{\sigma}),\sigma&gt;0$</p></li><li><p>Sigmoid核：$k(x_i,x_j)=tanh(\beta{x_i}^Tx_j+\theta)$</p><h1 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h1><p>&emsp;&emsp;防止过拟合现象，允许少量样本存在被误分类的情况，并引入损失函数，常见的损失函数如下，其对应关系如下图：</p></li><li>hinge损失函数：$f_{hinge}(z) = max(0,1-z)$</li><li>指数损失函数：$f_{exp}(z) = exp(-z)$</li><li>对数损失函数：$f_{log}(z) = log(1+exp(-z))$ <center><img src="/img/tech/20190330103802640.png" width="200" height="150" title="损失函数关系示意图"></center></li></ol><h1 id="支持向量回归（SVR）"><a href="#支持向量回归（SVR）" class="headerlink" title="支持向量回归（SVR）"></a>支持向量回归（SVR）</h1><p>&emsp;&emsp;将软间隔误差量化为数学表示，当误差小于约值时，认为损失为0，这有一个2倍误差的间隔带。本方法（SVR）跟支持向量机（SVM）是同一原理的分类方式，只是支持向量机的结果是离散的分类结果，比如（0、1），而回归问题相当于计算结果可以是任意的连续值。<br>&emsp;&emsp;另外使用支持向量机的思路进行回归问题的解决，跟传统的回归问题相比的不同在于，传统回归问题，是当计算值和目标值完全相同时才认为损失为0，而当前方法相当于在模型两边存在一个间隔带作为缓冲，若训练样本落入此间隔带内则被认为是预测正确的。</p>]]></content>
       
       
       <categories>
@@ -119,9 +119,9 @@
       
         <tags>
             
-            <tag> 基本概念 </tag>
-            
             <tag> 机器学习 </tag>
+            
+            <tag> 基本概念 </tag>
             
             <tag> 训练模型 </tag>
             
@@ -468,9 +468,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 谢苗 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 谢苗 </tag>
             
         </tags>
       
@@ -530,9 +530,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 韩寒 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -697,11 +697,11 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 霍元甲 </tag>
             
             <tag> 精武精神 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -730,9 +730,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> hello world </tag>
             
@@ -763,9 +763,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -1746,9 +1746,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> mnist </tag>
             
