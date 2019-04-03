@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>机器学习 之 聚类</title>
+      <link href="/2019/04/02/tech-ml-jl/"/>
+      <url>/2019/04/02/tech-ml-jl/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;聚类通常目标是将样本分为几个同的类别，而分类前的样本数据本身通常并没有对应的类别，也称为无监督学习，或者说样本是在聚类后才知道了哪些样本属于一类，而被分好的类别名称是需要用户根据其特征来命名，在分类前是不知道的。</p><h1 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h1><p>&emsp;&emsp;对聚类后的结果进行有效性评估的一种度量方法，通常希望聚类后的样本在类内部相似度高，在不同类之间相似度低，常用的衡量指标有两种：</p><h2 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h2><p>&emsp;&emsp;外表指标指，将聚类结果跟另一个参考模型进行比较，常用的评价指标有：</p><ol><li>Jaccard系数（JC：Jaccard Coefficient）</li><li>FM指数（FMI：Fowlkes and Mallows Index）</li><li>Rand指数（RI：Rand Index）<h2 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h2>&emsp;&emsp;内部指标指，直接基于聚类结果进行性能的评估，常用的评估指标有：</li><li>DB指数（DBI：Davies-Bouldin Index）</li><li>Dunn指数（DI：Dunn Index）<h1 id="距离计算"><a href="#距离计算" class="headerlink" title="距离计算"></a>距离计算</h1><h2 id="有序属性"><a href="#有序属性" class="headerlink" title="有序属性"></a>有序属性</h2>&emsp;&emsp;对于有序属性的样本之间距离的计算，常用的有：</li><li>闵可夫斯基距离：$dist_{mk}(x_i,x_j)=(\sum_{u=1}^{n}|x_{iu}-x_{ju}|^p)^{\frac{1}{p}}$</li><li>欧氏距离（p=2）：$dist_{ed}(x_i,x_j)=||x_i-x_j||^2=\sqrt{\sum_{u=1}^{n}|x_{iu}-x_{ju}|^2}$</li><li>曼哈顿距离（p=1）：$dist_{man}(x_i,x_j)=||x_i-x_j||=\sum_{u=1}^{n}|x_{iu}-x_{ju}|$<h2 id="无序属性"><a href="#无序属性" class="headerlink" title="无序属性"></a>无序属性</h2>$VDM_p(a,b) = \sum_{i=1}^{k}|\frac{m_{u,a,i}}{m_{u,a}}-\frac{m_{u,b,i}}{m_{u,b}}|^p$<h1 id="原型聚类"><a href="#原型聚类" class="headerlink" title="原型聚类"></a>原型聚类</h1>&emsp;&emsp;原型聚类顾名思义就是基于某个原型进行聚类的方法，根据不同的原型有不同的聚类算法，常用的原型算法如下：<h2 id="k均值算法"><a href="#k均值算法" class="headerlink" title="k均值算法"></a>k均值算法</h2>&emsp;&emsp;核心原理就是不断求各样本到当前各类别之间的距离，每个样本选择距离最近的类别，每次所有样本分类结束后重新求得各类别的中心位置，再继续迭代，直到所有样本分类不再变化。<br>$E=\sum_{i=1}^{k}\sum_{x\in{C_i}}||x-u_i||^2$<h2 id="学习向量量化"><a href="#学习向量量化" class="headerlink" title="学习向量量化"></a>学习向量量化</h2>&emsp;&emsp;核心原理跟k均值算法类似，区别仅在与对每个类别的调整方式，k均值是对所有样本计算结束后对所有样本求均值，而学习向量是根据每个样本计算完成后立即调整类别的中心位置，将样本归类的类别向当前样本靠近，其他所有类别远离当前样本。<h2 id="高斯混合聚类"><a href="#高斯混合聚类" class="headerlink" title="高斯混合聚类"></a>高斯混合聚类</h2>&emsp;&emsp;核心原理跟k均值算法一致，区别在于其距离的计算不是使用欧氏距离，而是使用概率模型，认为样本服从高斯分布，从而使用对应的高斯分布对各样本计算，每次计算万所有样本后根据所有样本的计算结果求得新的高斯分布函数，直到达到计算次数或偏差达到阈值内。其中$u_i,\Sigma_i,\alpha_i$分别表示第i个高斯分类的均值、协方差矩阵和权重。<br>$P(x)=\sum_{i=1}^k\alpha_ip(x|u_i,\Sigma_i)$</li></ol><h1 id="密度聚类"><a href="#密度聚类" class="headerlink" title="密度聚类"></a>密度聚类</h1><p>顾名思义就是基于样本的分布密度来进行分类，其聚类原理是从样本的密度来判别样本之间的关系，从而确定分类类别，最终不断聚类得到最终的聚类结果。其实现过程即为，先设定一些最小密度和分类最大距离阈值，找到满足阈值条件的一个样本作为核心，根据核心样本筛出当前分类，然后从剩下样本中继续寻找，直到将样本分类完。</p><h1 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h1><p>&emsp;&emsp;核心原理就是将样本分类为不同层次的数据，形成类似树形的结构，常用自底向上或者自顶向下两种方式，前者是先对所有样本进行初步分类，不断合并小的分类形成更大的分类，直到达到预定的分类个数，AGNES即为自底向上分类的一种聚类算法。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 聚类 </tag>
+            
+            <tag> 无监督学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>大学日常 之 做个好人</title>
       <link href="/2019/04/02/life-%E4%BF%8A%E5%81%9A%E4%B8%AA%E5%A5%BD%E4%BA%BA/"/>
       <url>/2019/04/02/life-%E4%BF%8A%E5%81%9A%E4%B8%AA%E5%A5%BD%E4%BA%BA/</url>
@@ -99,7 +130,7 @@
       <link href="/2019/03/30/tech-ml-jcxx/"/>
       <url>/2019/03/30/tech-ml-jcxx/</url>
       
-        <content type="html"><![CDATA[<p>&emsp;&emsp;集成学习是指将多个学习器进行集成来完成学习任务，若集成中只包含同类型的学习器称为同质集成，同质集成对应的学习器称为基学习器；若集成使用的学习器不同类型称为异质集成，异质集成对应的个体学习器称为组件学习器。</p><h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>&emsp;&emsp;Boosting是提高单个学习器学习能力的一种方法，其原理是，首先基于训练样本得到一个学习器，然后根据当前学习器的表现对训练样本的分布比例或者训练样本自身的权重进行调整，使得当前学习器中学习错误的样本得到更多关注，基于调整后的样本得到一个新的学习器，直到学习器的数量达到预先设定的值（$T$），最后将所有学习器进行加权结合，表达式如下，其中$\alpha_t$为第t次训练得到的学习器对应的权重，$h_t$为第t次得到的学习器。</p><p>$H(x)=\sum_{t=1}^{T}\alpha_th_t(x)$</p><h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p>&emsp;&emsp;Bagging是一种通过放回采样的方法得到不同的训练样本，使用不同训练样本对学习器进行训练，经过多次（$T$次）采样训练，最后对得到的不同学习器进行集成。具体的集成方法可以比较简单，对分类问题可以使用简单投票法，即少数服从多数的原则来选择所有分类器中分类最多的结果，对回归问题可以使用简单平均法，即对所有分类器的计算结果求均值。</p><h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><p>&emsp;&emsp;随机森林是在Bagging的基础上，随机选择训练样本的属性，它是基于Bagging做的一种改进的方法，Bagging只是通过随机选择样本来增加学习器的多样性，而随机森林中学习器的多样性不止来自训练样本的扰动，还有来自属性的扰动。通常来讲，随机森林在学习器数量增加时的泛化能力和收敛速度好于Bagging，但学习器数量较少时其波动也较大，即随机森林的起始性能相对较差，但学习潜力较大。</p><h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="平均法"><a href="#平均法" class="headerlink" title="平均法"></a>平均法</h2><p>&emsp;&emsp;由于训练样本不充分或存在噪声，所以加权平均法的权重有时候并不一定更好，通常来讲，如果单个学习器的性能相差较大时使用加权平均法，而相互接近时使用简单平均法。</p><h3 id="简单平均分："><a href="#简单平均分：" class="headerlink" title="简单平均分："></a>简单平均分：</h3><p>$H(x) = \frac{1}{T}\sum_{i=1}^{T}h_i(x)$</p><h3 id="加权平均法："><a href="#加权平均法：" class="headerlink" title="加权平均法："></a>加权平均法：</h3><p>$H(x) = \frac{1}{T}\sum_{i=1}^{T}w_ih_i(x)$</p><p>其中$w_i$是单个学习器$h_i$的权重，通常要求$w_i\ge0,\sum_{i=1}^{T}w_i=1$</p><h2 id="投票法"><a href="#投票法" class="headerlink" title="投票法"></a>投票法</h2><h3 id="绝对多数"><a href="#绝对多数" class="headerlink" title="绝对多数"></a>绝对多数</h3><p>&emsp;&emsp;仅选择票数过半的那个学习器的结果。</p><h3 id="相对多数"><a href="#相对多数" class="headerlink" title="相对多数"></a>相对多数</h3><p>&emsp;&emsp;选择票数最多的结果，如果得到多个相同数量的结果，则随机选择其中一个。</p><p>$H(x) = c_{argmax_j}\sum_{i=1}^{T}h_i^j(x)$</p><h3 id="加权投票"><a href="#加权投票" class="headerlink" title="加权投票"></a>加权投票</h3><p>&emsp;&emsp;基于相对多数投票法增加学习器对应的权重，跟加权平均类似，其中$w_i$是单个学习器$h_i$的权重，通常要求$w_i\ge0,\sum_{i=1}^{T}w_i=1$。</p><p>$H(x) = c_{argmax_j}\sum_{i=1}^{T}w_ih_i^j(x)$</p><h2 id="学习法"><a href="#学习法" class="headerlink" title="学习法"></a>学习法</h2><p>&emsp;&emsp;前面说的平均和投票，可以理解为一种简单的学习器，如果学习器的结果比较复杂或者学习器输出类型不一致时，也可以通过一个新的不同类型的学习器的来进行结合，即将学习器本身作为要学习和分类的测试样本，通常使用交叉验证法或留一法，留一法是指使用学习器没有使用的测试样本进行测试，交叉验证发是指将测试样本随机分为数量相当的几类，然后分别使用各学习器进行测试验证，最终得到一个新的学习器。</p>]]></content>
+        <content type="html"><![CDATA[<p>&emsp;&emsp;集成学习是指将多个学习器进行集成来完成学习任务，若集成中只包含同类型的学习器称为同质集成，同质集成对应的学习器称为基学习器；若集成使用的学习器不同类型称为异质集成，异质集成对应的个体学习器称为组件学习器。</p><h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>&emsp;&emsp;Boosting是提高单个学习器学习能力的一种方法，其原理是，首先基于训练样本得到一个学习器，然后根据当前学习器的表现对训练样本的分布比例或者训练样本自身的权重进行调整，使得当前学习器中学习错误的样本得到更多关注，基于调整后的样本得到一个新的学习器，直到学习器的数量达到预先设定的值（$T$），最后将所有学习器进行加权结合，表达式如下，其中$\alpha_t$为第t次训练得到的学习器对应的权重，$h_t$为第t次得到的学习器。</p><p>$H(x)=\sum_{t=1}^{T}\alpha_th_t(x)$</p><h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p>&emsp;&emsp;Bagging是一种通过放回采样的方法得到不同的训练样本，使用不同训练样本对学习器进行训练，经过多次（$T$次）采样训练，最后对得到的不同学习器进行集成。具体的集成方法可以比较简单，对分类问题可以使用简单投票法，即少数服从多数的原则来选择所有分类器中分类最多的结果，对回归问题可以使用简单平均法，即对所有分类器的计算结果求均值。</p><h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><p>&emsp;&emsp;随机森林是在Bagging的基础上，随机选择训练样本的属性，它是基于Bagging做的一种改进的方法，Bagging只是通过随机选择样本来增加学习器的多样性，而随机森林中学习器的多样性不止来自训练样本的扰动，还有来自属性的扰动。通常来讲，随机森林在学习器数量增加时的泛化能力和收敛速度好于Bagging，但学习器数量较少时其波动也较大，即随机森林的起始性能相对较差，但学习潜力较大。</p><h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="平均法"><a href="#平均法" class="headerlink" title="平均法"></a>平均法</h2><p>&emsp;&emsp;由于训练样本不充分或存在噪声，所以加权平均法的权重有时候并不一定更好，通常来讲，如果单个学习器的性能相差较大时使用加权平均法，而相互接近时使用简单平均法。</p><h3 id="简单平均分："><a href="#简单平均分：" class="headerlink" title="简单平均分："></a>简单平均分：</h3><p>$H(x) = \frac{1}{T}\sum_{i=1}^{T}h_i(x)$</p><h3 id="加权平均法："><a href="#加权平均法：" class="headerlink" title="加权平均法："></a>加权平均法：</h3><p>$H(x) = \frac{1}{T}\sum_{i=1}^{T}w_ih_i(x)$</p><p>其中$w_i$是单个学习器$h_i$的权重，通常要求$w_i\ge0,\sum_{i=1}^{T}w_i=1$</p><h2 id="投票法"><a href="#投票法" class="headerlink" title="投票法"></a>投票法</h2><h3 id="绝对多数"><a href="#绝对多数" class="headerlink" title="绝对多数"></a>绝对多数</h3><p>&emsp;&emsp;仅选择票数过半的那个学习器的结果。</p><h3 id="相对多数"><a href="#相对多数" class="headerlink" title="相对多数"></a>相对多数</h3><p>&emsp;&emsp;选择票数最多的结果，如果得到多个相同数量的结果，则随机选择其中一个。</p><p>$H(x) = c_{argmax_j}\sum_{i=1}^{T}h_i^j(x)$</p><h3 id="加权投票"><a href="#加权投票" class="headerlink" title="加权投票"></a>加权投票</h3><p>&emsp;&emsp;基于相对多数投票法增加学习器对应的权重，跟加权平均类似，其中$w_i$是单个学习器$h_i$的权重，通常要求$w_i\ge0,\sum_{i=1}^{T}w_i=1$。</p><p>$H(x) = c_{argmax_j}\sum_{i=1}^{T}w_ih_i^j(x)$</p><h2 id="学习法"><a href="#学习法" class="headerlink" title="学习法"></a>学习法</h2><p>&emsp;&emsp;前面说的平均和投票，可以理解为一种简单的学习器，如果学习器的结果比较复杂或者学习器输出类型不一致时，也可以通过一个新的不同类型的学习器的来进行结合，即将学习器本身作为要学习和分类的测试样本，通常使用交叉验证法或留一法，留一法是指使用学习器没有使用的测试样本进行测试，交叉验证发是指将测试样本随机分为数量相当的几类，然后分别使用各学习器进行测试验证，最终得到一个新的学习器。</p><h1 id="多样性"><a href="#多样性" class="headerlink" title="多样性"></a>多样性</h1><p>&emsp;&emsp;在集成学习的模型中，单个学习器的准确性越高，多样性越大，其集成后的准确性越高。</p><h2 id="多样性度量"><a href="#多样性度量" class="headerlink" title="多样性度量"></a>多样性度量</h2><p>&emsp;&emsp;可以通过对各学习器的分类或回归结果，进行不同的计算规则来表示学习器之间的多样性，常用多样性的度量方式有：</p><ol><li>不和度量</li><li>相关度量</li><li>Q-统计度量</li><li>k-统计度量<h2 id="多样性增强"><a href="#多样性增强" class="headerlink" title="多样性增强"></a>多样性增强</h2>&emsp;&emsp;除了可以衡量学习器的多样性，也有一些方法可以增加学习器的多样性，核心原理是为学习器的学习过程增加扰动，或者说人为增加偏差量，常见增加扰动的地方有：</li><li>数据样本扰动</li><li>输入属性扰动</li><li>输出表示扰动</li><li>算法参数扰动</li></ol>]]></content>
       
       
       <categories>
@@ -619,9 +650,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -1491,13 +1522,13 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 反脆弱 </tag>
             
             <tag> 心态 </tag>
             
             <tag> 最重要的事，只有一件 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
         </tags>
       
@@ -1629,11 +1660,11 @@
             
             <tag> 沟通 </tag>
             
+            <tag> 心灵鸡汤 </tag>
+            
             <tag> 听人说 </tag>
             
             <tag> 商务交流 </tag>
-            
-            <tag> 心灵鸡汤 </tag>
             
         </tags>
       
