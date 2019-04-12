@@ -4,6 +4,68 @@
   
     
     <entry>
+      <title>机器学习 之 半监督学习</title>
+      <link href="/2019/04/11/tech-ml-bjdxx/"/>
+      <url>/2019/04/11/tech-ml-bjdxx/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习。</p><h1 id="生成式方法"><a href="#生成式方法" class="headerlink" title="生成式方法"></a>生成式方法</h1><p>&emsp;&emsp;生成式方法是直接假设所有的样本数据，不论是否进行了标记，都由同一个未知的模型生成，因此可以通过该模型将未标记的数据跟学习目标建立联系，最终使用EM算法（目标和参数相互迭代）求解得到模型，进而可以实现未标记样本的分类。<br>&emsp;&emsp;如上所述，假定数据分布属于某个模型后，记得得到对应模型的的生成式半监督学习模型，常用的有高斯混合模型、混合专家模型及朴素贝叶斯模型等。但是，如果模型的假设不准确，及模型跟样本分布不一致，则可能会出现较差的结果，具体模型的假设通常需要一定的先验知识，或者对样本数据的领域知识。</p><h1 id="半监督支持向量机"><a href="#半监督支持向量机" class="headerlink" title="半监督支持向量机"></a>半监督支持向量机</h1><p>&emsp;&emsp;半监督支持向量机是支持向量机在半监督学习方向的拓展，标准的支持向量机的目标是找到最大间隔划分的超平面，而板件的支持向量机的目标是穿过低数据密度区域的划分超平面，当然，相同点都是针对二分类问题的学习方法。</p><h1 id="图半监督学习"><a href="#图半监督学习" class="headerlink" title="图半监督学习"></a>图半监督学习</h1><p>&emsp;&emsp;对于一个样本数据集，可以映射为一个图，每个样本集可以对应于图中的节点，如果两个样本之间的相似度高或相关性强，则节点之间可以建立一条边，边的强度对应于样本之间的相似度。<br>&emsp;&emsp;该方法有两个缺陷，第一，存储上开销较大，是空间复杂度为$O(m^2)$，因此很难处理大样本集；第二，图的构建过程仅考虑训练样本集，无法判断待测样本，因此有新样板或待测样本时需要重进建图。</p><h1 id="基于分歧的方法"><a href="#基于分歧的方法" class="headerlink" title="基于分歧的方法"></a>基于分歧的方法</h1><p>&emsp;&emsp;前面介绍的方法都是基于单个学习器的，而基于分歧的方法使用多学习器，考虑多学习器之间的分歧的选择，来决定未标记数据的结果，协同训练是常用的基于分歧的方法。<br>&emsp;&emsp;协同训练的原理是，首先选择多个学习器分别基于已标记样本训练得到分类器，然后在未标记样本中选择最大概率的分类作为伪标记，最后将伪标记提供给其他学习器进行训练；持续迭代这种交叉学习，直到所有学习器的结果不再变化，或者学习次数达到某个预定值。</p><h1 id="半监督聚类"><a href="#半监督聚类" class="headerlink" title="半监督聚类"></a>半监督聚类</h1><p>&emsp;&emsp;聚类本身是一种无监督学习方法，不过常规的样本中都有一些监督的信息，因此可以利用这些监督信息来进行半监督聚类学习，常见的监督信息分两类：第一类基于样本之间关系的必连和勿连，必连指样本必属于同一类，勿连指样本必不属于同一类；第二类是存在已标记的样本。<br>&emsp;&emsp;对于第一类监督信息，约束k均值算法是常用的半监督聚类方法，原理是在保持必连和勿连的前提下，寻找距离当前样本最近的类别，直到分类不再变化。对于第二类监督信息，约束种子k均值算法是常用方法，原理是在保持已标记样本所属分类不变的前提下，寻找距离当前样本最近的类别，直到分类不再变化。</p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 降维 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>读书笔记 之 《机器学习》</title>
+      <link href="/2019/04/11/books-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <url>/2019/04/11/books-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;周志华的这本清华大学出版社出版的机器学习，据说一度在各大电商平台计算机类书籍中排行都在前三，可见现在人工智能的热度以及大家对其未来的预期之高，不论是否能坚持读完或者能否理解部分内容，只要买了书都算是一种上进心吧。</p><h1 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h1><p>&emsp;&emsp;感觉本书位于专业和科普中间但偏向专业性，书中给出了不少的公式和推导，如果忽略所有的数学公式，本书适合作为机器学习方向的科普读物；但是，书中部分章节又有对公式的部分推导，推导过程部分也没展开，作为专业的图书又相对浅显。因此感觉这本书定位不明确，也许正因为如此，也许相关方面的书实在太少了，让这本书这么盛行。<br>&emsp;&emsp;开始几个章节会比较枯燥，随着阅读深入就会被其内容吸引，自己在看的时候没太关注数学公式，只是去了解每个模块对应的概念和思想，当做读小说里的故事情节。有很多概念之前都听过，所以在书中见到还是挺熟悉，不过，不知道买这么书的人有多少真正看了内容，能否有特别的收获。</p><h1 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h1><p>&emsp;&emsp;了解了机器学习相关的一些学习方法和基本思路，对于没有从事相关行业的自己来讲，相当于给自己建立了一个标签或者目录，这个也许已经够了，在真正需要的时候能根据自己的认知再去有针对性的深入了解，应该就是俗话说的广泛撒网，重点培养。<br>&emsp;&emsp;自己也在每章扫过一遍后，根据自己的理解简单写了点总结，方便日后回忆和遍历，下面是各模块目录，序言中将章节分为三部分，说第三部分是第二部分是进阶，但其实难度并没有增加，不过还是遵照其分类的笔记如下：</p><h2 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h2><ol><li><a href="https://www.zhenxiangsimple.com/2019/03/19/tech-ml-gn/">基础概念</a><h2 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h2></li><li><a href="https://www.zhenxiangsimple.com/2019/03/28/tech-ml-jcs/">决策树</a></li><li><a href="https://www.zhenxiangsimple.com/2019/03/29/tech-ml-sjwl/">神经网络</a></li><li><a href="https://www.zhenxiangsimple.com/2019/03/30/tech-ml-zcxlj/">支持向量机（SVM）</a></li><li><a href="https://www.zhenxiangsimple.com/2019/03/30/tech-ml-bysflq/">贝叶斯分类器</a></li><li><a href="https://www.zhenxiangsimple.com/2019/03/30/tech-ml-jcxx/">集成学习</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/02/tech-ml-jl/">聚类</a></li><li><a href="hhttps://www.zhenxiangsimple.com/2019/04/09/tech-ml-jwdlxx/">降维</a><h2 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h2></li><li><a href="https://www.zhenxiangsimple.com/2019/04/09/tech-ml-tzxsxx/">特征选择和稀疏学习</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/11/tech-ml-jsxxll/">计算学习理论</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/">半监督学习</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/12/tech-ml-glt/">概率图模型</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/12/tech-ml-gzxx">规则学习</a></li><li><a href="https://www.zhenxiangsimple.com/2019/04/12/tech-ml-qhxx">强化学习</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 读书笔记 </category>
+          
+          <category> 技术相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 人工智能 </tag>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 数学基础 </tag>
+            
+            <tag> 理论基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>机器学习 之 计算学习理论</title>
       <link href="/2019/04/11/tech-ml-jsxxll/"/>
       <url>/2019/04/11/tech-ml-jsxxll/</url>
@@ -741,9 +803,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -772,9 +834,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 韩寒 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1446,9 +1508,9 @@
       
         <tags>
             
-            <tag> 户口 </tag>
-            
             <tag> 身份证 </tag>
+            
+            <tag> 户口 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -1479,11 +1541,11 @@
       
         <tags>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 亲人关系 </tag>
             

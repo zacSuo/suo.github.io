@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="大多数人都有惰性，希望别人帮自己做决定，一方面不想思考或自己调研，或者说减少自己走的弯路，另一方面可能不愿意承担责任，所以总会希望别人给自己指出一条明路，但事实上，没有人比你自己更适合拿主意。由于没有平行时空的证据，所以无法进行AB对比，一个选择也没人可以说是对还是错，因为只有这一种是被实现了的，其它都是纸上谈兵">
-<meta name="keywords" content="建议,别轻信">
+<meta name="description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
+<meta name="keywords" content="机器学习,降维">
 <meta property="og:type" content="article">
-<meta property="og:title" content="self-不要提建议">
-<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/01/21/self-不要提建议/index.html">
+<meta property="og:title" content="机器学习 之 半监督学习">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/index.html">
 <meta property="og:site_name" content="真相很简单">
-<meta property="og:description" content="大多数人都有惰性，希望别人帮自己做决定，一方面不想思考或自己调研，或者说减少自己走的弯路，另一方面可能不愿意承担责任，所以总会希望别人给自己指出一条明路，但事实上，没有人比你自己更适合拿主意。由于没有平行时空的证据，所以无法进行AB对比，一个选择也没人可以说是对还是错，因为只有这一种是被实现了的，其它都是纸上谈兵">
+<meta property="og:description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-21T06:33:29.000Z">
+<meta property="og:updated_time" content="2019-04-11T14:51:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="self-不要提建议">
-<meta name="twitter:description" content="大多数人都有惰性，希望别人帮自己做决定，一方面不想思考或自己调研，或者说减少自己走的弯路，另一方面可能不愿意承担责任，所以总会希望别人给自己指出一条明路，但事实上，没有人比你自己更适合拿主意。由于没有平行时空的证据，所以无法进行AB对比，一个选择也没人可以说是对还是错，因为只有这一种是被实现了的，其它都是纸上谈兵">
+<meta name="twitter:title" content="机器学习 之 半监督学习">
+<meta name="twitter:description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>self-不要提建议 | 真相很简单</title>
+<title>机器学习 之 半监督学习 | 真相很简单</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -333,11 +333,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
-      <div class="body-wrap"><article id="post-self-不要提建议" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-tech-ml-bjdxx" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/01/21/self-不要提建议/" class="article-date">
-      <time datetime="2019-01-21T06:33:29.000Z" itemprop="datePublished">2019年01月21日</time>
+      <a href="/2019/04/11/tech-ml-bjdxx/" class="article-date">
+      <time datetime="2019-04-11T14:51:52.000Z" itemprop="datePublished">2019年04月11日</time>
 </a>
 
 
@@ -352,7 +352,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      self-不要提建议
+      机器学习 之 半监督学习
     </h1>
   
 
@@ -361,13 +361,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/life/">日常生活</a><a class="article-category-link" href="/categories/life/think/">所思所察</a>
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/别轻信/">别轻信</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/建议/">建议</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/降维/">降维</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -377,15 +377,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p>&emsp;&emsp;最近小朋友吃奶粉过敏，自己考虑换个品牌试试，不过，家里人说还是先不要考虑换品牌，可以先考虑换个系列（之前吃澳新版的爱他美，打算换港版的爱他美试试），理由是小朋友不能随便换奶粉，有朋友推荐吃这个牌子的奶粉。<br>&emsp;&emsp;尽管朋友的推荐并没有什么利益关系，也是出于一片诚心进行答疑解惑，而且亲密的关系更为这种建议增加可信度，但是问题就出在建议本身不一定是客观理性的，也许这个不应该叫做建议，而应该成为资讯。<br>&emsp;&emsp;下面站在提出建议者的角度来解释下，为什么不要轻易提供建议，但可以提供资讯信息和个人经验。</p>
-<h1 id="情景示例"><a href="#情景示例" class="headerlink" title="情景示例"></a>情景示例</h1><p>&emsp;&emsp;【不可以】考虑因素比较多或者目标不唯一的情况：有些事情是需要较多的考虑因素，而自己的经验或者知识，只对其中一部分有了解，甚至对其中关键的因素并不了解。以小朋友吃奶粉为例，奶粉的品牌和规格非常多，即使同一规格也会每个小朋友自身身体素质不同出现不一样的状态，没有哪个人可以自信的说，可以说出哪种奶粉最适合你家宝宝（如果有人打包票，有一个算一个都是诈骗），这个时候只能说自己在吃什么，吃过哪些有什么问题，只是提供资讯而不应该是建议，毕竟她自己并没有对所有品牌奶粉做过专业的对比，更没有对宝宝做过AB测试。如果想提供更多信息帮助朋友，可以帮助其查询相关资料，减少其调研的工作量，而不应该帮助朋友做决定，在有限信息的前提下做出选择是每个人的必修课，想想自己之前的选择是掌握了所有信息吗，一个人的视野和能力都是在有限的事物上寻找局部相对优的方案，即使知道所有信息也不一定可以选择到最优方案，因为人选择是受到情绪影响的，这就是人的非理性特性。<br>&emsp;&emsp;【可以】有固定模式达到目标的情况：有些事情是具有固定的流程和模式的，或者其选项是伸手可数的，比如去办理身份证或者补办证件，或者办理护照出国旅游等，其办理单位的办事流程和该项业务需要准备的材料是固定的，如果你有过办理相关手续和业务的经验，则传授自己的办事流程即为提供了有效信息。如果其中有些特别的注意事项，将该事项告知朋友即为提供了好的建议。<br>&emsp;&emsp;【可以】有多种方案达到目标的情况：有些事情是有一种或几种可行的方案和流程，而朋友的目标是完成目标，并不介意是否高效和走点弯路，这时候可以将自己走过的路告知朋友。比如，朋友目标是从深圳到达珠海，你只是做过高铁也不知道其它方案，那可以提供一个资讯就是可以做高铁绕广州过去珠海；而如果朋友的目标是最高性价比到达，则这个只是一个信息而不能构成建议了，毕竟还可以大巴直达，也可以轮渡直达，如果是建议做高铁，那就不仅是对朋友的误导，也是对自己信用的打折。<br>&emsp;&emsp;【可以】需要推一把的情况：有些事情的前提和目标都比较明确，朋友也许已经有了答案，除非有什么惊天大消息，否则常规对于大家都知道的信息，不论你说什么对方都会那么做，只是需要一个确定的答复来推自己一把。比如，对方想参加成人高考，但总感觉太难了，问你要不要报名。既然对方提出了这个疑问，那一定做过相对详细的调研，只是需要一颗定心丸，只需要大方给出即可。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;&emsp;大多数人都有惰性，希望别人帮自己做决定，一方面不想思考或自己调研，或者说减少自己走的弯路，另一方面可能不愿意承担责任，所以总会希望别人给自己指出一条明路，但事实上，没有人比你自己更适合拿主意。由于没有平行时空的证据，所以无法进行AB对比，一个选择也没人可以说是对还是错，因为只有这一种是被实现了的，其它都是纸上谈兵。</p>
-<ol>
-<li>除非对方明确提出需要建议，否则不要轻易给自己的建议</li>
-<li>生活中大部分情况是第一种（考虑因素比较多或者目标不唯一），最好只是提供资讯而不是建议</li>
-<li>如果要给建议，重点强调自己建议的逻辑和理由，而不是只给结果</li>
-<li>读书是最快捷的进步方式，听人建议也是，也是一种知识的传承，但基于知识还要根据自身情况思考才能形成智慧。</li>
-</ol>
+        <p>&emsp;&emsp;半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习。</p>
+<h1 id="生成式方法"><a href="#生成式方法" class="headerlink" title="生成式方法"></a>生成式方法</h1><p>&emsp;&emsp;生成式方法是直接假设所有的样本数据，不论是否进行了标记，都由同一个未知的模型生成，因此可以通过该模型将未标记的数据跟学习目标建立联系，最终使用EM算法（目标和参数相互迭代）求解得到模型，进而可以实现未标记样本的分类。<br>&emsp;&emsp;如上所述，假定数据分布属于某个模型后，记得得到对应模型的的生成式半监督学习模型，常用的有高斯混合模型、混合专家模型及朴素贝叶斯模型等。但是，如果模型的假设不准确，及模型跟样本分布不一致，则可能会出现较差的结果，具体模型的假设通常需要一定的先验知识，或者对样本数据的领域知识。</p>
+<h1 id="半监督支持向量机"><a href="#半监督支持向量机" class="headerlink" title="半监督支持向量机"></a>半监督支持向量机</h1><p>&emsp;&emsp;半监督支持向量机是支持向量机在半监督学习方向的拓展，标准的支持向量机的目标是找到最大间隔划分的超平面，而板件的支持向量机的目标是穿过低数据密度区域的划分超平面，当然，相同点都是针对二分类问题的学习方法。</p>
+<h1 id="图半监督学习"><a href="#图半监督学习" class="headerlink" title="图半监督学习"></a>图半监督学习</h1><p>&emsp;&emsp;对于一个样本数据集，可以映射为一个图，每个样本集可以对应于图中的节点，如果两个样本之间的相似度高或相关性强，则节点之间可以建立一条边，边的强度对应于样本之间的相似度。<br>&emsp;&emsp;该方法有两个缺陷，第一，存储上开销较大，是空间复杂度为$O(m^2)$，因此很难处理大样本集；第二，图的构建过程仅考虑训练样本集，无法判断待测样本，因此有新样板或待测样本时需要重进建图。</p>
+<h1 id="基于分歧的方法"><a href="#基于分歧的方法" class="headerlink" title="基于分歧的方法"></a>基于分歧的方法</h1><p>&emsp;&emsp;前面介绍的方法都是基于单个学习器的，而基于分歧的方法使用多学习器，考虑多学习器之间的分歧的选择，来决定未标记数据的结果，协同训练是常用的基于分歧的方法。<br>&emsp;&emsp;协同训练的原理是，首先选择多个学习器分别基于已标记样本训练得到分类器，然后在未标记样本中选择最大概率的分类作为伪标记，最后将伪标记提供给其他学习器进行训练；持续迭代这种交叉学习，直到所有学习器的结果不再变化，或者学习次数达到某个预定值。</p>
+<h1 id="半监督聚类"><a href="#半监督聚类" class="headerlink" title="半监督聚类"></a>半监督聚类</h1><p>&emsp;&emsp;聚类本身是一种无监督学习方法，不过常规的样本中都有一些监督的信息，因此可以利用这些监督信息来进行半监督聚类学习，常见的监督信息分两类：第一类基于样本之间关系的必连和勿连，必连指样本必属于同一类，勿连指样本必不属于同一类；第二类是存在已标记的样本。<br>&emsp;&emsp;对于第一类监督信息，约束k均值算法是常用的半监督聚类方法，原理是在保持必连和勿连的前提下，寻找距离当前样本最近的类别，直到分类不再变化。对于第二类监督信息，约束种子k均值算法是常用方法，原理是在保持已标记样本所属分类不变的前提下，寻找距离当前样本最近的类别，直到分类不再变化。</p>
+<hr>
 
       
     </div>
@@ -394,13 +392,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/01/21/self-不要提建议/">self-不要提建议</a></p>
+        <p><span>本文标题:</span><a href="/2019/04/11/tech-ml-bjdxx/">机器学习 之 半监督学习</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
-        <p><span>发布时间:</span>2019-01-21, 14:33:29</p>
-        <p><span>最后更新:</span>2019-01-21, 14:33:29</p>
+        <p><span>发布时间:</span>2019-04-11, 22:51:52</p>
+        <p><span>最后更新:</span>2019-04-11, 22:51:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/01/21/self-不要提建议/" title="self-不要提建议">https://www.zhenxiangsimple.com/2019/01/21/self-不要提建议/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/01/21/self-不要提建议/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/04/11/tech-ml-bjdxx/" title="机器学习 之 半监督学习">https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -412,16 +410,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/01/21/books-活着/">
-                    读书笔记 之 《活着》
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/01/18/life-婷保险概念/">
-                    6年保险从业者告诉你，关于保险你应该知道的一些事
+                <a href="/2019/04/11/books-机器学习/">
+                    读书笔记 之 《机器学习》
                 </a>
             </div>
         
@@ -433,7 +425,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#缘起"><span class="toc-number">1.</span> <span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情景示例"><span class="toc-number">2.</span> <span class="toc-text">情景示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#生成式方法"><span class="toc-number">1.</span> <span class="toc-text">生成式方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#半监督支持向量机"><span class="toc-number">2.</span> <span class="toc-text">半监督支持向量机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图半监督学习"><span class="toc-number">3.</span> <span class="toc-text">图半监督学习</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于分歧的方法"><span class="toc-number">4.</span> <span class="toc-text">基于分歧的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#半监督聚类"><span class="toc-number">5.</span> <span class="toc-text">半监督聚类</span></a></li></ol>
         
     </div>
     <style>
@@ -467,7 +459,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"self-不要提建议　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"机器学习 之 半监督学习　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -487,15 +479,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/01/21/books-活着/" title="上一篇: 读书笔记 之 《活着》">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/01/18/life-婷保险概念/" title="下一篇: 6年保险从业者告诉你，关于保险你应该知道的一些事">
+            <a href="/2019/04/11/books-机器学习/" title="下一篇: 读书笔记 之 《机器学习》">
                 <i class="fa fa-angle-right"></i>
             </a>
         
