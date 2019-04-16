@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
-<meta name="keywords" content="机器学习,降维">
+<meta name="description" content="概率图模型就是基于概率构建的图结构模型，使用该模型来进行数据的分类，有多种类型的方法来进行模型的求解，包括马尔科夫模型，条件随机场等..">
+<meta name="keywords" content="机器学习,图模型,贝叶斯模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习 之 半监督学习">
-<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/index.html">
+<meta property="og:title" content="机器学习 之 概率图模型">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/04/12/tech-ml-gltmx/index.html">
 <meta property="og:site_name" content="真相很简单">
-<meta property="og:description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
+<meta property="og:description" content="概率图模型就是基于概率构建的图结构模型，使用该模型来进行数据的分类，有多种类型的方法来进行模型的求解，包括马尔科夫模型，条件随机场等..">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-11T14:51:52.000Z">
+<meta property="og:updated_time" content="2019-04-12T14:08:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习 之 半监督学习">
-<meta name="twitter:description" content="半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习">
+<meta name="twitter:title" content="机器学习 之 概率图模型">
+<meta name="twitter:description" content="概率图模型就是基于概率构建的图结构模型，使用该模型来进行数据的分类，有多种类型的方法来进行模型的求解，包括马尔科夫模型，条件随机场等..">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>机器学习 之 半监督学习 | 真相很简单</title>
+<title>机器学习 之 概率图模型 | 真相很简单</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -333,11 +333,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
-      <div class="body-wrap"><article id="post-tech-ml-bjdxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-tech-ml-gltmx" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/11/tech-ml-bjdxx/" class="article-date">
-      <time datetime="2019-04-11T14:51:52.000Z" itemprop="datePublished">2019年04月11日</time>
+      <a href="/2019/04/12/tech-ml-gltmx/" class="article-date">
+      <time datetime="2019-04-12T14:08:38.000Z" itemprop="datePublished">2019年04月12日</time>
 </a>
 
 
@@ -352,7 +352,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习 之 半监督学习
+      机器学习 之 概率图模型
     </h1>
   
 
@@ -367,7 +367,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/降维/">降维</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图模型/">图模型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贝叶斯模型/">贝叶斯模型</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -377,13 +377,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>&emsp;&emsp;半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习。</p>
-<h1 id="生成式方法"><a href="#生成式方法" class="headerlink" title="生成式方法"></a>生成式方法</h1><p>&emsp;&emsp;生成式方法是直接假设所有的样本数据，不论是否进行了标记，都由同一个未知的模型生成，因此可以通过该模型将未标记的数据跟学习目标建立联系，最终使用EM算法（目标和参数相互迭代）求解得到模型，进而可以实现未标记样本的分类。<br>&emsp;&emsp;如上所述，假定数据分布属于某个模型后，记得得到对应模型的的生成式半监督学习模型，常用的有高斯混合模型、混合专家模型及朴素贝叶斯模型等。但是，如果模型的假设不准确，及模型跟样本分布不一致，则可能会出现较差的结果，具体模型的假设通常需要一定的先验知识，或者对样本数据的领域知识。</p>
-<h1 id="半监督支持向量机"><a href="#半监督支持向量机" class="headerlink" title="半监督支持向量机"></a>半监督支持向量机</h1><p>&emsp;&emsp;半监督支持向量机是支持向量机在半监督学习方向的拓展，标准的支持向量机的目标是找到最大间隔划分的超平面，而板件的支持向量机的目标是穿过低数据密度区域的划分超平面，当然，相同点都是针对二分类问题的学习方法。</p>
-<h1 id="图半监督学习"><a href="#图半监督学习" class="headerlink" title="图半监督学习"></a>图半监督学习</h1><p>&emsp;&emsp;对于一个样本数据集，可以映射为一个图，每个样本集可以对应于图中的节点，如果两个样本之间的相似度高或相关性强，则节点之间可以建立一条边，边的强度对应于样本之间的相似度。<br>&emsp;&emsp;该方法有两个缺陷，第一，存储上开销较大，是空间复杂度为$O(m^2)$，因此很难处理大样本集；第二，图的构建过程仅考虑训练样本集，无法判断待测样本，因此有新样板或待测样本时需要重进建图。</p>
-<h1 id="基于分歧的方法"><a href="#基于分歧的方法" class="headerlink" title="基于分歧的方法"></a>基于分歧的方法</h1><p>&emsp;&emsp;前面介绍的方法都是基于单个学习器的，而基于分歧的方法使用多学习器，考虑多学习器之间的分歧的选择，来决定未标记数据的结果，协同训练是常用的基于分歧的方法。<br>&emsp;&emsp;协同训练的原理是，首先选择多个学习器分别基于已标记样本训练得到分类器，然后在未标记样本中选择最大概率的分类作为伪标记，最后将伪标记提供给其他学习器进行训练；持续迭代这种交叉学习，直到所有学习器的结果不再变化，或者学习次数达到某个预定值。</p>
-<h1 id="半监督聚类"><a href="#半监督聚类" class="headerlink" title="半监督聚类"></a>半监督聚类</h1><p>&emsp;&emsp;聚类本身是一种无监督学习方法，不过常规的样本中都有一些监督的信息，因此可以利用这些监督信息来进行半监督聚类学习，常见的监督信息分两类：第一类基于样本之间关系的必连和勿连，必连指样本必属于同一类，勿连指样本必不属于同一类；第二类是存在已标记的样本。<br>&emsp;&emsp;对于第一类监督信息，约束k均值算法是常用的半监督聚类方法，原理是在保持必连和勿连的前提下，寻找距离当前样本最近的类别，直到分类不再变化。对于第二类监督信息，约束种子k均值算法是常用方法，原理是在保持已标记样本所属分类不变的前提下，寻找距离当前样本最近的类别，直到分类不再变化。</p>
-<hr>
+        <h1 id="隐马尔可夫模型"><a href="#隐马尔可夫模型" class="headerlink" title="隐马尔可夫模型"></a>隐马尔可夫模型</h1><p>&emsp;&emsp;隐马尔可夫模型是马尔可夫链的一种形式，马尔可夫链可以理解为一个状态变量受到其他所有状态的条件依赖关系，可以由一个状态代替，而不用去处理较多的状态，如果将状态使用时序表示，可以描述为系统的下一时刻的状态仅有当前时间状态决定，跟之前的状态无关。隐马尔可夫模型的状态值不能直接观察到，但能通过某个状态值推断出对应的观测值，同时而状态之间是一种马尔可夫链关系。<br>&emsp;&emsp;该模型常用语语音识别和自然语言处理，在吴军老师的数学之美中有更简洁易懂的解释。</p>
+<h1 id="马尔可夫随机场"><a href="#马尔可夫随机场" class="headerlink" title="马尔可夫随机场"></a>马尔可夫随机场</h1><p>&emsp;&emsp;马尔可夫随机场包含马尔可夫和随机两个概念，是一种满足马尔可夫性质的随机过程，马尔可夫简单说就是未来只跟现在有关，跟过去历史无关的一种样本状态；随机过程就是一连串随机状态的一种定量关系描述。整体来讲，马尔可夫随机场就是用于描述那些满足马尔可夫性质的随机状态的模型。<br>&emsp;&emsp;全局马尔可夫性是指给定两个变量子集的分离集，则这两个变量子集条件独立；将其细化可以得到局部马尔可夫性和成对马尔可夫性两个推论，局部马尔可夫性指给定比变量的邻接变量，则该变量条件独立于其他变量，成对马尔可夫性指给定所有变量，两个非邻接的变量条件独立。</p>
+<h1 id="条件随机场"><a href="#条件随机场" class="headerlink" title="条件随机场"></a>条件随机场</h1><p>&emsp;&emsp;条件随机场是一种判别式无向图，用于对多个变量在给定观测值后的条件概率进行建模，即对于一组给定随机分布的输入观测值，来建立随机分布的输出状态的条件概率分布模型。<br>&emsp;&emsp;条件随机场跟上面的马尔可夫随机场的本质上一样，区别是马尔可夫随机场考虑的是观测变量之间联合概率，而条件随机场分析的是观测变量到状态的条件概率，换句话说条件随机场可以理解为研究给定随机观测变量条件下，状态随机变量的马尔可夫随机场。</p>
+<h1 id="学习与推断"><a href="#学习与推断" class="headerlink" title="学习与推断"></a>学习与推断</h1><p>&emsp;&emsp;本节主要说概率图模型中对具体分布参数的学习和模型的推断，参数的学习可以使用极大似然估计或最大后验概率估计求解，若将参数视为待推测变量，则参数估计跟推断过程十分接近，可以吸收到推断问题中。常用的推断方法分为精确推断和近似推断两类，精确推断常用有变量消去法和信念传播法。<br>&emsp;&emsp;变量消去法是基于图模型的条件独立性，把多个变量的积的求和问题转化为部分变量交替进行求和和求积问题，实现了对部分变量的消去；信念传播法是基于变量消去法的思想，对各变量进行累计和传播，更好的解决了多个边际分布的重复计算问题。</p>
+<h1 id="近似推断"><a href="#近似推断" class="headerlink" title="近似推断"></a>近似推断</h1><p>&emsp;&emsp;近似推断一般分为随机化采样和确定性近似两类，随机化采样的原理是直接使用样本进行目标期望值的计算，而不用先通过样本计算出概率分布，然后再基于分布计算对应的期望值，其中MCMC采样法是通过构造“平稳分布为p的马尔可夫链”来产生样本。变分推断是使用已知的简单分布来逼近需要推断的复杂分布的一种确定性近似方法。</p>
+<h1 id="话题模型"><a href="#话题模型" class="headerlink" title="话题模型"></a>话题模型</h1><p>&emsp;&emsp;话题模型主要用于处理离散型的数据，基本原理就类似对一篇文章进行话题划分的过程，主要也用于信息检索和自然语言处理领域。先对文章中出现词的词频进行统计，然后将词指派给不同话题，再通过话题来对词进行随机采样，最终可以使用话题来表示文档；或者说，一篇文章中的词是基于一定概率出现在某个话题中，而反过来某个话题也是以一定概率含有某个词。</p>
 
       
     </div>
@@ -392,13 +391,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/04/11/tech-ml-bjdxx/">机器学习 之 半监督学习</a></p>
+        <p><span>本文标题:</span><a href="/2019/04/12/tech-ml-gltmx/">机器学习 之 概率图模型</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
-        <p><span>发布时间:</span>2019-04-11, 22:51:52</p>
-        <p><span>最后更新:</span>2019-04-11, 22:51:52</p>
+        <p><span>发布时间:</span>2019-04-12, 22:08:38</p>
+        <p><span>最后更新:</span>2019-04-12, 22:08:38</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/04/11/tech-ml-bjdxx/" title="机器学习 之 半监督学习">https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/04/11/tech-ml-bjdxx/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/04/12/tech-ml-gltmx/" title="机器学习 之 概率图模型">https://www.zhenxiangsimple.com/2019/04/12/tech-ml-gltmx/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/04/12/tech-ml-gltmx/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -410,16 +409,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/04/12/tech-ml-gltmx/">
-                    机器学习 之 概率图模型
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/04/11/books-机器学习/">
-                    读书笔记 之 《机器学习》
+                <a href="/2019/04/11/tech-ml-bjdxx/">
+                    机器学习 之 半监督学习
                 </a>
             </div>
         
@@ -431,7 +424,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#生成式方法"><span class="toc-number">1.</span> <span class="toc-text">生成式方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#半监督支持向量机"><span class="toc-number">2.</span> <span class="toc-text">半监督支持向量机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图半监督学习"><span class="toc-number">3.</span> <span class="toc-text">图半监督学习</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于分歧的方法"><span class="toc-number">4.</span> <span class="toc-text">基于分歧的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#半监督聚类"><span class="toc-number">5.</span> <span class="toc-text">半监督聚类</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#隐马尔可夫模型"><span class="toc-number">1.</span> <span class="toc-text">隐马尔可夫模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#马尔可夫随机场"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫随机场</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#条件随机场"><span class="toc-number">3.</span> <span class="toc-text">条件随机场</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习与推断"><span class="toc-number">4.</span> <span class="toc-text">学习与推断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#近似推断"><span class="toc-number">5.</span> <span class="toc-text">近似推断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#话题模型"><span class="toc-number">6.</span> <span class="toc-text">话题模型</span></a></li></ol>
         
     </div>
     <style>
@@ -465,7 +458,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"机器学习 之 半监督学习　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"机器学习 之 概率图模型　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -485,15 +478,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/04/12/tech-ml-gltmx/" title="上一篇: 机器学习 之 概率图模型">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/04/11/books-机器学习/" title="下一篇: 读书笔记 之 《机器学习》">
+            <a href="/2019/04/11/tech-ml-bjdxx/" title="下一篇: 机器学习 之 半监督学习">
                 <i class="fa fa-angle-right"></i>
             </a>
         
