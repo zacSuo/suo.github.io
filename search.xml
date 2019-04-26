@@ -4,6 +4,134 @@
   
     
     <entry>
+      <title>读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</title>
+      <link href="/2019/04/25/books-%E7%88%B6%E6%AF%8D%E7%9A%84%E8%AF%AD%E8%A8%80/"/>
+      <url>/2019/04/25/books-%E7%88%B6%E6%AF%8D%E7%9A%84%E8%AF%AD%E8%A8%80/</url>
+      
+        <content type="html"><![CDATA[<center><br>    <img src="/img/books/父母的语言-1.jpg" title="父母的语言"><br>    <img src="/img/books/父母的语言-2.jpg" title="父母的语言"><br>    <img src="/img/books/父母的语言-3.jpg" title="父母的语言"><br>    <img src="/img/books/父母的语言-4.jpg" title="父母的语言"><br>    <img src="/img/books/父母的语言-5.jpg" title="父母的语言"><br></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 读书笔记 </category>
+          
+          <category> 沟通相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Sunshine </tag>
+            
+            <tag> 学习型大脑 </tag>
+            
+            <tag> 家庭教育 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>读书笔记 之 《非暴力沟通》</title>
+      <link href="/2019/04/25/books-%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%B2%9F%E9%80%9A/"/>
+      <url>/2019/04/25/books-%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%B2%9F%E9%80%9A/</url>
+      
+        <content type="html"><![CDATA[<p>作者：锦书致南终</p><p>《非暴力沟通》 既表达自己又沟通他人<br>可以很清晰地表达出自己的愤怒，但是不会用语言轻易地伤害别人，因为伤害别人并无助于解决问题<br>不带评论的观察是人类智力的最高形式</p><h1 id="第一步：事实"><a href="#第一步：事实" class="headerlink" title="第一步：事实"></a>第一步：事实</h1><p>学会区分观察和评论，讲事实！<br>孔子讲的君子不器</p><h1 id="第二步：感受"><a href="#第二步：感受" class="headerlink" title="第二步：感受"></a>第二步：感受</h1><p> 讲出感受<br>人生的三个阶段：情绪的奴隶、<br>面目可憎（自己想做什么就去做，别人和我无关，会得罪很多人）<br>生活的主人（孔子的中庸之道）表现：乐于助人心中充满爱，帮助别人是出于爱，并不是出于恐惧内疚和惭愧，损人无法利己</p><h1 id="第三步：需求"><a href="#第三步：需求" class="headerlink" title="第三步：需求"></a>第三步：需求</h1><p>感受的根源来自自己的需求，所以盯着自己的需求，关键词“我想要…”一定是需求没有得到满足<br>“一个人只要生气，一定是某种需求没有得到满足”</p><h1 id="第四步：请求帮助"><a href="#第四步：请求帮助" class="headerlink" title="第四步：请求帮助"></a>第四步：请求帮助</h1><p>希望对方怎么做的方法请求帮助，真的想要怎么做说出来，“要什么而不是不要什么很重要”<br>  明确谈话目的，并且在提出要求以后，请求对方而不是命令对方反馈，因为没有一个人有资格命令别人，“你以后对我好点”×<br>“我希望你以后对我好点”×<br>“我希望你以后可以多给我点零花钱”√记得＋具体的需求！！！<br>在这个过程中，学会倾听，千万不要让对方停下来，或者打断对方，“建议、比较、说教、安慰、回忆、否定、同情、询问、辩证、纠正”都无助于体会对方的情境，但是在沟通中最重要的就是体会对方的感受“我能够理解你现在的感受，真的很难过………”<br>当你能够准确表达出对方的感受，他的情绪会大幅度好转。<br>当你很生气地时候，把自己的需求讲出来，这样才有可能帮助对方解决问题。<br>痛苦是来自于我们的需求没有得到满足。<br>表达愤怒的方法：要盯着自己的需求，而不是盯着情绪。<br>表达感激三步骤：①对方做了什么使我们的生活得到改善②我们的哪些需求得到满足③现在的心情是怎么样</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 读书笔记 </category>
+          
+          <category> 沟通相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 锦书致南终 </tag>
+            
+            <tag> 非暴力 </tag>
+            
+            <tag> 事实 </tag>
+            
+            <tag> 感受 </tag>
+            
+            <tag> 需求 </tag>
+            
+            <tag> 请求帮助 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>git版本管理工具，最简使用说明</title>
+      <link href="/2019/04/25/tech-git/"/>
+      <url>/2019/04/25/tech-git/</url>
+      
+        <content type="html"><![CDATA[<h1 id="代码库关系"><a href="#代码库关系" class="headerlink" title="代码库关系"></a>代码库关系</h1><p> <center><br>    <img src="/img/tech/20190425183119.png" title="git版本库关系"><br>    </center></p><h1 id="最简命令"><a href="#最简命令" class="headerlink" title="最简命令"></a>最简命令</h1><ol><li>git add .</li><li>git commit -m 修改说明</li><li>git pull </li><li>git push origin dev<h1 id="一般使用流程"><a href="#一般使用流程" class="headerlink" title="一般使用流程"></a>一般使用流程</h1></li><li>提交到本地代码库</li><li>从线上代码库拉取别人的代码<br>2.1 解决冲突（如有）<br>2.2. 提交到本地代码库</li><li>提交到线上代码库</li></ol><hr><h2 id="1-提交到本地代码库"><a href="#1-提交到本地代码库" class="headerlink" title="1. 提交到本地代码库"></a>1. 提交到本地代码库</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> git add 文件名或(.)表示所有文件</span><br><span class="line"><span class="number">2.</span> git commit -m <span class="string">"提交说明"</span></span><br></pre></td></tr></table></figure><h2 id="2-从线上代码库拉取别人的代码"><a href="#2-从线上代码库拉取别人的代码" class="headerlink" title="2. 从线上代码库拉取别人的代码"></a>2. 从线上代码库拉取别人的代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure><h3 id="2-1-解决冲突"><a href="#2-1-解决冲突" class="headerlink" title="2.1 解决冲突"></a>2.1 解决冲突</h3><p>&emsp;&emsp;修改代码中冲突的内容，解决冲突就是将自己跟别人同时修改的部分代码合并了。工具会通过HEAD结构将自己的部分和别人的部分区分开来，其中AAAAAAAAA是自己刚提交的版本，BBBBBBB为远程服务器上的版本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;HEAD</span><br><span class="line">AAAAAAAAAAAAAAA</span><br><span class="line">========</span><br><span class="line">BBBBBBBBBBBBBBB</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;id</span><br></pre></td></tr></table></figure></p><h3 id="2-2-提交到本地代码库"><a href="#2-2-提交到本地代码库" class="headerlink" title="2.2 提交到本地代码库"></a>2.2 提交到本地代码库</h3><p>同1</p><h2 id="3-提交到线上代码库"><a href="#3-提交到线上代码库" class="headerlink" title="3. 提交到线上代码库"></a>3. 提交到线上代码库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 工具相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 版本管理 </tag>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>影评 之 《分手男女》</title>
+      <link href="/2019/04/23/life-movice-fsnv/"/>
+      <url>/2019/04/23/life-movice-fsnv/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;这是一部2006年上映的老片了，这次回看表现现在的生活上依旧上没觉得过时，仍然可以抓住我的眼睛，让我耐心的看完整部电影，而且看完后依旧觉得这就是真实生活，一方面是电影本身的表达能力厉害，即使现在的影视效果发展很多了，对依然可以基于之前的技术占有一席之地；另一方面，也许只要有人的地方就会有电影中的情景，因此类似描述日常关系的故事永远也不会过时，最多只是随着技术的发展，视觉表现力、情绪感染力以及立意创新度等方面进行升华。</p><h1 id="故事情节"><a href="#故事情节" class="headerlink" title="故事情节"></a>故事情节</h1><p>&emsp;&emsp;电影女主是大名鼎鼎的詹妮弗·安妮斯顿，可能有人会不熟悉这个名字，但说到老友记里的瑞秋应该很多人都知道了。电影中男女两人因为生活中相互的不理解，两人各自都站在自己的立场为感情为家庭付出，都不认为自己有错，而是更多的看到自己付出和对方缺点，最终在跟朋友的一次家庭聚会结束后，因为洗碗的事情成为导火索，产生了分歧最终选择分手。<br>&emsp;&emsp;分手后，双方各自沉浸在自己的世界里，各自做一些事情来引起对方的注意，或者发泄自己心中的不快，经过两人几次的相互折磨后，双方将房子卖了，最终双方也都开始尝试去理解对方，在分手后的一段时间后双方的一次偶遇，让双方都看到了对方的成长，对他们也许是新的开始。</p><h1 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h1><p>&emsp;&emsp;本电影给自己最大的震撼还是在文化的不同，在电影中多处都有体现，一方面体现的是个人对自由的追求，另一方面其他人之间对自由的尊重，两个例子电影中的片段可以说明：</p><ol><li>第一是篇头男主对女主的示好，尽管有时觉得会比较烦人但其勇气是值得肯定的，在得知女士跟自己女朋友一起过来看比赛的情况下，依旧对其表示友好和爱慕，台词简单粗暴从第一面像似就谈到了永久性的选择及未来结婚的话题，如果相同的情景发生的国内，一方面女孩子根本不会搭理他，另一方面女孩子男朋友估计是会过来示威的，当然在国内出现这样情况的概率也比较低，因为一旦发现别人有女朋友或男朋友，通常就不会有幻想或者再进一步动作。这个跟道德或者性格无关，只是文化观念所致。</li><li>男女主一起筹钱付了首付也住在了一起，因为生活中的一地鸡毛发生了矛盾，女方选择分手后两人依旧住在一起，只是女主睡卧室，男主睡沙发，一方依旧敢于将裸体示于另一方，而另一方也不觉得有何不妥；一方可以邀请自己的新男友来家里做客，另一方也表示尊重和接受，就好像两人是合租在这间房一样，这样的事情本身应该很难发生在国内，或者国内很难接受这样的行为。一方面如果分手也许都不会在一起多待一天，肯定会有一方立马从房间搬走，另一方面，即使迫于条件限制两人依旧在同一屋檐，两人也可能会继续吵闹升级矛盾，而不会这么平淡的。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日常生活 </category>
+          
+          <category> 观影感受 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 文化 </tag>
+            
+            <tag> 家庭剧 </tag>
+            
+            <tag> 剧情片 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>读书笔记 之 《菊与刀》</title>
       <link href="/2019/04/16/books-%E8%8F%8A%E4%B8%8E%E5%88%80/"/>
       <url>/2019/04/16/books-%E8%8F%8A%E4%B8%8E%E5%88%80/</url>
@@ -301,9 +429,9 @@
       
         <tags>
             
-            <tag> 影评 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 影评 </tag>
             
             <tag> 动作片 </tag>
             
@@ -710,9 +838,9 @@
       
         <tags>
             
-            <tag> 影评 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 影评 </tag>
             
             <tag> 犯罪片 </tag>
             
@@ -772,11 +900,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 舅舅 </tag>
             
             <tag> 外甥 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -803,11 +931,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -929,9 +1057,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 谢苗 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -958,9 +1086,9 @@
       
         <tags>
             
-            <tag> 影评 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 影评 </tag>
             
             <tag> 港台剧 </tag>
             
@@ -989,9 +1117,9 @@
       
         <tags>
             
-            <tag> 影评 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 影评 </tag>
             
             <tag> 韩寒 </tag>
             
