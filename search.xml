@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</title>
+      <link href="/2019/07/12/proj-iot-autoup/"/>
+      <url>/2019/07/12/proj-iot-autoup/</url>
+      
+        <content type="html"><![CDATA[<p>项目核心包括软件系统和硬件系统两部分，用于提高车间管理效率：</p><ol><li>硬件系统实现通过传感器对原生产设备的数据采集和控制</li><li>软件系统实现生产数据的收集、存储、处理和展示，以及设备的基本控制</li></ol><center><img src="/img/proj/20190712115935818.png" width="250" height="200" title="系统整体框图"></center><h2 id="方案亮点："><a href="#方案亮点：" class="headerlink" title="方案亮点："></a>方案亮点：</h2><ol><li>软硬件一体解决方案，全系统拥有独立知识产权</li><li>跟企业ERP对接，为生产任务分派提供建议</li><li>实时统计各设备、员工及车间的产能和效率</li></ol><h2 id="硬件模块"><a href="#硬件模块" class="headerlink" title="硬件模块"></a>硬件模块</h2><ol><li>自主设计主控板卡<br>硬件部分，针对设备数据采集及远程控制的需求，自主设计研发了主控板卡进行设备端各模块的管理。</li><li>基本工作原理<br>工作原理是，通过光电传感器，根据设备动作和产品状态进行统计，实现生产数据的实时且准确采集，并定时将所有数据上传给服务器进行管理。</li><li>状态监控功能<br>温、湿度传感器可以进行环境状态的监控，同时支持警报器及三色灯等状态显示模块。</li></ol><center><img src="/img/proj/20190712115237198.png" width="250" height="200" title="硬件主控板卡"></center><h2 id="软件模块"><a href="#软件模块" class="headerlink" title="软件模块"></a>软件模块</h2><ol><li>自主设计与研发<br> 软件部分，根据客户对数据管理和应用的需求，进行自主设计和研发的软件系统，包括实时通信服务器和信息管理服务器两部分，将两个系统进行分离保证数据的安全与稳定。</li><li>实时通信功能模块<br> 其中实时通信服务器，负责接受并存储来自所有生产设备（目前200台）的信息，并对设备进行远程控制。</li><li>信息管理服务模块<br> 信息管理服务器，用于对设备状态及生产统计报表（设备、员工、车间）进行实时展示，同时基于准确的生产数据，进行订单完成时间预估和新订单排单建议。</li></ol><p>若对方案感兴趣，或有需要了解方案详情，欢迎来撩<br><img src="/img/proj/20190712120342767.png" width="200" height="200" title="个人微信"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 物联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 软硬件一体解决方案 </tag>
+            
+            <tag> 数据采集统计 </tag>
+            
+            <tag> ERP对接 </tag>
+            
+            <tag> 设备升级 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>影评 之 《九门提督》</title>
       <link href="/2019/05/04/life-movice-jmtd/"/>
       <url>/2019/05/04/life-movice-jmtd/</url>
@@ -319,11 +352,11 @@
       
         <tags>
             
+            <tag> 剧情片 </tag>
+            
             <tag> 文化 </tag>
             
             <tag> 家庭剧 </tag>
-            
-            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -631,9 +664,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -722,9 +755,9 @@
       
         <tags>
             
-            <tag> 电视剧 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 电视剧 </tag>
             
         </tags>
       
@@ -1184,9 +1217,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 吃饭 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1257,9 +1290,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 谢苗 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 谢苗 </tag>
             
         </tags>
       
@@ -1288,9 +1321,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -1350,9 +1383,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 喜剧片 </tag>
-            
             <tag> 神话故事 </tag>
+            
+            <tag> 喜剧片 </tag>
             
         </tags>
       
@@ -1486,11 +1519,11 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 霍元甲 </tag>
             
             <tag> 精武精神 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -1753,9 +1786,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 照顾 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1786,9 +1819,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 照顾 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1850,9 +1883,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 照顾 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1883,9 +1916,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 吃饭 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1916,9 +1949,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 证件 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1951,9 +1984,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 吃饭 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -1984,18 +2017,18 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 证件 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 身份证 </tag>
-            
             <tag> 户口 </tag>
+            
+            <tag> 身份证 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -2017,20 +2050,20 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 证件 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 亲人关系 </tag>
             
@@ -2050,9 +2083,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 证件 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -2085,9 +2118,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 疫苗 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
@@ -2118,9 +2151,9 @@
       
       <categories>
           
-          <category> 新生儿 </category>
+          <category> 日常生活 </category>
           
-          <category> 疫苗 </category>
+          <category> 新生儿 </category>
           
       </categories>
       
