@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>物联网方案 - 数据采集和控制系统（Web+微信小程序）</title>
+      <link href="/2019/07/12/proj-iot-shjcj/"/>
+      <url>/2019/07/12/proj-iot-shjcj/</url>
+      
+        <content type="html"><![CDATA[<p>当前方案是为硬件方案厂商做的数据采集及信息管理系统，核心包括两部分，分别如下：</p><ol><li>用于采集数据的后端服务器</li><li>用于显示统计数据的前端，包括Web端和微信小程序端</li></ol><center><img src="/img/proj/20190712173432.png" width="250" height="200" title="系统整体框图"></center><h2 id="亮点"><a href="#亮点" class="headerlink" title="亮点"></a>亮点</h2><ol><li>全系统拥有独立知识产权，可根据具体业务进行定制开发</li><li>数据采集和管理服务器分离，保证数据安全稳定</li><li>Web和微信小程序，实现设备状态查看和控制</li></ol><h2 id="Web端"><a href="#Web端" class="headerlink" title="Web端"></a>Web端</h2><p>Web端用于进行设备的权限及经销商管理，以及整体的数据分析。</p><p><img src="/img/proj/20190712162910163.png" width="400" height="250" alt="主页面统计信息"><img src="/img/proj/20190712163151975.png" width="400" height="250" alt="设备报警信息页"><img src="/img/proj/20190712163340508.png" width="400" height="250" alt="设备列表页"></p><h2 id="微信小程序端"><a href="#微信小程序端" class="headerlink" title="微信小程序端"></a>微信小程序端</h2><p>小程序端用于进行少量的设备核心信息查看和控制。</p><p><img src="/img/proj/20190712165129104.png" width="200" height="320" alt="系统登录"><img src="/img/proj/20190712164941132.png" width="200" height="320" alt="设备机组状态"><img src="/img/proj/20190712165044938.png" width="200" height="320" alt="设备开关机"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 物联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微信小程序 </tag>
+            
+            <tag> Web设备管理 </tag>
+            
+            <tag> 服务器分离 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>华为应用市场 隐私政策</title>
       <link href="/2019/07/12/tech-android-yszc/"/>
       <url>/2019/07/12/tech-android-yszc/</url>
@@ -167,11 +198,11 @@
             
             <tag> 金融学 </tag>
             
-            <tag> 经济学 </tag>
-            
             <tag> 入门 </tag>
             
             <tag> 基础 </tag>
+            
+            <tag> 经济学 </tag>
             
         </tags>
       
@@ -365,9 +396,9 @@
       
         <tags>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 文化 </tag>
+            
+            <tag> 剧情片 </tag>
             
             <tag> 家庭剧 </tag>
             
@@ -677,9 +708,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -768,9 +799,9 @@
       
         <tags>
             
-            <tag> 家庭剧 </tag>
-            
             <tag> 电视剧 </tag>
+            
+            <tag> 家庭剧 </tag>
             
         </tags>
       
@@ -2445,13 +2476,13 @@
       
         <tags>
             
-            <tag> 金融常识 </tag>
-            
-            <tag> 资产配置 </tag>
-            
             <tag> 金融学 </tag>
             
             <tag> 经济学 </tag>
+            
+            <tag> 金融常识 </tag>
+            
+            <tag> 资产配置 </tag>
             
         </tags>
       
