@@ -495,9 +495,9 @@
             
             <tag> 文化 </tag>
             
-            <tag> 家庭剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 家庭剧 </tag>
             
         </tags>
       
@@ -1305,11 +1305,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -1462,9 +1462,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 港台剧 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1493,9 +1493,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 韩寒 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 韩寒 </tag>
             
         </tags>
       
@@ -1524,9 +1524,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 神话故事 </tag>
-            
             <tag> 喜剧片 </tag>
+            
+            <tag> 神话故事 </tag>
             
         </tags>
       
@@ -1693,9 +1693,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> hello world </tag>
             
@@ -1726,9 +1726,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -2167,9 +2167,9 @@
       
         <tags>
             
-            <tag> 户口 </tag>
-            
             <tag> 身份证 </tag>
+            
+            <tag> 户口 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -2200,11 +2200,11 @@
       
         <tags>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 亲人关系 </tag>
             
@@ -2709,9 +2709,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> mnist </tag>
             

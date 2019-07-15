@@ -369,36 +369,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本文选择使用Matlab进行标定。</p>
-<p>标定过程分3步，接下来分步详细展开：</p>
-<ol>
-<li>使用棋盘格生产图像</li>
-<li>使用图像在Matlab中标定</li>
-<li>使用标定系数</li>
-</ol>
-<h2 id="第一步：使用棋盘格生产图像"><a href="#第一步：使用棋盘格生产图像" class="headerlink" title="第一步：使用棋盘格生产图像"></a>第一步：使用棋盘格生产图像</h2><ol>
-<li>打印棋盘格纸（这一步建议选择矩形棋盘格，否则容易因为原点不同出现标定偏差，本文版本放在文末了）</li>
-<li>在目录下创建两个文件夹：frameRight、frameLeft</li>
-<li>执行ImageCaptureFromCamera.py</li>
-<li>分别使得棋盘在两个摄像头视野中的不同角度，按空格键创建图片</li>
-</ol>
-<h2 id="第二步：使用图像在Matlab中标定"><a href="#第二步：使用图像在Matlab中标定" class="headerlink" title="第二步：使用图像在Matlab中标定"></a>第二步：使用图像在Matlab中标定</h2><ol>
-<li>参考Matlab官网介绍（<a href="https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）" target="_blank" rel="noopener">https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）</a></li>
-<li>打开Matlab的Stereo Camera Calibrate应用</li>
-<li>添加图片，1选择Left目录，2选择Right目录，长度填入真实棋盘长度（18）mm</li>
-<li>径向畸变选择3参数，选择切向畸变</li>
-<li>开始校正</li>
-<li>导出参数</li>
-</ol>
-<h2 id="第三步：使用标定系数"><a href="#第三步：使用标定系数" class="headerlink" title="第三步：使用标定系数"></a>第三步：使用标定系数</h2><ol>
-<li>参考Opencv官网（<a href="https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）" target="_blank" rel="noopener">https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）</a></li>
-<li>调用Opencv的stereoCalibrate()函数</li>
-<li>参数对应关系如下：<br>Matlab | Opencv<br>RotationOfCamera2 |  R<br>TranslationOfCamera2  |  T<br>CameraParameters1.IntrinsicMatrix |  left_camera_matrix<br>CameraParameters1.RadialDistortion | left_distortion<br>CameraParameters1.TangentialDistortion | left_distortion<br>CameraParameters2.IntrinsicMatrix  | right_camera_matrix<br>CameraParameters2.RadialDistortion  |right_distortion<br>CameraParameters2.TangentialDistortion | right_distortion</li>
-</ol>
-<p>注意，distortion：Opencv的参数是一个，Matlab有两个需要进行组合，组合方式如下：<br><img src="/img/tech/20190715175101.png" title="matlab"></p>
-<p>camera_matrix：Opencv的参数是由Matlab参数转置得到的。<br><img src="/img/tech/20190715175102.png" title="matlab"></p>
-<p>特别感谢：清华大学的董同学指导。</p>
-
+              本文选择使用Matlab进行标定，过程分3步，接下来分步详细展开：1. 使用棋盘格生产图像；2. 使用图像在Matlab中标定；3. 使用标定系数
+          
       
     </div>
     
@@ -415,6 +387,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Opencv/">Opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双目摄像头/">双目摄像头</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/标定/">标定</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2019/07/15/tech-img-cal/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
