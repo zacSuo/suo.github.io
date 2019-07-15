@@ -245,6 +245,18 @@
                                     </li>
                                     
                                 
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/img/">图像相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/manage/">项目管理</a>
+                                    </li>
+                                    
+                                
                                 </ul></li>
                             
                         </ul>
@@ -327,6 +339,234 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-tech-img-cal" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/07/15/tech-img-cal/" class="article-date">
+      <time datetime="2019-07-15T09:45:19.000Z" itemprop="datePublished">2019年07月15日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/15/tech-img-cal/">双目摄像头标定流程</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>本文选择使用Matlab进行标定。</p>
+<p>标定过程分3步，接下来分步详细展开：</p>
+<ol>
+<li>使用棋盘格生产图像</li>
+<li>使用图像在Matlab中标定</li>
+<li>使用标定系数</li>
+</ol>
+<h2 id="第一步：使用棋盘格生产图像"><a href="#第一步：使用棋盘格生产图像" class="headerlink" title="第一步：使用棋盘格生产图像"></a>第一步：使用棋盘格生产图像</h2><ol>
+<li>打印棋盘格纸（这一步建议选择矩形棋盘格，否则容易因为原点不同出现标定偏差，本文版本放在文末了）</li>
+<li>在目录下创建两个文件夹：frameRight、frameLeft</li>
+<li>执行ImageCaptureFromCamera.py</li>
+<li>分别使得棋盘在两个摄像头视野中的不同角度，按空格键创建图片</li>
+</ol>
+<h2 id="第二步：使用图像在Matlab中标定"><a href="#第二步：使用图像在Matlab中标定" class="headerlink" title="第二步：使用图像在Matlab中标定"></a>第二步：使用图像在Matlab中标定</h2><ol>
+<li>参考Matlab官网介绍（<a href="https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）" target="_blank" rel="noopener">https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）</a></li>
+<li>打开Matlab的Stereo Camera Calibrate应用</li>
+<li>添加图片，1选择Left目录，2选择Right目录，长度填入真实棋盘长度（18）mm</li>
+<li>径向畸变选择3参数，选择切向畸变</li>
+<li>开始校正</li>
+<li>导出参数</li>
+</ol>
+<h2 id="第三步：使用标定系数"><a href="#第三步：使用标定系数" class="headerlink" title="第三步：使用标定系数"></a>第三步：使用标定系数</h2><ol>
+<li>参考Opencv官网（<a href="https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）" target="_blank" rel="noopener">https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）</a></li>
+<li>调用Opencv的stereoCalibrate()函数</li>
+<li>参数对应关系如下：<br>Matlab | Opencv<br>RotationOfCamera2 |  R<br>TranslationOfCamera2  |  T<br>CameraParameters1.IntrinsicMatrix |  left_camera_matrix<br>CameraParameters1.RadialDistortion | left_distortion<br>CameraParameters1.TangentialDistortion | left_distortion<br>CameraParameters2.IntrinsicMatrix  | right_camera_matrix<br>CameraParameters2.RadialDistortion  |right_distortion<br>CameraParameters2.TangentialDistortion | right_distortion</li>
+</ol>
+<p>注意，distortion：Opencv的参数是一个，Matlab有两个需要进行组合，组合方式如下：<br><img src="/img/tech/20190715175101.png" title="matlab"></p>
+<p>camera_matrix：Opencv的参数是由Matlab参数转置得到的。<br><img src="/img/tech/20190715175102.png" title="matlab"></p>
+<p>特别感谢：清华大学的董同学指导。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/tools/">工具相关</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Opencv/">Opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双目摄像头/">双目摄像头</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/标定/">标定</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-proj-img-sm" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/07/15/proj-img-sm/" class="article-date">
+      <time datetime="2019-07-15T09:42:39.000Z" itemprop="datePublished">2019年07月15日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/15/proj-img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              方案基于Matlab2018，Python 2.7、Opencv 3.4实现，实现流程如下： 1. 首先，使用Matlab，进行双目摄像头的标定；  2. 其次，识别特定颜色；  3. 最后，使用双目测距公式得到特征点的距离
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/img/">图像相关</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双目摄像头/">双目摄像头</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测距/">测距</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/特定颜色物体/">特定颜色物体</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/07/15/proj-img-sm/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-proj-manage-510" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/07/15/proj-manage-510/" class="article-date">
+      <time datetime="2019-07-15T04:45:58.000Z" itemprop="datePublished">2019年07月15日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/15/proj-manage-510/">proj-manage-510</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              5个过程组包括启动、规划、执行、监控和收尾，10个知识领域包括对项目的范围、进度、成本、质量、资源、风险、采购及相关方等领域管理的知识
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/manage/">项目管理</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10个知识领域/">10个知识领域</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/5个过程组/">5个过程组</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PMP/">PMP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/第六版/">第六版</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/07/15/proj-manage-510/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-proj-iot-shjcj" class="article article-type-post" itemscope="" itemprop="blogPost">
   
@@ -1118,210 +1358,6 @@
       
         <p class="article-more-link">
           <a href="/2019/04/25/tech-git/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-life-movice-fsnv" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/23/life-movice-fsnv/" class="article-date">
-      <time datetime="2019-04-23T06:00:22.000Z" itemprop="datePublished">2019年04月23日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/23/life-movice-fsnv/">影评 之 《分手男女》</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              这是一部2006年上映的老片了，这次回看表现现在的生活上依旧上没觉得过时，仍然让我耐心的看完整部电影，而且看完后依旧觉得这就是真实生活，一方面是电影本身的表达能力厉害，另一方面，也许只要有人的地方就会有电影中的情景...
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/life/">日常生活</a><a class="article-category-link" href="/categories/life/movice/">观影感受</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剧情片/">剧情片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/家庭剧/">家庭剧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文化/">文化</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/23/life-movice-fsnv/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-books-菊与刀" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/16/books-菊与刀/" class="article-date">
-      <time datetime="2019-04-16T06:04:35.000Z" itemprop="datePublished">2019年04月16日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/16/books-菊与刀/">读书笔记 之 《菊与刀》</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              现在的日本已经跟那时候应该有很大不同，但其一些关于文化的传承应该还是保持着，就像现在我们的很多观念跟新中国刚成立时候已经有非常大的变化，但很多历史文化的东西也有保留和继承。即使不论现在的日本是一种什么样的状态，只是以那时候来了解日本文化，也是有挺多的借鉴意义
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/story/">一些小说</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/传统文化/">传统文化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文化/">文化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日本文化/">日本文化</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/16/books-菊与刀/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-tech-ml-qhxx" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/12/tech-ml-qhxx/" class="article-date">
-      <time datetime="2019-04-12T14:10:40.000Z" itemprop="datePublished">2019年04月12日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/12/tech-ml-qhxx/">机器学习 之 强化学习</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              强化学习的原理，就是通过结果的反馈来对有效规则进行强化，并弱化无效或者较差的规则的一种学习原理。跟常规的监督学习不同之处在于，在学习器的训练前没有标记样本的结果，而需要通过尝试来得到各行为的结果，进而来对训练本身进行反馈
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反馈/">反馈</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/奖励/">奖励</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/12/tech-ml-qhxx/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

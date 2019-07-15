@@ -4,11 +4,108 @@
   
     
     <entry>
+      <title>双目摄像头标定流程</title>
+      <link href="/2019/07/15/tech-img-cal/"/>
+      <url>/2019/07/15/tech-img-cal/</url>
+      
+        <content type="html"><![CDATA[<p>本文选择使用Matlab进行标定。</p><p>标定过程分3步，接下来分步详细展开：</p><ol><li>使用棋盘格生产图像</li><li>使用图像在Matlab中标定</li><li>使用标定系数</li></ol><h2 id="第一步：使用棋盘格生产图像"><a href="#第一步：使用棋盘格生产图像" class="headerlink" title="第一步：使用棋盘格生产图像"></a>第一步：使用棋盘格生产图像</h2><ol><li>打印棋盘格纸（这一步建议选择矩形棋盘格，否则容易因为原点不同出现标定偏差，本文版本放在文末了）</li><li>在目录下创建两个文件夹：frameRight、frameLeft</li><li>执行ImageCaptureFromCamera.py</li><li>分别使得棋盘在两个摄像头视野中的不同角度，按空格键创建图片</li></ol><h2 id="第二步：使用图像在Matlab中标定"><a href="#第二步：使用图像在Matlab中标定" class="headerlink" title="第二步：使用图像在Matlab中标定"></a>第二步：使用图像在Matlab中标定</h2><ol><li>参考Matlab官网介绍（<a href="https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）" target="_blank" rel="noopener">https://cn.mathworks.com/help/vision/ug/stereo-camera-calibrator-app.html?s_tid=gn_loc_drop）</a></li><li>打开Matlab的Stereo Camera Calibrate应用</li><li>添加图片，1选择Left目录，2选择Right目录，长度填入真实棋盘长度（18）mm</li><li>径向畸变选择3参数，选择切向畸变</li><li>开始校正</li><li>导出参数</li></ol><h2 id="第三步：使用标定系数"><a href="#第三步：使用标定系数" class="headerlink" title="第三步：使用标定系数"></a>第三步：使用标定系数</h2><ol><li>参考Opencv官网（<a href="https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）" target="_blank" rel="noopener">https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html#ga617b1685d4059c6040827800e72ad2b6）</a></li><li>调用Opencv的stereoCalibrate()函数</li><li>参数对应关系如下：<br>Matlab | Opencv<br>RotationOfCamera2 |  R<br>TranslationOfCamera2  |  T<br>CameraParameters1.IntrinsicMatrix |  left_camera_matrix<br>CameraParameters1.RadialDistortion | left_distortion<br>CameraParameters1.TangentialDistortion | left_distortion<br>CameraParameters2.IntrinsicMatrix  | right_camera_matrix<br>CameraParameters2.RadialDistortion  |right_distortion<br>CameraParameters2.TangentialDistortion | right_distortion</li></ol><p>注意，distortion：Opencv的参数是一个，Matlab有两个需要进行组合，组合方式如下：<br><img src="/img/tech/20190715175101.png" title="matlab"></p><p>camera_matrix：Opencv的参数是由Matlab参数转置得到的。<br><img src="/img/tech/20190715175102.png" title="matlab"></p><p>特别感谢：清华大学的董同学指导。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 工具相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 双目摄像头 </tag>
+            
+            <tag> 标定 </tag>
+            
+            <tag> Opencv </tag>
+            
+            <tag> matlab </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>测距方案 - 基于双目摄像头和特定颜色物体</title>
+      <link href="/2019/07/15/proj-img-sm/"/>
+      <url>/2019/07/15/proj-img-sm/</url>
+      
+        <content type="html"><![CDATA[<p>方案基于Matlab2018，Python 2.7、Opencv 3.4实现，实现流程如下：</p><ol><li>首先，使用Matlab，进行双目摄像头的标定； </li><li>其次，识别特定颜色； </li><li>最后，使用双目测距公式得到特征点的距离。</li></ol><h2 id="摄像头标定"><a href="#摄像头标定" class="headerlink" title="摄像头标定"></a>摄像头标定</h2><p>首先进行摄像头的标定，具体标定流程，点击<a href="https://www.zhenxiangsimple.com/2019/07/15/tech-img-sm/">https://www.zhenxiangsimple.com/2019/07/15/tech-img-sm/</a> 查看</p><h2 id="识别特定颜色物体"><a href="#识别特定颜色物体" class="headerlink" title="识别特定颜色物体"></a>识别特定颜色物体</h2><p>在cvt颜色空间中，使用颜色对应范围进行过滤，详细代码如下</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findTargetPoint</span><span class="params">(self,frameRectified)</span>:</span></span><br><span class="line">    hsvImg = cv2.cvtColor(frameRectified, cv2.COLOR_BGR2HSV)</span><br><span class="line">    maskImg = cv2.inRange(hsvImg, self.lower_range, self.upper_range)</span><br><span class="line">    <span class="comment"># Detect contour for both left and right images</span></span><br><span class="line">    (_, cntsImg, _) = cv2.findContours(maskImg, cv2.RETR_EXTERNAL,</span><br><span class="line">                    cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">    <span class="comment"># If the spot is out of view, then go to next frame</span></span><br><span class="line">    <span class="keyword">if</span> len(cntsImg) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>)</span><br><span class="line">    <span class="comment"># find target obj</span></span><br><span class="line">    maxArea,maxIdx = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(<span class="number">0</span>,len(cntsImg)):</span><br><span class="line">        _,_,w,h = cv2.boundingRect(cntsImg[idx])</span><br><span class="line">        tmpArea = w * h</span><br><span class="line">        <span class="keyword">if</span> tmpArea &gt; maxArea:</span><br><span class="line">            maxArea = tmpArea</span><br><span class="line">            maxIdx = idx</span><br><span class="line">    <span class="comment"># compute the center of the contour in the frame</span></span><br><span class="line">    M = cv2.moments(cntsImg[maxIdx])</span><br><span class="line">    <span class="keyword">if</span> M[<span class="string">"m00"</span>] == <span class="number">0</span>:</span><br><span class="line">        cXTarget = cntsImg[maxIdx][<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">        cYTarget = cntsImg[maxIdx][<span class="number">0</span>][<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">else</span>:        </span><br><span class="line">        cXTarget = int(M[<span class="string">"m10"</span>] / M[<span class="string">"m00"</span>])</span><br><span class="line">        cYTarget = int(M[<span class="string">"m01"</span>] / M[<span class="string">"m00"</span>])</span><br><span class="line">    <span class="comment"># draw the contour and center of the shape on the image</span></span><br><span class="line">    cv2.drawContours(frameRectified, cntsImg, maxIdx, (<span class="number">240</span>, <span class="number">0</span>, <span class="number">159</span>), <span class="number">1</span>)</span><br><span class="line">    cv2.circle(frameRectified, (cXTarget, cYTarget), <span class="number">1</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>,cXTarget,cYTarget)</span><br></pre></td></tr></table></figure><h2 id="测距公式计算"><a href="#测距公式计算" class="headerlink" title="测距公式计算"></a>测距公式计算</h2><p>其计算原理如下图所示，计算公式为：$实际距离 = 焦距 \times 摄像头间距 \div 视差$，opencv官网给的参考链接：<a href="https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html" target="_blank" rel="noopener">https://docs.opencv.org/3.3.1/d9/d0c/group__calib3d.html</a></p><center><img src="/img/proj/20190715172704115.png" width="450" height="350" title="测距原理图"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 图像相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 双目摄像头 </tag>
+            
+            <tag> 测距 </tag>
+            
+            <tag> 特定颜色物体 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>proj-manage-510</title>
+      <link href="/2019/07/15/proj-manage-510/"/>
+      <url>/2019/07/15/proj-manage-510/</url>
+      
+        <content type="html"><![CDATA[<p>5个过程组包括启动、规划、执行、监控和收尾，10个知识领域包括对项目的范围、进度、成本、质量、资源、风险、采购及相关方等领域管理的知识。</p><h2 id="10个知识领域"><a href="#10个知识领域" class="headerlink" title="10个知识领域"></a>10个知识领域</h2><h4 id="4-项目整合管理"><a href="#4-项目整合管理" class="headerlink" title="4. 项目整合管理"></a>4. 项目整合管理</h4><p>4.1 制定项目章程<br>4.2 制定项目管理计划<br>4.3 指导与管理项目工作<br>4.4 管理项目只是<br>4.5 监控项目工作<br>4.6 实时整体变更控制<br>4.7 结束项目或阶段</p><h4 id="5-项目范围管理"><a href="#5-项目范围管理" class="headerlink" title="5. 项目范围管理"></a>5. 项目范围管理</h4><p>5.1 规划范围管理<br>5.2 收集需求<br>5.3 定义范围<br>5.4 创建WBS<br>5.5 确认范围<br>5.6 控制范围</p><h4 id="6-项目进度管理"><a href="#6-项目进度管理" class="headerlink" title="6. 项目进度管理"></a>6. 项目进度管理</h4><p>6.1 规划进度管理<br>6.2 定义活动<br>6.3 排列活动顺序<br>6.4 估算活动持续时间<br>6.5 制定进度计划<br>6.6 控制进度</p><h4 id="7-项目成本管理"><a href="#7-项目成本管理" class="headerlink" title="7. 项目成本管理"></a>7. 项目成本管理</h4><p>7.1 规划成本管理<br>7.2 估算成本<br>7.3 制定预算<br>7.4 控制成本</p><h4 id="8-项目质量管理"><a href="#8-项目质量管理" class="headerlink" title="8. 项目质量管理"></a>8. 项目质量管理</h4><p>8.1 规划质量管理<br>8.2 管理质量<br>8.3 控制质量</p><h4 id="9-项目资源管理"><a href="#9-项目资源管理" class="headerlink" title="9. 项目资源管理"></a>9. 项目资源管理</h4><p>9.1 规划资源管理<br>9.2 估算活动资源<br>9.3 获取资源<br>9.4 建设团队<br>9.5 管理团队<br>9.6 控制资源</p><h4 id="10-项目沟通管理"><a href="#10-项目沟通管理" class="headerlink" title="10. 项目沟通管理"></a>10. 项目沟通管理</h4><p>10.1 规划沟通管理<br>10.2 管理沟通<br>10.3 监督沟通</p><h4 id="11-项目风险管理"><a href="#11-项目风险管理" class="headerlink" title="11. 项目风险管理"></a>11. 项目风险管理</h4><p>11.1 规划风险管理<br>11.2 识别风险<br>11.3 实施定型风险分析<br>11.4 实施定量风险分析<br>11.5 规划风险应对<br>11.6 实施风险应对<br>11.7 监督风险</p><h4 id="12-项目采购管理"><a href="#12-项目采购管理" class="headerlink" title="12. 项目采购管理"></a>12. 项目采购管理</h4><p>12.1 规划采购管理<br>12.2 实施采购<br>12.3 控制采购</p><h4 id="13-项目相关方管理"><a href="#13-项目相关方管理" class="headerlink" title="13. 项目相关方管理"></a>13. 项目相关方管理</h4><p>13.1 识别相关方<br>13.2 规划相关方参与<br>13.3 管理相关方参与<br>13.4 监督相关方参与</p><h2 id="5个过程组"><a href="#5个过程组" class="headerlink" title="5个过程组"></a>5个过程组</h2><ol><li>启动</li><li>规划</li><li>执行</li><li>监控</li><li>收尾</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 项目管理 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PMP </tag>
+            
+            <tag> 5个过程组 </tag>
+            
+            <tag> 10个知识领域 </tag>
+            
+            <tag> 第六版 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>物联网方案 - 数据采集和控制系统（Web+微信小程序）</title>
       <link href="/2019/07/12/proj-iot-shjcj/"/>
       <url>/2019/07/12/proj-iot-shjcj/</url>
       
-        <content type="html"><![CDATA[<p>当前方案是为硬件方案厂商做的数据采集及信息管理系统，核心包括两部分，分别如下：</p><ol><li>用于采集数据的后端服务器</li><li>用于显示统计数据的前端，包括Web端和微信小程序端</li></ol><center><img src="/img/proj/20190712173432.png" width="250" height="200" title="系统整体框图"></center><h2 id="亮点"><a href="#亮点" class="headerlink" title="亮点"></a>亮点</h2><ol><li>全系统拥有独立知识产权，可根据具体业务进行定制开发</li><li>数据采集和管理服务器分离，保证数据安全稳定</li><li>Web和微信小程序，实现设备状态查看和控制</li></ol><h2 id="Web端"><a href="#Web端" class="headerlink" title="Web端"></a>Web端</h2><p>Web端用于进行设备的权限及经销商管理，以及整体的数据分析。</p><p><img src="/img/proj/20190712162910163.png" width="400" height="250" alt="主页面统计信息"><img src="/img/proj/20190712163151975.png" width="400" height="250" alt="设备报警信息页"><img src="/img/proj/20190712163340508.png" width="400" height="250" alt="设备列表页"></p><h2 id="微信小程序端"><a href="#微信小程序端" class="headerlink" title="微信小程序端"></a>微信小程序端</h2><p>小程序端用于进行少量的设备核心信息查看和控制。</p><p><img src="/img/proj/20190712165129104.png" width="200" height="320" alt="系统登录"><img src="/img/proj/20190712164941132.png" width="200" height="320" alt="设备机组状态"><img src="/img/proj/20190712165044938.png" width="200" height="320" alt="设备开关机"></p>]]></content>
+        <content type="html"><![CDATA[<p>当前方案是为硬件方案厂商做的数据采集及信息管理系统，核心包括两部分，分别如下：</p><ol><li>用于采集数据的后端服务器</li><li>用于显示统计数据的前端，包括Web端和微信小程序端</li></ol><center><img src="/img/proj/20190712173432.png" width="250" height="200" title="系统整体框图"></center><h2 id="亮点"><a href="#亮点" class="headerlink" title="亮点"></a>亮点</h2><ol><li>全系统拥有独立知识产权，可根据具体业务进行定制开发</li><li>数据采集和管理服务器分离，保证数据安全稳定</li><li>Web和微信小程序，实现设备状态查看和控制</li></ol><h2 id="Web端"><a href="#Web端" class="headerlink" title="Web端"></a>Web端</h2><p>Web端用于进行设备的权限及经销商管理，以及整体的数据分析。</p><p><img src="/img/proj/20190712162910163.png" width="400" height="250" alt="主页面统计信息"><img src="/img/proj/20190712163151975.png" width="400" height="250" alt="设备报警信息页"><img src="/img/proj/20190712163340508.png" width="400" height="250" alt="设备列表页"></p><h2 id="微信小程序端"><a href="#微信小程序端" class="headerlink" title="微信小程序端"></a>微信小程序端</h2><p>小程序端用于进行少量的设备核心信息查看和控制。</p><p><img src="/img/proj/20190712165129104.png" width="200" height="320" alt="系统登录"><img src="/img/proj/20190712164941132.png" width="200" height="320" alt="设备机组状态"><img src="/img/proj/20190712165044938.png" width="200" height="320" alt="设备开关机"></p><p>若对方案感兴趣，或有需要了解方案详情，欢迎来撩<br><img src="/img/proj/20190712120342767.png" width="200" height="200" title="个人微信"></p>]]></content>
       
       
       <categories>
@@ -198,11 +295,11 @@
             
             <tag> 金融学 </tag>
             
+            <tag> 经济学 </tag>
+            
             <tag> 入门 </tag>
             
             <tag> 基础 </tag>
-            
-            <tag> 经济学 </tag>
             
         </tags>
       
@@ -398,9 +495,9 @@
             
             <tag> 文化 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1208,11 +1305,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -1365,9 +1462,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -1396,9 +1493,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 韩寒 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1427,9 +1524,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 喜剧片 </tag>
-            
             <tag> 神话故事 </tag>
+            
+            <tag> 喜剧片 </tag>
             
         </tags>
       
@@ -2476,13 +2573,13 @@
       
         <tags>
             
-            <tag> 金融学 </tag>
-            
-            <tag> 经济学 </tag>
-            
             <tag> 金融常识 </tag>
             
             <tag> 资产配置 </tag>
+            
+            <tag> 金融学 </tag>
+            
+            <tag> 经济学 </tag>
             
         </tags>
       
