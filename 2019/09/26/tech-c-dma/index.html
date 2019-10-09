@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="阿东和他的朋友们">
+
+
+
+<meta name="description" content="1.掌握单片机DMA的工作原理，以及在STM32单片机上实现DMA传输的配置和流程；2.了解DMA传输方式相对与传统利用CPU传输方式的优势；3.完成以 DMA 的方式给数据赋值并显示在OLED显示屏上的实验。">
+<meta name="keywords" content="嵌入式,dma,存取,数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式实验 之 DMA控制器实验">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/09/26/tech-c-dma/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="1.掌握单片机DMA的工作原理，以及在STM32单片机上实现DMA传输的配置和流程；2.了解DMA传输方式相对与传统利用CPU传输方式的优势；3.完成以 DMA 的方式给数据赋值并显示在OLED显示屏上的实验。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191009180330852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220202279.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220218112.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220240724.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220246536.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220556129.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220607262.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220615263.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220621468.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220628938.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190926220643942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-26T09:33:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式实验 之 DMA控制器实验">
+<meta name="twitter:description" content="1.掌握单片机DMA的工作原理，以及在STM32单片机上实现DMA传输的配置和流程；2.了解DMA传输方式相对与传统利用CPU传输方式的优势；3.完成以 DMA 的方式给数据赋值并显示在OLED显示屏上的实验。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191009180330852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>嵌入式实验 之 DMA控制器实验 | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?56467b4a9bdbd6ba525198dabfb9fec0";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">阿东和他的朋友们</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="文章搜索..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/embed/">嵌入式</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/tech/">技术相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/money/">钱财相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">小说相关</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/sports/">运动健康</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/movice/">观影感受</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/baby/">宝宝成长</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/project/"> 项目相关</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/iot/">物联网</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/img/">图像相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/manage/">项目管理</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech-c-dma" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/26/tech-c-dma/" class="article-date">
+      <time datetime="2019-09-26T09:33:31.000Z" itemprop="datePublished">2019年09月26日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      嵌入式实验 之 DMA控制器实验
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/embed/">嵌入式</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dma/">dma</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/存取/">存取</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据/">数据</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="【实验目的】"><a href="#【实验目的】" class="headerlink" title="【实验目的】"></a>【实验目的】</h2><ul>
+<li>掌握单片机DMA的工作原理，以及在STM32单片机上实现DMA传输的配置和流程；<ul>
+<li>了解DMA传输方式相对与传统利用CPU传输方式的优势；</li>
+<li>完成以 DMA 的方式给数据赋值并显示在OLED显示屏上的实验。<h2 id="【实验原理】"><a href="#【实验原理】" class="headerlink" title="【实验原理】"></a>【实验原理】</h2>DMA (Direct Memory Access)，直接存储器存取，是一种可以大大减轻CPU 工作量的数据存取方式，因而被广泛地使用。外设工作的时候，除了转移数据，实质上是不需要内核进行干预的，而如果数据转移的工作现在也交给了另一个外设，那么在该外设进行工作的时候，内核同时还可以进行其它操作。而STM32 的 DMA 模块正是以类似外设的形式，添加到 Cortex 内核之外，进行数据转移工作的。<h3 id="一、DMA功能简介："><a href="#一、DMA功能简介：" class="headerlink" title="一、DMA功能简介："></a>一、DMA功能简介：</h3>单片机的硬件系统，通常主要由 CPU(内核)、外设、内存(SRAM)、总线等结构组成，在系统工作中，数据经常要在各项设备之间进行转移。通常情况下，在转移数据的过程中会占用 CPU 十分宝贵的资源，所以我们希望 CPU 更多地被用在数据运算或响应中断之中，而数据转移的工作交由其它部件完成。DMA 恰恰为 CPU 分担了这部分数据转移的工作。因为 DMA 的存在， CPU 被解放出来，它可以在 DMA 转移数据的过程中同时进行数据运算，响应中断，大大提高了系统的运行效率。</li>
+</ul>
+</li>
+</ul>
+<p>在 STM32 中，DMA 的传输模式分为3种：</p>
+<ol>
+<li>外设到存储器的传输。</li>
+<li>存储器到存储器的传输。</li>
+<li><p>存储器到外设的传输。</p>
+<h3 id="二、DMA工作过程分析"><a href="#二、DMA工作过程分析" class="headerlink" title="二、DMA工作过程分析"></a>二、DMA工作过程分析</h3><p>由 DMA 控制器挂载在AHB(高级高性能总线)上，与内核共享数据总线。DMA控制器在收到一个传输命令后，开始访问源地址寄存器中储存的地址，并加载该地址对应的数据，然后将数据存储到目标地址寄存器中指定的地址上去。在完成一次数据转移后，DMA内记录数据总数的寄存器执行一次减一操作，然后根据预先设定的传输模式决定是否对源/目标地址进行位移操作。例如，若是从外设（GPIO或其他有固定接口的设备）到存储器的传输，则在执行一次操作后，只需目标地址进行位移，源地址不变；而若是从存储器到存储器的传输，则需要同时将源地址和目标地址进行位移。</p>
+<h3 id="三、DMA库函数分析"><a href="#三、DMA库函数分析" class="headerlink" title="三、DMA库函数分析"></a>三、DMA库函数分析</h3><p>DMA_InitTypeDef结构体参数的配置如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_PeripheralBaseAddr;        <span class="comment">// DMA 外设基地址 </span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_MemoryBaseAddr;        <span class="comment">//DMA 内存基地址 </span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_DIR; <span class="comment">//规定了外设是作为数据传输的目的地还是来源    </span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_BufferSize;                <span class="comment">// DMA 缓存的大小</span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_PeripheralInc;             <span class="comment">// 外设地址寄存器递增与否 </span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_MemoryInc;             <span class="comment">// 内存地址寄存器递增与否       uint32_t DMA_PeripheralDataSize;       // 外设数据宽度</span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_MemoryDataSize;            <span class="comment">// 内存数据宽度</span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_Mode;                  <span class="comment">// 工作模式</span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_Priority;                  <span class="comment">// DMA 软件优先级 </span></span><br><span class="line"><span class="keyword">uint32_t</span> DMA_M2M;                   <span class="comment">//非否内存到内存传输</span></span><br><span class="line">&#125;DMA_InitTypeDef;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DMA_PeripheralBaseAddr：外设地址，设定 DMA_CPAR 寄存器的值；一般设置为外设的数据寄存器地址，如果是存储器到存储器模式则设置为其中一个存储器地址。</p>
+</li>
+<li>DMA_Memory0BaseAddr：存储器地址，设定 DMA_CMAR 寄存器值；一般设置为我们自定义存储区的首地址。</li>
+<li>DMA_DIR：传输方向选择，可选外设到存储器、存储器到外设。它设定DMA_CCR 寄存器的 DIR[1:0]位的值。 这里并没有存储器到存储器的方向选择，当使用存储器到存储器时，只需要把其中一个存储器当作外设使用即可。<br>4) DMA_BufferSize：设定待传输数据数目，初始化设定 DMA_CNDTR 寄存器的值。<br>5) DMA_PeripheralInc：如果配置为 DMA_PeripheralInc_Enable，使能外设地址自动递增功能，它设定 DMA_CCR 寄存器的 PINC 位的值；一般外设都是只有一个数据寄存器，所以一般不会使能该位。<br>6) DMA_MemoryInc：如果配置为 DMA_MemoryInc_Enable，使能存储器地址自动递增功能，它设定 DMA_CCR 寄存器的 MINC 位的值；我们自定义的存储区一般都是存放多个数据的，所以要使能存储器地址自动递增功能。<br>7) DMA_PeripheralDataSize： 外设数据宽度，可选字节(8 位)、半字(16位)和字(32位)，它设定 DMA_CCR 寄存器的 PSIZE[1:0]位的值。<br>8) DMA_MemoryDataSize：存储器数据宽度，可选字节(8 位)、半字(16 位)和字(32位)，它设定 DMA_CCR 寄存器的 MSIZE[1:0]位的值。 当外设和存储器之间传数据时，两边的数据宽度应该设置为一致大小。<br>9) DMA_Mode： DMA 传输模式选择，可选一次传输或者循环传输，它设定DMA_CCR 寄存器的 CIRC 位的值。 例程我们的 ADC 采集是持续循环进行的，所以使用循环传输模式。<br>10) DMA_Priority：软件设置通道的优先级，有 4 个可选优先级分别为非常高、高、中和低，它设定 DMA_CCR 寄存器的 PL[1:0]位的值。 DMA 通道优先级只有在多个 DMA 通道同时使用时才有意义，如果是单个通道，优先级可以随便设置。<br>11) DMA_M2M：存储器到存储器模式 ，使用存储器到存储器时用到设定DMA_CCR 的位14 MEN2MEN 即可启动存储器到存储器模式。<h3 id="四、软件流程图"><a href="#四、软件流程图" class="headerlink" title="四、软件流程图"></a>四、软件流程图</h3><img src="https://img-blog.csdnimg.cn/20191009180330852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图1 实验程序流程示意图<h2 id="【实验环境】"><a href="#【实验环境】" class="headerlink" title="【实验环境】"></a>【实验环境】</h2><h3 id="硬件设备："><a href="#硬件设备：" class="headerlink" title="硬件设备："></a>硬件设备：</h3>双轮自平衡机器人。如图2所示，平衡车所搭载的电路板主控芯片STM32内部有DMA，另外，电路上已经预留接口并安装了OLED显示屏。<br>ST-Link下载器（包含USB线与下载线）。如图3所示。<h3 id="操作系统："><a href="#操作系统：" class="headerlink" title="操作系统："></a>操作系统：</h3>Windows7/8/10，32bit/64bit<br><img src="https://img-blog.csdnimg.cn/20190926220202279.png" alt="在这里插入图片描述"><br>图2 双轮自平衡机器人<br><img src="https://img-blog.csdnimg.cn/20190926220218112.png" alt="在这里插入图片描述"><br>图3 ST-Link下载器与下载线<h3 id="软件环境："><a href="#软件环境：" class="headerlink" title="软件环境："></a>软件环境：</h3>Keil 5，串口助手软件<br>实验场地：<br>无<h2 id="【实验步骤】"><a href="#【实验步骤】" class="headerlink" title="【实验步骤】"></a>【实验步骤】</h2><h3 id="一、-配置工程环境"><a href="#一、-配置工程环境" class="headerlink" title="一、 配置工程环境"></a>一、 配置工程环境</h3>打开已经建立好的工程模板，在新建立的工程模板中已经添加五个文件夹，分别命名为USER、HARDWARE、SYSTEM、CORE、FWLIB文件夹，如图4所示。其中USER文件夹存放的是主函数，HARDWARE文件夹存放的是本实验对应的硬件设备函数，SYSTEM存放的是本课程所有实验通用的函数，CORE文件夹存放的是启动文件，FWLib文件夹存放的是底层驱动函数。在本实验中，oled模块的设备函数已经在oled.c的文件中给出。<br><img src="https://img-blog.csdnimg.cn/20190926220240724.png" alt="在这里插入图片描述"><br>图4 工程模板对应的文件夹<br>在HARDWARE文件夹下新建两个文件，分别为dma.c和dma.h。分别存放DMA控制函数与DMA头文件，如图5所示。<br><img src="https://img-blog.csdnimg.cn/20190926220246536.png" alt="在这里插入图片描述"><br>图5 在HARDWARE文件夹下建立dma.c与dma.h文件<h3 id="二、-完成DMA配置，并开启时钟"><a href="#二、-完成DMA配置，并开启时钟" class="headerlink" title="二、 完成DMA配置，并开启时钟"></a>二、 完成DMA配置，并开启时钟</h3>2.1 打开程序中的dma.c文件，首先将dma.h文件包含进来。其次对DMA_Config函数进行编写，对DMA的地址通信模式等进行配置。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"dma.h"</span>    <span class="comment">//包含头文件</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DMA_Config</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">/*定义一个GPIO_ InitTypeDef类型的结构体*/</span></span><br><span class="line">DMA_InitTypeDef DMA_InitStructure;</span><br><span class="line"><span class="comment">/*定义一个GPIO_ InitTypeDef类型的结构体*/</span></span><br><span class="line">DMA_DeInit(DMA1_Channel1);</span><br><span class="line"></span><br><span class="line"><span class="comment">//(1)使能DMA时钟</span></span><br><span class="line"><span class="comment">/*开启DMA时钟*/</span></span><br><span class="line">RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);</span><br><span class="line"></span><br><span class="line"><span class="comment">//(2)初始化DMA通道参数</span></span><br><span class="line">        <span class="comment">/*配置源地址*/</span></span><br><span class="line">DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&amp;number_origin;  </span><br><span class="line"><span class="comment">/*配置目标地址*/</span></span><br><span class="line">DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&amp;number_target;</span><br><span class="line"><span class="comment">/*配置DMA的传输方向*/</span></span><br><span class="line">DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;</span><br><span class="line"><span class="comment">/*配置缓冲区大小*/</span></span><br><span class="line">DMA_InitStructure.DMA_BufferSize = <span class="number">1</span>;</span><br><span class="line"><span class="comment">/*配置在完成单次转移后是否对源地址进行位移*/</span></span><br><span class="line">DMA_InitStructure.DMA_PeripheralInc= DMA_PeripheralInc_Disable;</span><br><span class="line"><span class="comment">/*配置在完成单次转移后是否对目标地址进行位移*/</span></span><br><span class="line">DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;</span><br><span class="line"><span class="comment">/*配置DMA每次访问的源地址长度*/</span></span><br><span class="line">DMA_InitStructure.DMA_PeripheralDataSize =                                                          DMA_PeripheralDataSize_HalfWord;</span><br><span class="line"><span class="comment">/*配置DMA每次访问的目标地址长度*/</span></span><br><span class="line">DMA_InitStructure.DMA_MemoryDataSize =                                                                  DMA_MemoryDataSize_HalfWord;</span><br><span class="line"><span class="comment">/*配置DMA的传输模式*/</span></span><br><span class="line">DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;</span><br><span class="line"><span class="comment">/*配置DMA的优先级*/</span></span><br><span class="line">DMA_InitStructure.DMA_Priority = DMA_Priority_High;</span><br><span class="line"><span class="comment">/*配置DMA是否可以进行内存到内存的转移*/</span></span><br><span class="line">DMA_InitStructure.DMA_M2M = DMA_M2M_Enable;</span><br><span class="line"><span class="comment">/*将以上配置进行部署*/</span></span><br><span class="line">DMA_Init(DMA1_Channel1, &amp;DMA_InitStructure);</span><br><span class="line"></span><br><span class="line"><span class="comment">//(3)使能DMA通道，启动传输</span></span><br><span class="line"><span class="comment">/*使能DMA传输*/</span></span><br><span class="line">DMA_Cmd(DMA1_Channel1, ENABLE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2.2 打开dma.h文件，添加DMA_Config 函数声明及外部变量。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __DMA_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DMA_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sys.h"</span>  </span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">uint16_t</span> number_origin;    <span class="comment">//引用已经定义的外部变量</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">uint16_t</span> number_target;    <span class="comment">//引用已经定义的外部变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DMA_Config</span><span class="params">(<span class="keyword">void</span>)</span></span>;        <span class="comment">//声明函数</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="三、-编写main-c文件"><a href="#三、-编写main-c文件" class="headerlink" title="三、 编写main.c文件"></a>三、 编写main.c文件</h3><p>将工程编译需要用到的头文件包含进来。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stm32f10x.h"</span>    <span class="comment">//包含系统寄存器定义声明的头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sys.h"</span>          <span class="comment">//包含系统文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"delay.h"</span>        <span class="comment">//包含延时函数头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"dma.h"</span>          <span class="comment">//包含DMA头文件</span></span></span><br></pre></td></tr></table></figure></p>
+<p>定义待转移的源地址及目标地址。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint16_t</span> number_origin=<span class="number">123</span>;        <span class="comment">//待转移的源地址</span></span><br><span class="line"><span class="keyword">uint16_t</span> number_target=<span class="number">0</span>;          <span class="comment">//待转移的目标地址</span></span><br></pre></td></tr></table></figure></p>
+<p>预定义oled屏幕显示函数。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">oled_show</span><span class="params">(<span class="keyword">void</span>)</span></span>;      <span class="comment">//oled屏幕显示函数</span></span><br></pre></td></tr></table></figure></p>
+<p>在主函数中调用延时函数与OLED初始化函数。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delay_init();     <span class="comment">//调用延时函数</span></span><br><span class="line">OLED_Init();    <span class="comment">//调用OLED初始化函数</span></span><br></pre></td></tr></table></figure></p>
+<p>在主函数中，更新源地址内容并调用显示函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">delay_init();         <span class="comment">//延时函数初始化</span></span><br><span class="line">OLED_Init();        <span class="comment">//OLED屏幕显示初始化</span></span><br><span class="line">DMA_Config();        <span class="comment">//DMA初始化</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;   </span><br><span class="line">    DMA_Cmd(DMA1_Channel1, ENABLE);   <span class="comment">//调用DMA传输 </span></span><br><span class="line">    number_origin++;</span><br><span class="line">    delay_ms(<span class="number">500</span>);</span><br><span class="line">    oled_show();</span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在主函数下面新建oled_show函数，并编写显示函数。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">oled_show</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">OLED_ShowString(<span class="number">0</span>,<span class="number">50</span>,<span class="string">"DMA_NUM_O"</span>);  <span class="comment">//在指定位置显示文字信息</span></span><br><span class="line">OLED_ShowNumber(<span class="number">85</span>,<span class="number">50</span>,number_origin,<span class="number">3</span>,<span class="number">12</span>); <span class="comment">//在指定位置显示数字信息</span></span><br><span class="line">OLED_ShowString(<span class="number">0</span>,<span class="number">30</span>,<span class="string">"DMA_NUM_T"</span>);</span><br><span class="line">OLED_ShowNumber(<span class="number">85</span>,<span class="number">30</span>,number_target,<span class="number">3</span>,<span class="number">12</span>);</span><br><span class="line"><span class="comment">/*=============刷新=======================*/</span></span><br><span class="line">OLED_Refresh_Gram();    </span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、-编译并下载，观察实验现象"><a href="#四、-编译并下载，观察实验现象" class="headerlink" title="四、 编译并下载，观察实验现象"></a>四、 编译并下载，观察实验现象</h3><p>本实验采用仿真器为STLink V2，将仿真器与小车相连，注意正负极不要接反，如图6所示。<br><img src="https://img-blog.csdnimg.cn/20190926220556129.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图6 仿真器与下载线连接图<br>编译程序：点击如图7所示的编译按键。<br><img src="https://img-blog.csdnimg.cn/20190926220607262.png" alt="在这里插入图片描述"><br>图7  Keil编译环境下的编译按键<br>当编译完成后，如果没有问题，Build Output栏会出现无错误、无警告的提示，如图8所示。<br><img src="https://img-blog.csdnimg.cn/20190926220615263.png" alt="在这里插入图片描述"><br>图8 编译通过后Build Output栏提示信息<br>下载程序：点击如图所示的下载按键，程序就会下载到STM32的芯片中。下载按键如图9所示。<br><img src="https://img-blog.csdnimg.cn/20190926220621468.png" alt="在这里插入图片描述"><br>图9 Keil编译环境下的下载按键<br>观察实验现象，如图12所示。重新上电以后，OLED显示屏上显示的DMA_NUM_O后数字从初始设定的123开始，每隔0.5秒加一。DMA_NUM_T紧跟着DMA_NUM_O变化。<br><img src="https://img-blog.csdnimg.cn/20190926220628938.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图10 平衡车上的小灯LED2</p>
+<h2 id="【思考题】"><a href="#【思考题】" class="headerlink" title="【思考题】"></a>【思考题】</h2><h3 id="1、选择题"><a href="#1、选择题" class="headerlink" title="1、选择题"></a>1、选择题</h3><p>题目1：  下面哪条语句是设置串口数据寄存地址？（A）<br>A：DMA_InitStructure.DMA_PeripheralBaseAddr = 0x40004C04;<br>B：DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;<br>C：DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;<br>D：DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;</p>
+<p>题目2：  在DMA进行数据转移时，内核可以进行其它操作吗？（A）<br>A：可以<br>B：不可以</p>
+<h3 id="2、简答题"><a href="#2、简答题" class="headerlink" title="2、简答题"></a>2、简答题</h3><p>题目1：DMA的工作意义是什么？<br>在转移数据的过程中会占用 CPU 十分宝贵的资源，所以我们希望 CPU 更多地被用在数据运算或响应中断之中，而数据转移的工作交由其它部件完成。DMA 正为 CPU 分担了数据转移的工作。因为 DMA 的存在， CPU 被解放出来，它可以在 DMA 转移数据的过程中同时进行数据运算，响应中断，大大提高效率。</p>
+<h2 id="附录：DMA-库函数"><a href="#附录：DMA-库函数" class="headerlink" title="附录：DMA 库函数"></a>附录：DMA 库函数</h2><p><img src="https://img-blog.csdnimg.cn/20190926220643942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/09/26/tech-c-dma/">嵌入式实验 之 DMA控制器实验</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
+        <p><span>发布时间:</span>2019-09-26, 17:33:31</p>
+        <p><span>最后更新:</span>2019-09-26, 17:33:31</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/26/tech-c-dma/" title="嵌入式实验 之 DMA控制器实验">https://www.zhenxiangsimple.com/2019/09/26/tech-c-dma/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/09/26/tech-c-dma/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/09/27/tech-c-iic/">
+                    嵌入式实验 之 I2C实验（IIC）
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/09/25/tech-c-spi/">
+                    嵌入式实验 之 SPI通信实验
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验目的】"><span class="toc-number">1.</span> <span class="toc-text">【实验目的】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验原理】"><span class="toc-number">2.</span> <span class="toc-text">【实验原理】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、DMA功能简介："><span class="toc-number">2.1.</span> <span class="toc-text">一、DMA功能简介：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、DMA工作过程分析"><span class="toc-number">2.2.</span> <span class="toc-text">二、DMA工作过程分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、DMA库函数分析"><span class="toc-number">2.3.</span> <span class="toc-text">三、DMA库函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、软件流程图"><span class="toc-number">2.4.</span> <span class="toc-text">四、软件流程图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验环境】"><span class="toc-number">3.</span> <span class="toc-text">【实验环境】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件设备："><span class="toc-number">3.1.</span> <span class="toc-text">硬件设备：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统："><span class="toc-number">3.2.</span> <span class="toc-text">操作系统：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件环境："><span class="toc-number">3.3.</span> <span class="toc-text">软件环境：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验步骤】"><span class="toc-number">4.</span> <span class="toc-text">【实验步骤】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、-配置工程环境"><span class="toc-number">4.1.</span> <span class="toc-text">一、 配置工程环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、-完成DMA配置，并开启时钟"><span class="toc-number">4.2.</span> <span class="toc-text">二、 完成DMA配置，并开启时钟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、-编写main-c文件"><span class="toc-number">4.3.</span> <span class="toc-text">三、 编写main.c文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、-编译并下载，观察实验现象"><span class="toc-number">4.4.</span> <span class="toc-text">四、 编译并下载，观察实验现象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【思考题】"><span class="toc-number">5.</span> <span class="toc-text">【思考题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、选择题"><span class="toc-number">5.1.</span> <span class="toc-text">1、选择题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、简答题"><span class="toc-number">5.2.</span> <span class="toc-text">2、简答题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录：DMA-库函数"><span class="toc-number">6.</span> <span class="toc-text">附录：DMA 库函数</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"嵌入式实验 之 DMA控制器实验　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/09/27/tech-c-iic/" title="上一篇: 嵌入式实验 之 I2C实验（IIC）">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/09/25/tech-c-spi/" title="下一篇: 嵌入式实验 之 SPI通信实验">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech-c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech-c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech-c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech-c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech-c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech-c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech-c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech-c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech-c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech-img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj-img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj-manage-510/">proj-manage-510</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj-iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech-android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj-iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life-movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life-movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life-movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books-从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books-穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books-跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books-父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books-非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech-git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life-movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books-菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech-ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech-ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech-ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech-ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books-机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech-ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech-ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech-ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life-movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech-ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life-movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech-ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech-ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech-ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech-ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech-ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech-ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books-思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books-乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life-movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books-浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby-核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life-movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life-movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life-movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life-movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life-movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life-movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech-tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books-经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life-movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech-tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech-tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books-活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self-不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books-月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby-老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books-乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby-维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby-身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby-出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby-免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books-反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books-冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books-好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books-如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books-数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech-md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books-心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books-创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books-三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech-tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2019 阿东和他的朋友们<i class="fa fa-heart animated infinite pulse"></i>个人版权所有
+            </div>
+            <div class="footer-right">
+            粤ICP备19013521号
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
