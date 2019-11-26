@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="阿东和他的朋友们">
+
+
+
+<meta name="description" content="1. 熟悉编码器的种类及其工作原理；2.熟悉编码器的输出形式，熟悉单片机如何通过编码器的输出得到电机的旋转方向和速率；3.掌握STM32F10xx系列微控制器上编码器的接口配置与数据采集过程；">
+<meta name="keywords" content="嵌入式,传感器,霍尔,编码器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式课程 之 霍尔传感器（编码器）实验">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="1. 熟悉编码器的种类及其工作原理；2.熟悉编码器的输出形式，熟悉单片机如何通过编码器的输出得到电机的旋转方向和速率；3.掌握STM32F10xx系列微控制器上编码器的接口配置与数据采集过程；">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910113846569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910113938428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114001530.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114009746.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114023910.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114120359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114140612.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114211384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114224823.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019091011423472.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114241815.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190910114255167.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-10T09:34:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式课程 之 霍尔传感器（编码器）实验">
+<meta name="twitter:description" content="1. 熟悉编码器的种类及其工作原理；2.熟悉编码器的输出形式，熟悉单片机如何通过编码器的输出得到电机的旋转方向和速率；3.掌握STM32F10xx系列微控制器上编码器的接口配置与数据采集过程；">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190910113846569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>嵌入式课程 之 霍尔传感器（编码器）实验 | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?56467b4a9bdbd6ba525198dabfb9fec0";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">阿东和他的朋友们</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="文章搜索..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/embed/">嵌入式</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/tech/">技术相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/money/">钱财相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">小说相关</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/sports/">运动健康</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/movice/">观影感受</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/baby/">宝宝成长</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/news/">新闻记录</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/project/"> 项目相关</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/iot/">物联网</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/img/">图像相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/manage/">项目管理</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech/c-hall" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/10/tech/c-hall/" class="article-date">
+      <time datetime="2019-09-10T09:34:41.000Z" itemprop="datePublished">2019年09月10日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      嵌入式课程 之 霍尔传感器（编码器）实验
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/embed/">嵌入式</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/传感器/">传感器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编码器/">编码器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/霍尔/">霍尔</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="【实验目的】"><a href="#【实验目的】" class="headerlink" title="【实验目的】"></a>【实验目的】</h2><ol>
+<li>熟悉编码器的种类及其工作原理；</li>
+<li>熟悉编码器的输出形式，熟悉单片机如何通过编码器的输出得到电机的旋转方向和速率；</li>
+<li>掌握STM32F10xx系列微控制器上编码器的接口配置与数据采集过程；<h2 id="【实验原理】"><a href="#【实验原理】" class="headerlink" title="【实验原理】"></a>【实验原理】</h2>编码器（encoder）是指将某一形式的信号或数据（通常特指电机转速）通过采集、编制，转换为可以用于传输、储存的信号形式的设备。编码器按采集方式可以分为接触式编码器和非接触式编码器两种；按工作原理可以分为：光电式、磁电式和触点电刷式编码器。光电式编码器通过采集光通过码盘刻孔产生的脉冲信号的频率进行转换，磁电式编码器通过霍尔元件感应电机转动时产生的磁场变化进行转换，触点电刷式编码器直接采集触点在码盘上的位置进行转换；还可以根据其计数模式分为增量式和绝对式编码器。增量式编码器记录通过采集位移信息产生的脉冲信号，近似于“速率”的概念，绝对式编码器记录位置信息，与过程无关，近似于“路程”的概念。</li>
+</ol>
+<p>本实验采用的编码器为增量式编码器，增量式编码器通常有两个输出信号，分别为A相和B相（也有的编码器有A、B、Z三相输出，有编码器只有A相输出）。每一个信号都是由方波构成的脉冲序列，A相和B相之间的相位差为90度。单片机在接收到AB相输入后，可以根据收到相位的先后顺序确定电机的转向，根据脉冲序列的频率确定电机的转速，这种解码方式称为正交解码。值得注意的是，脉冲频率与电机转速成正比关系，而其具体比例系数会和码盘孔数、减速箱齿数等有关，而转速与行驶速率也存在一个比例系数，因此通常在使用中，会根据实地测试结果直接确定一个脉冲频率与行驶速率之间的经验系数。</p>
+<p>STM32芯片中集成了强大的定时器模块，其工作状态主要有以下几种模式：输入捕获模式、PWM输入模式、强制输出模式、输出比较模式、PWM模式、单脉冲模式、编码器接口模式、调试模式等。在本实验中需要用到的是定时器模块的编码器接口模式。当定时器工作在编码器模式下时，定时器会采集两个指定的引脚输入信号，然后通过检测输入信号的跳变沿，确定输入脉冲的频率及其相位差，从而计算出电机旋转的方向以及速率。编码器接口模式基本上相当于使用了一个带有方向选择的外部时钟。这意味着计数器只在0到TIMx_ARR寄存器的自动装载值之间连续计数(根据方向，或是0到ARR计数，或是ARR到0计数)。所以在开始计数之前必须配置TIMx_ARR。</p>
+<p> <img src="https://img-blog.csdnimg.cn/20190910113846569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> 图1 编码器模式下的计数器操作示意图</p>
+<p>值得注意的是，仅仅完成跳变沿检测的功能，普通IO口就能办到。而定时器模块的编码器接口模式相比于普通IO口的优势在于可以抵抗一定的噪音，如图1所示，在输入信号有毛刺的情况下，计数器依然能够正常的工作，普通IO口想要办到类似的功能则需要人为添加一系列代码。<br>程序流程的简要说明图如图2所示：</p>
+<p> <img src="https://img-blog.csdnimg.cn/20190910113938428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图2 程序流程示意图
+ </p>
+<h2 id="【实验环境】"><a href="#【实验环境】" class="headerlink" title="【实验环境】"></a>【实验环境】</h2><h3 id="硬件设备："><a href="#硬件设备：" class="headerlink" title="硬件设备："></a>硬件设备：</h3><p>1、双轮自平衡机器人。如图3所示，在平衡车背面中间安装了HC-SR04超声波测距模块。<br>2、ST-Link下载器（包含USB线与下载线）。如图4所示。<br>操作系统：<br>Windows7/8/10，32bit/64bit</p>
+<p> <img src="https://img-blog.csdnimg.cn/20190910114001530.png" alt="在这里插入图片描述"><br>图3 双轮自平衡机器人<br>  <img src="https://img-blog.csdnimg.cn/20190910114009746.png" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/20190910114023910.png" alt="在这里插入图片描述"><br>图4 ST-Link下载器与下载线</p>
+<h3 id="软件环境："><a href="#软件环境：" class="headerlink" title="软件环境："></a>软件环境：</h3><p>Keil 5</p>
+<h2 id="【实验步骤】"><a href="#【实验步骤】" class="headerlink" title="【实验步骤】"></a>【实验步骤】</h2><h4 id="第一步-配置工程环境"><a href="#第一步-配置工程环境" class="headerlink" title="第一步 配置工程环境"></a>第一步 配置工程环境</h4><p>（1）打开已经建立好的工程模板，在新建立的工程模板中已经添加五个文件夹，分别命名为USER、HARDWARE、SYSTEM、CORE、FWLib文件夹，如图5所示。其中USER文件夹存放的是主函数，HARDWARE文件夹存放的是本实验对应的硬件设备函数，SYSTEM存放的是本课程所有实验通用的函数，CORE文件夹存放的是启动文件，FWLib文件夹存放的是底层驱动函数。<br> <img src="https://img-blog.csdnimg.cn/20190910114120359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图5工程模板对应的文件夹</p>
+<p>（2）在HARDWARE文件夹下新建两个文件，分别为encoder.c和encoder.h。分别存放编码器的函数文件和头文件，如图6所示。<br> <img src="https://img-blog.csdnimg.cn/20190910114140612.png" alt="在这里插入图片描述"><br>图6 在HARDWARE文件夹下建立encoder.c与encoder.h文件</p>
+<h4 id="第二步-编写定时器函数，完成定时器的配置和启用"><a href="#第二步-编写定时器函数，完成定时器的配置和启用" class="headerlink" title="第二步 编写定时器函数，完成定时器的配置和启用"></a>第二步 编写定时器函数，完成定时器的配置和启用</h4><p>（3）打开程序中的encoder.c文件，首先将encoder.h文件包含进来。其次对Encoder_Init_TIM2 函数进行编写，TIM2采集的是左侧的码盘返回值，选择要使用的时钟，配置引脚，启用编码器模式并配置参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"encoder.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stm32f10x_gpio.h"</span></span></span><br><span class="line"><span class="comment">/****************************************************************</span></span><br><span class="line"><span class="comment">函数功能：把TIM2初始化为编码器接口模式</span></span><br><span class="line"><span class="comment">入口参数：无</span></span><br><span class="line"><span class="comment">返回值：无</span></span><br><span class="line"><span class="comment">****************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Encoder_Init_TIM2</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;  </span><br><span class="line">    TIM_ICInitTypeDef TIM_ICInitStructure;  </span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line"><span class="comment">//使能定时器4的时钟</span></span><br><span class="line">RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);</span><br><span class="line"><span class="comment">//使能PA端口时钟</span></span><br><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;    <span class="comment">//端口配置</span></span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; <span class="comment">//浮空输入</span></span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure);      <span class="comment">//初始化GPIOA</span></span><br><span class="line">    TIM_TimeBaseStructInit(&amp;TIM_TimeBaseStructure);</span><br><span class="line">    TIM_TimeBaseStructure.TIM_Prescaler = <span class="number">0x0</span>; <span class="comment">//预分频器</span></span><br><span class="line"><span class="comment">//设定计数器自动重载值</span></span><br><span class="line">    TIM_TimeBaseStructure.TIM_Period = ENCODER_TIM_PERIOD; </span><br><span class="line"><span class="comment">//选择时钟分频：不分频</span></span><br><span class="line">    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;</span><br><span class="line"><span class="comment">//TIM向上计数</span></span><br><span class="line">    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;</span><br><span class="line">    TIM_TimeBaseInit(TIM2, &amp;TIM_TimeBaseStructure);</span><br><span class="line">TIM_EncoderInterfaceConfig(TIM2, TIM_EncoderMode_TI12,                  TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);<span class="comment">//使用编码器模式</span></span><br><span class="line">    TIM_ICStructInit(&amp;TIM_ICInitStructure);</span><br><span class="line">    TIM_ICInitStructure.TIM_ICFilter = <span class="number">10</span>;</span><br><span class="line">    TIM_ICInit(TIM2, &amp;TIM_ICInitStructure);</span><br><span class="line">    TIM_ClearFlag(TIM2, TIM_FLAG_Update);<span class="comment">//清除TIM的更新标志位</span></span><br><span class="line">    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);</span><br><span class="line">    <span class="comment">//Reset counter</span></span><br><span class="line">    TIM_SetCounter(TIM2,<span class="number">0</span>);</span><br><span class="line">    TIM_Cmd(TIM2, ENABLE); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(1) （4）同理，编写Encoder_Init_TIM4函数，TIM4定时器采集的是右侧的编码器返回值。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/****************************************************************</span></span><br><span class="line"><span class="comment">函数功能：把TIM4初始化为编码器接口模式</span></span><br><span class="line"><span class="comment">入口参数：无</span></span><br><span class="line"><span class="comment">返回值：无</span></span><br><span class="line"><span class="comment">****************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Encoder_Init_TIM4</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;  </span><br><span class="line">TIM_ICInitTypeDef TIM_ICInitStructure;  </span><br><span class="line">GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line"><span class="comment">//使能定时器4的时钟</span></span><br><span class="line">RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);</span><br><span class="line"><span class="comment">//使能PB端口时钟</span></span><br><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);</span><br><span class="line">GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;    <span class="comment">//端口配置</span></span><br><span class="line">GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; <span class="comment">//浮空输入</span></span><br><span class="line">GPIO_Init(GPIOB, &amp;GPIO_InitStructure);      <span class="comment">//初始化GPIOA</span></span><br><span class="line">TIM_TimeBaseStructInit(&amp;TIM_TimeBaseStructure);</span><br><span class="line">TIM_TimeBaseStructure.TIM_Prescaler = <span class="number">0x0</span>; <span class="comment">//预分频器</span></span><br><span class="line"><span class="comment">//设定计数器自动重载值</span></span><br><span class="line">TIM_TimeBaseStructure.TIM_Period = ENCODER_TIM_PERIOD; </span><br><span class="line"><span class="comment">//选择时钟分频：不分频</span></span><br><span class="line">TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;</span><br><span class="line"><span class="comment">//TIM向上计数</span></span><br><span class="line">TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; </span><br><span class="line">TIM_TimeBaseInit(TIM4, &amp;TIM_TimeBaseStructure);</span><br><span class="line">TIM_EncoderInterfaceConfig(TIM4, TIM_EncoderMode_TI12,</span><br><span class="line">TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);<span class="comment">//使用编码器模式</span></span><br><span class="line">TIM_ICStructInit(&amp;TIM_ICInitStructure);</span><br><span class="line">TIM_ICInitStructure.TIM_ICFilter = <span class="number">10</span>;</span><br><span class="line">TIM_ICInit(TIM4, &amp;TIM_ICInitStructure);</span><br><span class="line">TIM_ClearFlag(TIM4, TIM_FLAG_Update);<span class="comment">//清除TIM的更新标志位</span></span><br><span class="line">TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE);</span><br><span class="line">TIM_SetCounter(TIM4,<span class="number">0</span>);<span class="comment">//Reset counter</span></span><br><span class="line">TIM_Cmd(TIM4, ENABLE); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>（5）编写编码器计数器读取函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*****************************************************************</span></span><br><span class="line"><span class="comment">函数功能：单位时间读取编码器计数</span></span><br><span class="line"><span class="comment">入口参数：定时器</span></span><br><span class="line"><span class="comment">返回值：速度值</span></span><br><span class="line"><span class="comment">*****************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Read_Encoder</span><span class="params">(u8 TIMX)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> Encoder_TIM;    </span><br><span class="line">    <span class="keyword">switch</span>(TIMX)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:  Encoder_TIM= (<span class="keyword">short</span>)TIM2 -&gt; CNT;  TIM2 -&gt; CNT=<span class="number">0</span>;<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:  Encoder_TIM= (<span class="keyword">short</span>)TIM4 -&gt; CNT;  TIM4 -&gt; CNT=<span class="number">0</span>;<span class="keyword">break</span>; </span><br><span class="line">        <span class="keyword">default</span>:  Encoder_TIM=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Encoder_TIM;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(2) 打开encoder.h，编写函数声明<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __ENCODER_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __ENCODER_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys.h&gt;    </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ENCODER_TIM_PERIOD (u16)(65535)   <span class="comment">//不可大于65535 因为F103的定时器是16位的</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Encoder_Init_TIM2</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Encoder_Init_TIM4</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Read_Encoder</span><span class="params">(u8 TIMX)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="第三步-编写main-c文件"><a href="#第三步-编写main-c文件" class="headerlink" title="第三步 编写main.c文件"></a>第三步 编写main.c文件</h4><p>(3) （6）将工程编译需要用到的头文件包含进来，并预定义显示函数和全局变量。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"encoder.h"</span> <span class="comment">//包含编码器函数头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sys.h"</span>   <span class="comment">//包含系统头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stm32f10x.h"</span> <span class="comment">//包含系统寄存器定义声明的头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">oled_show</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="keyword">int</span> Encoder_Left,Encoder_Right;   <span class="comment">//左右编码器的脉冲计数</span></span><br></pre></td></tr></table></figure></p>
+<p>(4) （7）在主函数中调用延时函数、显示函数和编码器函数的初始化函数。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">delay_init();      <span class="comment">//延时函数初始化</span></span><br><span class="line">    OLED_Init();     <span class="comment">//OLED初始化</span></span><br><span class="line">        Encoder_Init_TIM2();            <span class="comment">//编码器接口初始化</span></span><br><span class="line">        Encoder_Init_TIM4();            <span class="comment">//编码器接口初始化</span></span><br></pre></td></tr></table></figure></p>
+<p>(5) （8）定义主循环，在主循环中调用超声波读取函数和显示函数。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Encoder_Left=Read_Encoder(<span class="number">2</span>);       <span class="comment">//读取左侧编码器值</span></span><br><span class="line">    Encoder_Right=Read_Encoder(<span class="number">4</span>);      <span class="comment">//读取右侧编码器值</span></span><br><span class="line">    oled_show();          <span class="comment">//显示屏打开</span></span><br><span class="line">    delay_ms(<span class="number">50</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(6) （9）编写OLED显示函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">oled_show</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//显示右侧编码器返回值</span></span><br><span class="line">    OLED_ShowString(<span class="number">0</span>,<span class="number">10</span>,<span class="string">"Encoder_Right"</span>);</span><br><span class="line">    <span class="keyword">if</span>(Encoder_Right &gt;=<span class="number">0</span>)OLED_ShowString(<span class="number">20</span>,<span class="number">20</span>,<span class="string">""</span>),</span><br><span class="line">        OLED_ShowNumber(<span class="number">45</span>,<span class="number">20</span>,Encoder_Right,<span class="number">4</span>,<span class="number">12</span>);  </span><br><span class="line">    <span class="keyword">else</span> OLED_ShowString(<span class="number">20</span>,<span class="number">20</span>,<span class="string">"-"</span>),</span><br><span class="line">        OLED_ShowNumber(<span class="number">45</span>,<span class="number">20</span>,<span class="number">4</span>-Encoder_Right,<span class="number">4</span>,<span class="number">12</span>);</span><br><span class="line"><span class="comment">//显示左侧编码器返回值</span></span><br><span class="line">    OLED_ShowString(<span class="number">0</span>,<span class="number">40</span>,<span class="string">"Encoder_Left"</span>);</span><br><span class="line">    <span class="keyword">if</span>(Encoder_Left&gt;=<span class="number">0</span>)OLED_ShowString(<span class="number">10</span>,<span class="number">50</span>,<span class="string">""</span>),</span><br><span class="line">        OLED_ShowNumber(<span class="number">45</span>,<span class="number">50</span>,Encoder_Left,<span class="number">4</span>,<span class="number">12</span>);</span><br><span class="line">    <span class="keyword">else</span> OLED_ShowString(<span class="number">10</span>,<span class="number">50</span>,<span class="string">"-"</span>),</span><br><span class="line">        OLED_ShowNumber(<span class="number">45</span>,<span class="number">50</span>,-Encoder_Left,<span class="number">4</span>,<span class="number">12</span>);</span><br><span class="line">    <span class="comment">//=============刷新======================//</span></span><br><span class="line">    OLED_Refresh_Gram();    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="第四步-编译并下载，观察实验现象"><a href="#第四步-编译并下载，观察实验现象" class="headerlink" title="第四步 编译并下载，观察实验现象"></a>第四步 编译并下载，观察实验现象</h4><p>（10）本实验采用仿真器为STLink V2，将仿真器与小车相连，注意正负极不要接反，如图7所示。<br> <img src="https://img-blog.csdnimg.cn/20190910114211384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图7仿真器与下载线连接图</p>
+<p>（11）编译程序：点击如图8所示的编译按键。<br> <img src="https://img-blog.csdnimg.cn/20190910114224823.png" alt="在这里插入图片描述"><br>图8Keil编译环境下的编译按键</p>
+<p>（12）当编译完成后，如果没有问题，Build Output栏会出现无错误、无警告的提示，如图9所示。<br> <img src="https://img-blog.csdnimg.cn/2019091011423472.png" alt="在这里插入图片描述"><br>图9编译通过后Build Output栏提示信息</p>
+<p>（13）下载程序：点击如图所示的下载按键，程序就会下载到STM32的芯片中。下载按键如图10所示。<br> <img src="https://img-blog.csdnimg.cn/20190910114241815.png" alt="在这里插入图片描述"><br>图10Keil编译环境下的下载按键</p>
+<p>（14）观察实验现象，OLED显示屏上显示出当前电机的转速，用手从不同方向转动电机，观察数值的变化，结果如图11所示。<br> <img src="https://img-blog.csdnimg.cn/20190910114255167.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>图11平衡车上的编码器测量数据</p>
+<h2 id="【思考题】"><a href="#【思考题】" class="headerlink" title="【思考题】"></a>【思考题】</h2><h3 id="1、选择题"><a href="#1、选择题" class="headerlink" title="1、选择题"></a>1、选择题</h3><p>题目1：编码器传回的正交编码中，两个信号的相位差是多少（B）<br>A：60度<br>B：90度<br>C：120度<br>D：180度</p>
+<p>题目2：若要配置一个8位的编码器，在encoder.h中的自动重载值应该设为多少（B）<br>A：8<br>B：255<br>C：256<br>D：65535</p>
+<h3 id="2、简答题"><a href="#2、简答题" class="headerlink" title="2、简答题"></a>2、简答题</h3><p>题目1：简要说明如何将编码器的输出转换为方向信息和速率信息。<br>编码器输出为AB两相脉冲信号，A相和B相之间的相位差为90度。单片机在接收到AB相输入后，可以根据收到相位的先后顺序确定电机的转向，根据脉冲序列的频率确定电机的转速。</p>
+<p>题目2：结合相关资料，试说明如何通过IO和中断对编码器的输出数据进行解码。</p>
+<p>（开放性题目，答案不唯一）配置两个IO口为上升下降沿触发中断，设置全局变量表示转速、方向，设置表示跳变的标志位，指定其中一个输入，若该输入触发中断，则转速变量加1，检测相应的寄存器，若为上升沿触发则跳变标志位置1，若为下降沿触发则跳变标志位置0；当另一输入进入中断时，可以根据自身是上升沿还是下降沿触发结合方向标志位，确定自身是超前于另一信号，还是滞后于另一信号，从而确定方向。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
+        <p><span>发布时间:</span>2019-09-10, 17:34:41</p>
+        <p><span>最后更新:</span>2019-09-10, 17:34:41</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/10/tech/c-hall/" title="嵌入式课程 之 霍尔传感器（编码器）实验">https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/09/17/tech/c-ultra/">
+                    嵌入式课程 之 超声波传感器实验
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/07/15/tech/img-cal/">
+                    双目摄像头标定流程
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验目的】"><span class="toc-number">1.</span> <span class="toc-text">【实验目的】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验原理】"><span class="toc-number">2.</span> <span class="toc-text">【实验原理】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验环境】"><span class="toc-number">3.</span> <span class="toc-text">【实验环境】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件设备："><span class="toc-number">3.1.</span> <span class="toc-text">硬件设备：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件环境："><span class="toc-number">3.2.</span> <span class="toc-text">软件环境：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验步骤】"><span class="toc-number">4.</span> <span class="toc-text">【实验步骤】</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步-配置工程环境"><span class="toc-number">4.0.1.</span> <span class="toc-text">第一步 配置工程环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步-编写定时器函数，完成定时器的配置和启用"><span class="toc-number">4.0.2.</span> <span class="toc-text">第二步 编写定时器函数，完成定时器的配置和启用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步-编写main-c文件"><span class="toc-number">4.0.3.</span> <span class="toc-text">第三步 编写main.c文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四步-编译并下载，观察实验现象"><span class="toc-number">4.0.4.</span> <span class="toc-text">第四步 编译并下载，观察实验现象</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#【思考题】"><span class="toc-number">5.</span> <span class="toc-text">【思考题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、选择题"><span class="toc-number">5.1.</span> <span class="toc-text">1、选择题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、简答题"><span class="toc-number">5.2.</span> <span class="toc-text">2、简答题</span></a></li></ol></li>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"嵌入式课程 之 霍尔传感器（编码器）实验　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/09/17/tech/c-ultra/" title="上一篇: 嵌入式课程 之 超声波传感器实验">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/07/15/tech/img-cal/" title="下一篇: 双目摄像头标定流程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/books/以眨眼干杯/">读书笔记 之 《以眨眼干杯》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/24/news/20191124/">新闻联播 之 2019年11月24日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/23/news/20191123/">新闻联播 之 2019年11月23日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/22/news/20191122/">新闻联播 之 2019年11月22日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/news/20191121/">新闻联播 之 2019年11月21日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/20/news/20191120/">新闻联播 之 2019年11月20日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/19/news/20191119/">新闻联播 之 2019年11月19日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/18/news/20191118/">新闻联播 之 2019年11月18日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/17/news/20191117/">新闻联播 之 2019年11月17日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/16/news/20191116/">新闻联播 之 2019年11月16日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/15/news/20191115/">新闻联播 之 2019年11月15日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/14/news/20191114/">新闻联播 之 2019年11月14日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/13/news/20191113/">新闻联播 之 2019年11月13日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/12/news/20191112/">新闻联播 之 2019年11月12日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/11/news/20191111/">新闻联播 之 2019年11月11日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/10/news/20191110/">新闻联播 之 2019年11月10日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/09/news/20191109/">新闻联播 之 2019年11月9日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/08/news/20191108/">新闻联播 之 2019年11月8日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/07/news/20191107/">新闻联播 之 2019年11月7日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/06/news/20191106/">新闻联播 之 2019年11月6日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/05/news/20191105/">新闻联播 之 2019年11月5日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech/c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech/c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech/c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech/c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech/c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech/c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech/c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/manage-510/">proj-manage-510</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life/movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books/菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books/机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life/movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech/ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life/movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech/ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech/ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/books/名人传/">读书笔记 之 《名人传》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech/ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books/思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books/乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life/movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books/浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby/核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life/movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life/movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life/movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life/movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech/tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books/经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life/movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech/tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech/tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books/活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self/不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books/月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books/乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby/身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books/反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books/冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books/如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books/数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech/md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books/创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books/三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech/tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2019 阿东和他的朋友们<i class="fa fa-heart animated infinite pulse"></i>个人版权所有
+            </div>
+            <div class="footer-right">
+            粤ICP备19013521号
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

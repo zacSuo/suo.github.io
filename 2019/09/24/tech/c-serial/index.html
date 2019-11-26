@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="阿东和他的朋友们">
+
+
+
+<meta name="description" content="1.掌握USART接口的基本的和主要指标；2.掌握USART接口的编程原理和使用方法。">
+<meta name="keywords" content="嵌入式,中断,串口,serial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式课程 之 中断和串口通信实验">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="1.掌握USART接口的基本的和主要指标；2.掌握USART接口的编程原理和使用方法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232547893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232601975.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232610695.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232901111.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232907783.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232913597.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232921386.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232927646.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190924232951177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-24T09:33:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式课程 之 中断和串口通信实验">
+<meta name="twitter:description" content="1.掌握USART接口的基本的和主要指标；2.掌握USART接口的编程原理和使用方法。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190924232547893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>嵌入式课程 之 中断和串口通信实验 | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?56467b4a9bdbd6ba525198dabfb9fec0";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">阿东和他的朋友们</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="文章搜索..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/embed/">嵌入式</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/tech/">技术相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/money/">钱财相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">小说相关</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/sports/">运动健康</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/movice/">观影感受</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/baby/">宝宝成长</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/news/">新闻记录</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/project/"> 项目相关</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/iot/">物联网</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/img/">图像相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/manage/">项目管理</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">阿东和他的朋友们</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech/c-serial" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/24/tech/c-serial/" class="article-date">
+      <time datetime="2019-09-24T09:33:46.000Z" itemprop="datePublished">2019年09月24日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      嵌入式课程 之 中断和串口通信实验
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/embed/">嵌入式</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/serial/">serial</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/中断/">中断</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/串口/">串口</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/嵌入式/">嵌入式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="【实验目的】"><a href="#【实验目的】" class="headerlink" title="【实验目的】"></a>【实验目的】</h2><p>掌握USART接口的基本的和主要指标。<br>掌握USART接口的编程原理和使用方法。</p>
+<h2 id="【实验原理】"><a href="#【实验原理】" class="headerlink" title="【实验原理】"></a>【实验原理】</h2><p>STM32的串口非常强大，它不仅支持最基本的通用串口同步、异步通讯，还具有LIN总线功能(局域互联网)、IRDA 功能(红外通讯)、SmartCard功能。</p>
+<h3 id="一、USART接口简介"><a href="#一、USART接口简介" class="headerlink" title="一、USART接口简介"></a>一、USART接口简介</h3><p>本实验使用的为串口中最基本、最常用的全双工、异步通讯方式，其寄存器说明如表1所示。要配置串口通讯，至少要设置以下几个参数：字长(一次传送的数据长度)、波特率(每秒传输的数据位数)、奇偶校验位、还有停止位。在初始化串口的时候，必然有一个串口初始化结构体，这个结构体的几个成员肯定就是存储这些控制参数的。<br><img src="https://img-blog.csdnimg.cn/20190924232547893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>表1 USART相关寄存器</p>
+<h3 id="二、串口通信分类及原理"><a href="#二、串口通信分类及原理" class="headerlink" title="二、串口通信分类及原理"></a>二、串口通信分类及原理</h3><p>串口通讯分为并行通信和串行通信。并行通信是通过多条数据线来传输数据，所以传输的速度比较快，缺点是不利于长距离传输，串行通信指将数据字节分成位的形式，在一条线上来传输，相比并行通信可以大幅减少成本，但是控制难度较大，串行通信根据传输方向分为单工、半双工和全双工，根据时钟的特性又可以分为同步通信和异步通信。</p>
+<p>一般使用异步通信较多，异步通信的原理是将数据以帧的形式传输，每帧间有固定的传输时间间隔，通信中的波特率、数据位、停止位和奇偶校验的参数设置很关键，必须使两个端口的参数匹配后才可以通信。</p>
+<p>串行通信中的波特率和比特率：波特率指数据信号对载波的调制速率，波特率的单位是波特(baud)，比特率指单位时间内传输的比特数，单位bit/s(bps)，而对于USART来说，波特率和比特率是相等的。总之，波特率越大传输速率越快，通过控制时钟可以改变波特率。</p>
+<p>数据位是传输数据的部分，停止位都在一帧数据的最后一位表示数据帧传输的结束，而奇偶校验位是用来纠错的，用于判读数据传输过程中是否发生了错误。</p>
+<h3 id="三、硬件连接和USART库函数介绍"><a href="#三、硬件连接和USART库函数介绍" class="headerlink" title="三、硬件连接和USART库函数介绍"></a>三、硬件连接和USART库函数介绍</h3><p><img src="https://img-blog.csdnimg.cn/20190924232601975.png" alt="在这里插入图片描述"><br>图1 电路原理图<br>STM32芯片有3个同步异步串口和2个异步串口，本实验中使用异步串口的方式进行通讯，连接方式见图1，芯片上的PC10和PC11引脚分别对应异步串口UART4的发送端TX和接收端RX，小车上的电路板已经将这两个引脚引出。<br><img src="https://img-blog.csdnimg.cn/20190924232610695.png" alt="在这里插入图片描述"><br>表2 STM32F103xx芯片引脚功能定义</p>
+<p>STM32的芯片引脚和串口的对应关系见上表2(芯片手册P34页)，可以看出PC10和PC11引脚的功能分别是异步串口UART4的发送和接收端，为了使用串口通信功能，需要对GPIO和UART4的时钟进行配置。</p>
+<p>与串口模块有关的结构体USART_InitTypeDef定义在stm32f10x_usart.h中，库函数USART_Init定义在stm32f10x_usart.c中。<br>USART_InitTypeDef结构体的配置如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">uint32_t</span>  USART_BaudRate;                <span class="comment">// 波特率</span></span><br><span class="line"><span class="keyword">uint16_t</span>  USART_WordLength;              <span class="comment">// 字长</span></span><br><span class="line"><span class="keyword">uint16_t</span>  USART_StopBits;                 <span class="comment">// 停止位</span></span><br><span class="line"><span class="keyword">uint16_t</span>  USART_Parity;                   <span class="comment">// 校验位</span></span><br><span class="line"><span class="keyword">uint16_t</span>  USART_Mode;                   <span class="comment">// USART 模式</span></span><br><span class="line"><span class="keyword">uint16_t</span>  USART_HardwareFlowControl;     <span class="comment">// 硬件流控制</span></span><br><span class="line">&#125; USART_InitTypeDef;</span><br><span class="line">``` </span><br><span class="line">库函数USART_Init的作用是初始化串口参数，配置串口的波特率、数据位、停止位和奇偶校验等参数。</span><br><span class="line">### 四、软件流程图</span><br><span class="line"></span><br><span class="line">图<span class="number">2</span> 系统流程图</span><br><span class="line">系统流程图见图<span class="number">2</span>，使用串口模块时同样要先初始化串口所对应的GPIO引脚，这里使用的是异步串口UART4，它所对应的引脚为PC10和PC11，所以先使能引脚的时钟，设置与串口发送端TX对应的PC10为推挽输出，与串口接收端RX对应的PC11引脚设置为浮空输入，然后初始化GPIO，之后再使能串口UART4的时钟，先将其复位，然后设置波特率、停止位、校验位等参数，最关键的是要重定位fputc函数，因为这里要与电脑通信，所以要将该函数的输出重定向到串口上，这样在使用<span class="built_in">printf</span>语句时，输出的结果可以通过串口传到电脑端，然后再开启串口中断。最后开启串口进行通信，这样电脑端就可以显示从单片机发送来的信息。</span><br><span class="line">## 【实验环境】</span><br><span class="line">### 操作系统：</span><br><span class="line">Windows7/<span class="number">8</span>/<span class="number">10</span>，<span class="number">32b</span>it/<span class="number">64b</span>it</span><br><span class="line">### 设备简介：</span><br><span class="line"><span class="number">1</span>、自平衡小车，如下图<span class="number">3</span>所示，小车所搭载的电路板已经将STM32芯片上的PC10和PC11引脚引出，测试串口时将电路板和电脑端的usb转TTL模块的GND端连接，TX和RX相互交叉连接，则串口通讯的物理连接就完成了。 </span><br><span class="line">![在这里插入图片描述](https:<span class="comment">//img-blog.csdnimg.cn/20190924232701863.png)![在这里插入图片描述](https://img-blog.csdnimg.cn/20190924232707174.png)</span></span><br><span class="line">图<span class="number">3</span> 双轮自平衡车和USB转TTL模块</span><br><span class="line"><span class="number">2</span>、ST-Link下载器(包含USB线与下载线)，如下图<span class="number">4</span>所示。</span><br><span class="line">    ![在这里插入图片描述](https:<span class="comment">//img-blog.csdnimg.cn/20190924232718123.png)</span></span><br><span class="line">图<span class="number">4</span> ST-Link下载器与下载线</span><br><span class="line"><span class="number">3</span>、软件：Keil5、串口调试软件。</span><br><span class="line"></span><br><span class="line">通过串口功能可以实现STM32单片机和电脑端的异步通讯，例如将单片机的信息输出到电脑端，在电脑端显示通讯结果的软件叫串口调试助手，串口调试助手的参数设置如图<span class="number">5</span>所示。</span><br><span class="line">![在这里插入图片描述](https:<span class="comment">//img-blog.csdnimg.cn/20190924232725784.png)</span></span><br><span class="line">图<span class="number">5</span> 串口助手参数配置界面</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、实验场地：无</span><br><span class="line">## 【实验步骤】</span><br><span class="line">### 一、配置工程环境</span><br><span class="line"><span class="number">1.1</span> 打开已经建立好的工程模板，在新建立的工程模板中已经添加五个文件夹，分别命名为USER、HARDWARE、SYSTEM、CORE、FWLib文件夹，如下图<span class="number">6</span>所示。其中USER文件夹存放的是主函数，HARDWARE文件夹存放的是本实验对应的硬件设备函数，SYSTEM存放的是本课程所有实验通用的函数，CORE文件夹存放的是启动文件，FWLib文件夹存放的是底层驱动函数。</span><br><span class="line">![在这里插入图片描述](https:<span class="comment">//img-blog.csdnimg.cn/20190924232734349.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70)</span></span><br><span class="line">图<span class="number">6</span> 工程模板对应的文件夹</span><br><span class="line"><span class="number">1.2</span> 在SYSTEM文件夹下新建两个文件，分别为usart.c和usart.h。分别存放串口USART模块的初始化及配置函数与USART头文件，如图<span class="number">7</span>所示。</span><br><span class="line">![在这里插入图片描述](https:<span class="comment">//img-blog.csdnimg.cn/20190924232740781.png)</span></span><br><span class="line">图<span class="number">7</span> 在SYSTEM文件夹下新建usart.c和usart.h文件</span><br><span class="line">### 二、开启时钟，完成端口初始化</span><br><span class="line"><span class="number">2.1</span> GPIO时钟使能：调用库函数RCC_APB2PeriphClockCmd()初始化UART4和GPIOC的时钟。</span><br><span class="line">```c</span><br><span class="line"><span class="comment">/*声明一个GPIO初始化结构体*/</span></span><br><span class="line">GPIO_InitTypeDef  GPIO_InitStructure;</span><br><span class="line"><span class="comment">/*使能USART4对应的GPIOA时钟*/</span></span><br><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);</span><br><span class="line"><span class="number">2.2</span>设置GPIO端口模式：这是使用GPIOC的PC10和PC11的默认复用UART4的功能，在使用复用功能的时候，要开启相应的功能时钟UART4。</span><br><span class="line"><span class="comment">/*USART4_TX对应引脚PC10*/</span></span><br><span class="line">GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;</span><br><span class="line">GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line"><span class="comment">/*复用推挽输出*/</span></span><br><span class="line">GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;</span><br><span class="line"><span class="comment">/*初始化PC10引脚*/</span></span><br><span class="line">GPIO_Init(GPIOC, &amp;GPIO_InitStructure);</span><br><span class="line"><span class="comment">/*USART4_RX对应引脚PC11*/</span></span><br><span class="line">GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;</span><br><span class="line"><span class="comment">/*设置浮空输入*/</span></span><br><span class="line">GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;</span><br><span class="line"><span class="comment">/*初始化PC11*/</span></span><br><span class="line">GPIO_Init(GPIOC, &amp;GPIO_InitStructure);</span><br></pre></td></tr></table></figure></p>
+<p>2.3 UART4外设使能：对UART进行初始化配置。分别配置串口的波特率、传输字长、停止位和校验位等。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*声明一个串口初始化结构体*/</span></span><br><span class="line">USART_InitTypeDef  USART_InitStructure;</span><br><span class="line"><span class="comment">/*声明一个中断初始化结构体*/</span> </span><br><span class="line">NVIC_InitTypeDef  NVIC_InitStructure;</span><br><span class="line"><span class="comment">/*使能USART4的时钟*/</span></span><br><span class="line">RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);</span><br><span class="line"><span class="comment">/*复位串口4 */</span> </span><br><span class="line">USART_DeInit(UART4);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* USART初始化设置，波特率设置为9600*/</span></span><br><span class="line">USART_InitStructure.USART_BaudRate = <span class="number">9600</span>;</span><br><span class="line"><span class="comment">/*字长为8位数据格式*/</span></span><br><span class="line">USART_InitStructure.USART_WordLength = USART_WordLength_8b;</span><br><span class="line"><span class="comment">/*一个停止位*/</span></span><br><span class="line">USART_InitStructure.USART_StopBits = USART_StopBits_1;</span><br><span class="line"><span class="comment">/*无奇偶校验位*/</span></span><br><span class="line">USART_InitStructure.USART_Parity = USART_Parity_No;</span><br><span class="line"><span class="comment">/*无硬件数据流控制*/</span></span><br><span class="line">USART_InitStructure.USART_HardwareFlowControl=USART_HardwareFlowControl_None;</span><br><span class="line"><span class="comment">/*收发模式*/</span></span><br><span class="line">USART_InitStructure.USART_Mode=USART_Mode_Rx|USART_Mode_Tx;</span><br><span class="line"><span class="comment">/*初始化串口*/</span></span><br><span class="line">USART_Init(UART4, &amp;USART_InitStructure);</span><br><span class="line"><span class="comment">/*开启中断*/</span></span><br><span class="line"><span class="comment">//USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);</span></span><br><span class="line"><span class="comment">/*使能串口*/</span></span><br><span class="line">USART_Cmd(UART4, ENABLE);</span><br></pre></td></tr></table></figure></p>
+<p>2.4中断做初始化。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Usart4 NVIC配置*/</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;</span><br><span class="line"><span class="comment">/*抢占优先级3*/</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = <span class="number">3</span>;</span><br><span class="line"><span class="comment">/*子优先级3*/</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelSubPriority = <span class="number">3</span>;</span><br><span class="line"><span class="comment">/*IRQ通道使能*/</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;</span><br><span class="line"><span class="comment">/*根据指定的参数初始化VIC寄存器*/</span> </span><br><span class="line">NVIC_Init(&amp;NVIC_InitStructure);</span><br></pre></td></tr></table></figure></p>
+<p>2.5 输出：根据选择的串口类型重新定义fputc函数，则调用printf函数可以将结果通过串口打印到电脑端的串口助手上。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*重定义fputc函数*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">(<span class="keyword">int</span> ch, FILE*f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*循环发送, 直到发送完毕*/</span></span><br><span class="line"><span class="keyword">while</span>(USART_GetFlagStatus(UART4, USART_FLAG_TC)!=Bit_SET);</span><br><span class="line">UART4-&gt;DR = (u8)ch;</span><br><span class="line"><span class="comment">/*返回要发送的值*/</span></span><br><span class="line"><span class="keyword">return</span> ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、编写main函数实现实验要求"><a href="#三、编写main函数实现实验要求" class="headerlink" title="三、编写main函数实现实验要求"></a>三、编写main函数实现实验要求</h3><p>3.1编写主函数来实现串口通信的功能<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"delay.h"</span>      <span class="comment">//包含延时函数头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"usart.h"</span>     <span class="comment">//包含串口函数头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sys.h"</span>        <span class="comment">//包系统函数的头文件</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;     </span><br><span class="line">    <span class="comment">/*计数器初始化*/</span></span><br><span class="line">u16 i = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/*延时函数初始化*/</span></span><br><span class="line">    delay_init(); </span><br><span class="line">    <span class="comment">/*设置NVIC中断分组2:2位抢占优先级，2位响应优先级*/</span></span><br><span class="line">    NVIC_Configuration();</span><br><span class="line">    <span class="comment">/*串口初始化波特率为9600*/</span></span><br><span class="line">    uart_init(<span class="number">9600</span>);</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*将嵌入式实验输出到串口中，并在电脑端显示结果*/</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"\r\n 嵌入式实验 \r\n"</span>);</span><br><span class="line"><span class="comment">/*计数器累加*/</span></span><br><span class="line">        i++;</span><br><span class="line"><span class="comment">/*当计数器结果等于20时，改变输出结果*/</span></span><br><span class="line">        <span class="keyword">if</span>(i == <span class="number">20</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">/*串口输出中断和串口操作实验字符串*/</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\r\n 中断和串口操作实验 \r\n"</span>);</span><br><span class="line">            <span class="comment">/*计数器清零 */</span></span><br><span class="line">            i = <span class="number">0</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 延迟10ms*/</span></span><br><span class="line">        delay_ms(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、编译并下载，观察实验现象"><a href="#四、编译并下载，观察实验现象" class="headerlink" title="四、编译并下载，观察实验现象"></a>四、编译并下载，观察实验现象</h3><p>4.1 本实验采用仿真器为STLink V2，将仿真器与小车相连，注意正负极不要接反，如下图8所示。<br><img src="https://img-blog.csdnimg.cn/20190924232901111.png" alt="在这里插入图片描述"><br>图8 仿真器与下载线连接图<br>4.2 编译程序：点击如图9所示的编译按键。<br><img src="https://img-blog.csdnimg.cn/20190924232907783.png" alt="在这里插入图片描述"><br>图9 Keil5编译环境下的编译按键<br>当编译完成后，如果没有问题，Build Output栏会出现无错误、无警告的提示，如图10所示。<br><img src="https://img-blog.csdnimg.cn/20190924232913597.png" alt="在这里插入图片描述"><br>图10 编译通过后Build Output栏提示信息<br>4.3 下载程序：点击如图所示的下载按键，程序就会下载到STM32的芯片中。下载按键如下图11所示。<br><img src="https://img-blog.csdnimg.cn/20190924232921386.png" alt="在这里插入图片描述"><br>图11 Keil5编译环境下的下载按键<br>4.4 打开串口调试软件。设置波特率为9600打开串口接受数据，如图12所示<br><img src="https://img-blog.csdnimg.cn/20190924232927646.png" alt="在这里插入图片描述"><br>图12 串口调试助手显示的结果</p>
+<h2 id="【实验思考】"><a href="#【实验思考】" class="headerlink" title="【实验思考】"></a>【实验思考】</h2><h3 id="一、选择题"><a href="#一、选择题" class="headerlink" title="一、选择题"></a>一、选择题</h3><p>题目1：下面哪条语句是设置串口传输字长？ (A)<br>A：USART_InitStructure.USART_WordLength = USART_WordLength_8b;<br>B：USART_InitStructure.USART_BaudRate = 9600;<br>C：USART_InitStructure.USART_Mode=USART_Mode_Rx| USART_Mode_Tx;<br>D：USART_InitStructure.USART_StopBits = USART_StopBits_1;</p>
+<p>题目2：在串口配置时将波特率设置为9600，那么在串口助手中应该将波特率设置为多少？(A)<br>A：9600<br>B：115200</p>
+<h3 id="二、简答题"><a href="#二、简答题" class="headerlink" title="二、简答题"></a>二、简答题</h3><p>题目1：在选定串口引脚后，应该如何对引脚进行功能配置选择？</p>
+<p>在UART4串口选择管脚后，Tx为发送端，输出引脚，而且现在GPIO是使用复用功能，所以要把它配置为复用推挽输出(GPIO_Mode_AF_PP)，而Rx引脚为接收端，输入引脚，所以配置为浮空输入模式GPIO_Mode_IN_FLOATING。</p>
+<h2 id="附录：USART相关库函数"><a href="#附录：USART相关库函数" class="headerlink" title="附录：USART相关库函数"></a>附录：USART相关库函数</h2><p><img src="https://img-blog.csdnimg.cn/20190924232951177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1b3hkMTIz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">阿东和他的朋友们</a></p>
+        <p><span>发布时间:</span>2019-09-24, 17:33:46</p>
+        <p><span>最后更新:</span>2019-09-24, 17:33:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/24/tech/c-serial/" title="嵌入式课程 之 中断和串口通信实验">https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/　　作者: 阿东和他的朋友们" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/09/25/tech/c-spi/">
+                    嵌入式实验 之 SPI通信实验
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/09/23/tech/c-gpio-flash/">
+                    嵌入式课程 之 GPIO的配置与FLASH编程
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验目的】"><span class="toc-number">1.</span> <span class="toc-text">【实验目的】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验原理】"><span class="toc-number">2.</span> <span class="toc-text">【实验原理】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、USART接口简介"><span class="toc-number">2.1.</span> <span class="toc-text">一、USART接口简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、串口通信分类及原理"><span class="toc-number">2.2.</span> <span class="toc-text">二、串口通信分类及原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、硬件连接和USART库函数介绍"><span class="toc-number">2.3.</span> <span class="toc-text">三、硬件连接和USART库函数介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、编写main函数实现实验要求"><span class="toc-number">2.4.</span> <span class="toc-text">三、编写main函数实现实验要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、编译并下载，观察实验现象"><span class="toc-number">2.5.</span> <span class="toc-text">四、编译并下载，观察实验现象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【实验思考】"><span class="toc-number">3.</span> <span class="toc-text">【实验思考】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、选择题"><span class="toc-number">3.1.</span> <span class="toc-text">一、选择题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、简答题"><span class="toc-number">3.2.</span> <span class="toc-text">二、简答题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录：USART相关库函数"><span class="toc-number">4.</span> <span class="toc-text">附录：USART相关库函数</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"嵌入式课程 之 中断和串口通信实验　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/09/25/tech/c-spi/" title="上一篇: 嵌入式实验 之 SPI通信实验">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/09/23/tech/c-gpio-flash/" title="下一篇: 嵌入式课程 之 GPIO的配置与FLASH编程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/books/以眨眼干杯/">读书笔记 之 《以眨眼干杯》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/24/news/20191124/">新闻联播 之 2019年11月24日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/23/news/20191123/">新闻联播 之 2019年11月23日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/22/news/20191122/">新闻联播 之 2019年11月22日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/news/20191121/">新闻联播 之 2019年11月21日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/20/news/20191120/">新闻联播 之 2019年11月20日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/19/news/20191119/">新闻联播 之 2019年11月19日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/18/news/20191118/">新闻联播 之 2019年11月18日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/17/news/20191117/">新闻联播 之 2019年11月17日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/16/news/20191116/">新闻联播 之 2019年11月16日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/15/news/20191115/">新闻联播 之 2019年11月15日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/14/news/20191114/">新闻联播 之 2019年11月14日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/13/news/20191113/">新闻联播 之 2019年11月13日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/12/news/20191112/">新闻联播 之 2019年11月12日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/11/news/20191111/">新闻联播 之 2019年11月11日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/10/news/20191110/">新闻联播 之 2019年11月10日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/09/news/20191109/">新闻联播 之 2019年11月9日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/08/news/20191108/">新闻联播 之 2019年11月8日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/07/news/20191107/">新闻联播 之 2019年11月7日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/06/news/20191106/">新闻联播 之 2019年11月6日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/05/news/20191105/">新闻联播 之 2019年11月5日</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech/c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech/c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech/c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech/c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech/c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech/c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech/c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/manage-510/">proj-manage-510</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life/movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books/菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books/机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life/movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech/ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life/movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech/ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech/ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/books/名人传/">读书笔记 之 《名人传》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech/ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books/思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books/乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life/movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books/浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby/核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life/movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life/movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life/movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life/movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech/tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books/经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life/movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech/tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech/tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books/活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self/不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books/月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books/乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby/身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books/反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books/冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books/如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books/数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech/md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books/创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books/三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech/tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2019 阿东和他的朋友们<i class="fa fa-heart animated infinite pulse"></i>个人版权所有
+            </div>
+            <div class="footer-right">
+            粤ICP备19013521号
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

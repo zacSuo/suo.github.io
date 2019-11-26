@@ -352,11 +352,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-tech-ml-gzxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-tech/img-cal" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/12/tech-ml-gzxx/" class="article-date">
-      <time datetime="2019-04-12T14:10:38.000Z" itemprop="datePublished">2019年04月12日</time>
+      <a href="/2019/07/15/tech/img-cal/" class="article-date">
+      <time datetime="2019-07-15T09:45:19.000Z" itemprop="datePublished">2019年07月15日</time>
 </a>
 
 
@@ -371,7 +371,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/12/tech-ml-gzxx/">机器学习 之 规则学习</a>
+      <a class="article-title" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a>
     </h1>
   
 
@@ -381,7 +381,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              规则学习就是指通过样本学习一个明确的规则，用以对待分类样本进行分类，目标是产生一个能覆盖尽可能多的样本的规则集。规则常分为命题规则和一阶规则，命题规则指使用具体原子命题和逻辑关系组合成的简单陈述句，一阶规则是由可以描述属性的原子公式，从描述来看命题规则属于一阶规则的特殊情况
+              本文选择使用Matlab进行标定，过程分3步，接下来分步详细展开：1. 使用棋盘格生产图像；2. 使用图像在Matlab中标定；3. 使用标定系数
           
       
     </div>
@@ -390,18 +390,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/tools/">工具相关</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/一阶规则/">一阶规则</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/命题规则/">命题规则</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规则学习/">规则学习</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Opencv/">Opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双目摄像头/">双目摄像头</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/标定/">标定</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/12/tech-ml-gzxx/#more">阅读全文 >></a>
+          <a href="/2019/07/15/tech/img-cal/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -420,11 +420,11 @@
 
 
   
-    <article id="post-tech-ml-gltmx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-proj/img-sm" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/12/tech-ml-gltmx/" class="article-date">
-      <time datetime="2019-04-12T14:08:38.000Z" itemprop="datePublished">2019年04月12日</time>
+      <a href="/2019/07/15/proj/img-sm/" class="article-date">
+      <time datetime="2019-07-15T09:42:39.000Z" itemprop="datePublished">2019年07月15日</time>
 </a>
 
 
@@ -439,7 +439,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/12/tech-ml-gltmx/">机器学习 之 概率图模型</a>
+      <a class="article-title" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a>
     </h1>
   
 
@@ -449,7 +449,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              概率图模型就是基于概率构建的图结构模型，使用该模型来进行数据的分类，有多种类型的方法来进行模型的求解，包括马尔科夫模型，条件随机场等..
+              方案基于Matlab2018，Python 2.7、Opencv 3.4实现，实现流程如下： 1. 首先，使用Matlab，进行双目摄像头的标定；  2. 其次，识别特定颜色；  3. 最后，使用双目测距公式得到特征点的距离
           
       
     </div>
@@ -458,18 +458,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/img/">图像相关</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图模型/">图模型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贝叶斯模型/">贝叶斯模型</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双目摄像头/">双目摄像头</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测距/">测距</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/特定颜色物体/">特定颜色物体</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/12/tech-ml-gltmx/#more">阅读全文 >></a>
+          <a href="/2019/07/15/proj/img-sm/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -488,11 +488,11 @@
 
 
   
-    <article id="post-tech-ml-bjdxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-proj/manage-510" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/11/tech-ml-bjdxx/" class="article-date">
-      <time datetime="2019-04-11T14:51:52.000Z" itemprop="datePublished">2019年04月11日</time>
+      <a href="/2019/07/15/proj/manage-510/" class="article-date">
+      <time datetime="2019-07-15T04:45:58.000Z" itemprop="datePublished">2019年07月15日</time>
 </a>
 
 
@@ -507,7 +507,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/11/tech-ml-bjdxx/">机器学习 之 半监督学习</a>
+      <a class="article-title" href="/2019/07/15/proj/manage-510/">proj-manage-510</a>
     </h1>
   
 
@@ -517,7 +517,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              半监督学习是指让学习器的训练不仅仅依赖于对训练样本的标记，而是可以利用未标记的样本实现自主学习的一种方式。相对应的常规基于已标记的样本进行模型训练，然后使用训练的结果对待预测数据进行预测的方式称为主动学习
+              5个过程组包括启动、规划、执行、监控和收尾，10个知识领域包括对项目的范围、进度、成本、质量、资源、风险、采购及相关方等领域管理的知识
           
       
     </div>
@@ -526,18 +526,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/manage/">项目管理</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/降维/">降维</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10个知识领域/">10个知识领域</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/5个过程组/">5个过程组</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PMP/">PMP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/第六版/">第六版</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/11/tech-ml-bjdxx/#more">阅读全文 >></a>
+          <a href="/2019/07/15/proj/manage-510/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -556,11 +556,11 @@
 
 
   
-    <article id="post-books-机器学习" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-proj/iot-shjcj" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/11/books-机器学习/" class="article-date">
-      <time datetime="2019-04-11T14:50:59.000Z" itemprop="datePublished">2019年04月11日</time>
+      <a href="/2019/07/12/proj/iot-shjcj/" class="article-date">
+      <time datetime="2019-07-12T09:32:20.000Z" itemprop="datePublished">2019年07月12日</time>
 </a>
 
 
@@ -575,7 +575,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/11/books-机器学习/">读书笔记 之 《机器学习》</a>
+      <a class="article-title" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a>
     </h1>
   
 
@@ -585,7 +585,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              周志华的这本清华大学出版社出版的机器学习，据说一度在各大电商平台计算机类书籍中排行都在前三，可见现在人工智能的热度以及大家对其未来的预期之高，不论是否能坚持读完或者能否理解部分内容，只要买了书都算是一种上进心吧
+              当前方案是为硬件方案厂商做的数据采集及信息管理系统，核心包括两部分，分别如下：1. 用于采集数据的后端服务器；2.用于显示统计数据的前端，包括Web端和微信小程序端...
           
       
     </div>
@@ -594,18 +594,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/tech/">技术相关</a>
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/iot/">物联网</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数学基础/">数学基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/理论基础/">理论基础</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web设备管理/">Web设备管理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信小程序/">微信小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器分离/">服务器分离</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/11/books-机器学习/#more">阅读全文 >></a>
+          <a href="/2019/07/12/proj/iot-shjcj/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -624,11 +624,11 @@
 
 
   
-    <article id="post-tech-ml-jsxxll" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-tech/android-yszc" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/11/tech-ml-jsxxll/" class="article-date">
-      <time datetime="2019-04-11T05:20:11.000Z" itemprop="datePublished">2019年04月11日</time>
+      <a href="/2019/07/12/tech/android-yszc/" class="article-date">
+      <time datetime="2019-07-12T09:07:23.000Z" itemprop="datePublished">2019年07月12日</time>
 </a>
 
 
@@ -643,7 +643,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/11/tech-ml-jsxxll/">机器学习 之 计算学习理论</a>
+      <a class="article-title" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a>
     </h1>
   
 
@@ -653,7 +653,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              本章节以概念介绍为主，计算学习理论为了研究通过“计算”来进行“学习”的理论，即研究机器学习的理论基础，目标是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法的设计
+              华为应用市场 隐私政策
           
       
     </div>
@@ -661,19 +661,11 @@
     <div class="article-info article-info-index">
       
       
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
-    </div>
-
 
       
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习理论/">学习理论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算学习/">计算学习</a></li></ul>
-    </div>
-
       
         <p class="article-more-link">
-          <a href="/2019/04/11/tech-ml-jsxxll/#more">阅读全文 >></a>
+          <a href="/2019/07/12/tech/android-yszc/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -692,11 +684,11 @@
 
 
   
-    <article id="post-tech-ml-tzxsxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-proj/iot-autoup" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/09/tech-ml-tzxsxx/" class="article-date">
-      <time datetime="2019-04-09T12:55:52.000Z" itemprop="datePublished">2019年04月09日</time>
+      <a href="/2019/07/12/proj/iot-autoup/" class="article-date">
+      <time datetime="2019-07-12T04:34:10.000Z" itemprop="datePublished">2019年07月12日</time>
 </a>
 
 
@@ -711,7 +703,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/09/tech-ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a>
+      <a class="article-title" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a>
     </h1>
   
 
@@ -721,7 +713,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              特征选择可以理解为降维，就是在样本的众多属性数据中选择部分属性或特征作为学习的数据，常见的特征选择分为过滤式、包裹式和嵌入式三类。一方面可以减轻后期学习的计算量，尽量避免维数灾难问题，另一方面，可以降低学习难度，毕竟维数减少后使用较少的维度更容易找到样本之间的关系
+              项目核心包括软件系统和硬件系统两部分，用于提高车间管理效率： 1. 硬件系统实现通过传感器对原生产设备的数据采集和控制； 2. 软件系统实现生产数据的收集、存储、处理和展示，以及设备的基本控制...
           
       
     </div>
@@ -730,18 +722,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/project/">项目相关</a><a class="article-category-link" href="/categories/project/iot/">物联网</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/特征选择/">特征选择</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/稀疏/">稀疏</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ERP对接/">ERP对接</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据采集统计/">数据采集统计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设备升级/">设备升级</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软硬件一体解决方案/">软硬件一体解决方案</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/09/tech-ml-tzxsxx/#more">阅读全文 >></a>
+          <a href="/2019/07/12/proj/iot-autoup/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -760,11 +752,11 @@
 
 
   
-    <article id="post-tech-ml-jwdlxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-life/movice-jmtd" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/09/tech-ml-jwdlxx/" class="article-date">
-      <time datetime="2019-04-09T12:51:52.000Z" itemprop="datePublished">2019年04月09日</time>
+      <a href="/2019/05/04/life/movice-jmtd/" class="article-date">
+      <time datetime="2019-05-04T07:38:07.000Z" itemprop="datePublished">2019年05月04日</time>
 </a>
 
 
@@ -779,7 +771,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/09/tech-ml-jwdlxx/">机器学习 之 降维与度量学习</a>
+      <a class="article-title" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a>
     </h1>
   
 
@@ -789,75 +781,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              k临近学习的原理是，对于给定的待测试样本，基于某种距离找出训练集中与其最靠近的k个训练样本，然后基于这k个邻居的属性来进行计算，使用k个邻居的“均值”作为待测试样本的最终分类值。当前分类方法受距离计算原理影响，可能不同的距离会得到不同的分类结果；也收到k的取值影响，可能也会由于k的范围不同得到不同的分类区间...
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/降维/">降维</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/09/tech-ml-jwdlxx/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-life-movice-kld" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/03/life-movice-kld/" class="article-date">
-      <time datetime="2019-04-03T06:08:31.000Z" itemprop="datePublished">2019年04月03日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/life-movice-kld/">影评 之 《金刚：骷髅岛》</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              科学家在军队及探险成员的陪同下，去一个小岛（骷髅岛）上进行科学考察，遇到了史前巨兽，整个故事都围绕这群考察团在岛上的奇遇。在岛上，他们遇到的动物体型超大，蚂蚁蜘蛛都比树还要高，有个场景是在森林中遇到一只蜘蛛要吃其中一位成员，蜘蛛的腿比树还要高，身体在树顶之上，当然最终人类通过枪械将蜘蛛带走了...
+              尽管盗墓相关的九门题材也是自己喜欢的，但这里的九门跟盗墓里说的九门不是一回事，整部剧都是政治正确，坏人做坏事会受到应有的惩罚，好人也会由于各自的苦衷或执念，迫不得已做一些违心的事情，最终每个人得到了该有的结果
           
       
     </div>
@@ -872,12 +796,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剧情片/">剧情片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动作片/">动作片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/影评/">影评</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/刺客/">刺客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动作片/">动作片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/古装/">古装</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/明朝/">明朝</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/03/life-movice-kld/#more">阅读全文 >></a>
+          <a href="/2019/05/04/life/movice-jmtd/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -896,11 +820,11 @@
 
 
   
-    <article id="post-tech-ml-jl" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-life/movice-rjxj" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/02/tech-ml-jl/" class="article-date">
-      <time datetime="2019-04-02T06:08:07.000Z" itemprop="datePublished">2019年04月02日</time>
+      <a href="/2019/05/04/life/movice-rjxj/" class="article-date">
+      <time datetime="2019-05-04T06:28:07.000Z" itemprop="datePublished">2019年05月04日</time>
 </a>
 
 
@@ -915,7 +839,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/02/tech-ml-jl/">机器学习 之 聚类</a>
+      <a class="article-title" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a>
     </h1>
   
 
@@ -925,143 +849,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              聚类通常目标是将样本分为几个同的类别，而分类前的样本数据本身通常并没有对应的类别，也称为无监督学习，或者说样本是在聚类后才知道了哪些样本属于一类，而被分好的类别名称是需要用户根据其特征来命名...
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/无监督学习/">无监督学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/聚类/">聚类</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/02/tech-ml-jl/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-life-俊做个好人" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/02/life-俊做个好人/" class="article-date">
-      <time datetime="2019-04-02T06:00:03.000Z" itemprop="datePublished">2019年04月02日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/02/life-俊做个好人/">大学日常 之 做个好人</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              文明礼仪是中华民族的传统美德，人无礼而不生，事无礼则不成，构建和谐文明校园，是学院每位师生的共同愿望。但在我们的校园中，仍然存在许多不文明行为现象：将饮食品带入教室、在教室产生的垃圾无人带走、公共场所吸烟、烟头随地丢、垃圾随地扔、缺乏环保意识、宿舍卫生差、食堂用餐离开后残羹留桌、谈恋爱中不文明行为等，各式各样，给周围带来诸多困扰
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/life/">日常生活</a><a class="article-category-link" href="/categories/life/think/">所思所察</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大学生活/">大学生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/所见所思/">所见所思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阿俊/">阿俊</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2019/04/02/life-俊做个好人/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-life-movice-dth" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/04/01/life-movice-dth/" class="article-date">
-      <time datetime="2019-04-01T06:00:58.000Z" itemprop="datePublished">2019年04月01日</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/01/life-movice-dth/">影评 之 《都挺好》</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              最开始看的时候，就能预想到最终结果肯定是一家团聚，毕竟标题是“都挺好”。剧中老蒙装病及好几个故事感觉就是为了拖沓而讲个故事，编剧为了凑字数，也是一开始就猜到了结果。另外，其实开始时候并不想让苏明玉原谅，认为如果最终团圆了，编剧就是在鬼扯，但到最后大团圆时候还是觉得温馨...
+              这个电影看起来有些无厘头，但跟周星驰的无厘头又不同。看完电影感慨有影院愿意上映，第一反应就是任达华撑起了电影，但是细想其实也算是喜剧电影的一种探索，只是跟传统的喜剧不同，不再是一味的增加细节的包袱，而是基于黑帮故事作为背景进行创作，在传统的黑帮风格中加入喜剧元素来表现喜剧，显然喜剧效果并不是特别好...
           
       
     </div>
@@ -1076,12 +864,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/家庭剧/">家庭剧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电视剧/">电视剧</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任达华/">任达华</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/喜剧片/">喜剧片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/艾伦/">艾伦</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/黑帮/">黑帮</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/04/01/life-movice-dth/#more">阅读全文 >></a>
+          <a href="/2019/05/04/life/movice-rjxj/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1100,11 +888,11 @@
 
 
   
-    <article id="post-tech-ml-bysflq" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-life/movice-lps" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/30/tech-ml-bysflq/" class="article-date">
-      <time datetime="2019-03-30T14:09:26.000Z" itemprop="datePublished">2019年03月30日</time>
+      <a href="/2019/05/04/life/movice-lps/" class="article-date">
+      <time datetime="2019-05-04T05:28:07.000Z" itemprop="datePublished">2019年05月04日</time>
 </a>
 
 
@@ -1119,7 +907,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/30/tech-ml-bysflq/">机器学习 之 贝叶斯分类器</a>
+      <a class="article-title" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a>
     </h1>
   
 
@@ -1129,7 +917,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              贝叶斯分类器是一类基于贝叶斯公式的分类算法的总称，它不是指某一个具体算法，基于贝叶斯订立的这些分类算法可以统称为贝叶斯分类...
+              这是一部基于种族歧视题材的电影，基于真实历史故事进行改编，现在看来也许很多事情有些不可思议，但返回历史现场也许一切都是那么自然，尤其是在奴隶制时代奴隶被当作商品进行交易...
           
       
     </div>
@@ -1138,18 +926,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/life/">日常生活</a><a class="article-category-link" href="/categories/life/movice/">观影感受</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/极大似然估计/">极大似然估计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贝叶斯/">贝叶斯</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剧情片/">剧情片</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/种族歧视/">种族歧视</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/美国/">美国</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/03/30/tech-ml-bysflq/#more">阅读全文 >></a>
+          <a href="/2019/05/04/life/movice-lps/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1168,11 +956,11 @@
 
 
   
-    <article id="post-tech-ml-jcxx" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-books/从零开始读懂金融学" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/30/tech-ml-jcxx/" class="article-date">
-      <time datetime="2019-03-30T06:00:58.000Z" itemprop="datePublished">2019年03月30日</time>
+      <a href="/2019/05/04/books/从零开始读懂金融学/" class="article-date">
+      <time datetime="2019-05-04T04:19:46.000Z" itemprop="datePublished">2019年05月04日</time>
 </a>
 
 
@@ -1187,7 +975,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/30/tech-ml-jcxx/">机器学习 之 集成学习</a>
+      <a class="article-title" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a>
     </h1>
   
 
@@ -1197,7 +985,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              集成学习是指将多个学习器进行集成来完成学习任务，若集成中只包含同类型的学习器称为同质集成，同质集成对应的学习器称为基学习器；若集成使用的学习器不同类型称为异质集成，异质集成对应的个体学习器称为组件学习器...
+              这本书是关于经济及金融相关的基础书，全书共294页，整体分两部分，前面一部分介绍金融中的一些基本的经济概念，从各金融市场概念到各类金融机构的一般性介绍；后面一部分围绕个人理财进行相关概念的介绍和原理的说明，整体来讲如果对经济及金融知识感兴趣，推荐阅读...
           
       
     </div>
@@ -1206,18 +994,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/money/">钱财相关</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/结合策略/">结合策略</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/入门/">入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经济学/">经济学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融学/">金融学</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/03/30/tech-ml-jcxx/#more">阅读全文 >></a>
+          <a href="/2019/05/04/books/从零开始读懂金融学/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1236,11 +1024,11 @@
 
 
   
-    <article id="post-tech-ml-zcxlj" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-books/穷查理宝典" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/30/tech-ml-zcxlj/" class="article-date">
-      <time datetime="2019-03-30T03:40:37.000Z" itemprop="datePublished">2019年03月30日</time>
+      <a href="/2019/05/04/books/穷查理宝典/" class="article-date">
+      <time datetime="2019-05-04T04:19:25.000Z" itemprop="datePublished">2019年05月04日</time>
 </a>
 
 
@@ -1255,7 +1043,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/30/tech-ml-zcxlj/">机器学习 之 支持向量机（SVM）</a>
+      <a class="article-title" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a>
     </h1>
   
 
@@ -1265,7 +1053,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              支持向量机是一种，使用线性模型将测试样本一分为二的一种模型，并且两类样本的区别越大越好(间隔越远越好)，通过不同方式的优化升级，使得模型具有较高的鲁棒性，并可以解决一些非线性分类问题，简单来讲模型的优化过程如下...
+              来自孤独不苦的读书笔记
           
       
     </div>
@@ -1274,18 +1062,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/money/">钱财相关</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/支持向量机/">支持向量机</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/做事做人/">做事做人</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/孤独不苦/">孤独不苦</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/巴菲特/">巴菲特</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/投资/">投资</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/查理·芒格/">查理·芒格</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/03/30/tech-ml-zcxlj/#more">阅读全文 >></a>
+          <a href="/2019/05/04/books/穷查理宝典/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1304,11 +1092,11 @@
 
 
   
-    <article id="post-tech-ml-sjwl" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-books/跟美国幼儿园老师学早教" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/29/tech-ml-sjwl/" class="article-date">
-      <time datetime="2019-03-29T11:24:15.000Z" itemprop="datePublished">2019年03月29日</time>
+      <a href="/2019/04/29/books/跟美国幼儿园老师学早教/" class="article-date">
+      <time datetime="2019-04-29T14:05:25.000Z" itemprop="datePublished">2019年04月29日</time>
 </a>
 
 
@@ -1323,7 +1111,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/29/tech-ml-sjwl/">机器学习 之 神经网络</a>
+      <a class="article-title" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a>
     </h1>
   
 
@@ -1333,7 +1121,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              不论神经网络的模型是否真的跟生物自身的神经网络相似，也不是特别重要，可以不用太关心，能大概理解它的一个构造思想即可。通常大家不会具体到要去通过代码实现神经网络模型，所以不必太在意其数学公式和具体计算，只需要关心其大概原理，本文就说说相关的一些概念。
+              来自Zoe的手写笔记，红字部分其实觉得是教育父母的，大家可以看一下，其实我觉得看了那么多的育儿书，我觉得最大的作用是让我在育儿路上不那么焦虑，父母的状态好了，一切都会OK
           
       
     </div>
@@ -1342,18 +1130,222 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/ai/">人工智能</a>
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/commu/">沟通相关</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BP网络/">BP网络</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP模型/">MP模型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/神经网络/">神经网络</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zoe/">Zoe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/家庭教育/">家庭教育</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/幼儿园老师/">幼儿园老师</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/早教/">早教</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/美国/">美国</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2019/03/29/tech-ml-sjwl/#more">阅读全文 >></a>
+          <a href="/2019/04/29/books/跟美国幼儿园老师学早教/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-books/父母的语言" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/04/25/books/父母的语言/" class="article-date">
+      <time datetime="2019-04-25T14:31:50.000Z" itemprop="datePublished">2019年04月25日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              来自Sunshine的手写笔记，书名为《父母的语言 · 3000万词汇塑造更强大的学习型大脑》
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/commu/">沟通相关</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sunshine/">Sunshine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习型大脑/">学习型大脑</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/家庭教育/">家庭教育</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/04/25/books/父母的语言/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-books/非暴力沟通" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/04/25/books/非暴力沟通/" class="article-date">
+      <time datetime="2019-04-25T14:20:45.000Z" itemprop="datePublished">2019年04月25日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              可以很清晰地表达出自己的愤怒，但是不会用语言轻易地伤害别人，因为伤害别人并无助于解决问题，不带评论的观察是人类智力的最高形式
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/read/">读书笔记</a><a class="article-category-link" href="/categories/read/commu/">沟通相关</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事实/">事实</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/感受/">感受</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/请求帮助/">请求帮助</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/锦书致南终/">锦书致南终</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求/">需求</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/非暴力/">非暴力</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/04/25/books/非暴力沟通/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-tech/git" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/04/25/tech/git/" class="article-date">
+      <time datetime="2019-04-25T10:24:49.000Z" itemprop="datePublished">2019年04月25日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              Git版本管理工具的新手介绍，最基本的4条命令的使用说明
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/tools/">工具相关</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/版本管理/">版本管理</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/04/25/tech/git/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1374,7 +1366,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>
