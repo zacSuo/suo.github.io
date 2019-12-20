@@ -645,7 +645,7 @@
           
           <category> 读书笔记 </category>
           
-          <category> 钱财相关 </category>
+          <category> 工作相关 </category>
           
       </categories>
       
@@ -654,11 +654,11 @@
             
             <tag> 金融学 </tag>
             
-            <tag> 经济学 </tag>
-            
             <tag> 入门 </tag>
             
             <tag> 基础 </tag>
+            
+            <tag> 经济学 </tag>
             
         </tags>
       
@@ -678,7 +678,7 @@
           
           <category> 读书笔记 </category>
           
-          <category> 钱财相关 </category>
+          <category> 工作相关 </category>
           
       </categories>
       
@@ -2008,7 +2008,7 @@
           
           <category> 读书笔记 </category>
           
-          <category> 钱财相关 </category>
+          <category> 工作相关 </category>
           
       </categories>
       
@@ -2210,7 +2210,7 @@
           
           <category> 日常生活 </category>
           
-          <category> 运动健康 </category>
+          <category> 所思所察 </category>
           
       </categories>
       
@@ -2249,7 +2249,7 @@
           
           <category> 日常生活 </category>
           
-          <category> 运动健康 </category>
+          <category> 所思所察 </category>
           
       </categories>
       
@@ -2956,20 +2956,20 @@
           
           <category> 读书笔记 </category>
           
-          <category> 钱财相关 </category>
+          <category> 工作相关 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 金融常识 </tag>
-            
-            <tag> 资产配置 </tag>
-            
             <tag> 金融学 </tag>
             
             <tag> 经济学 </tag>
+            
+            <tag> 金融常识 </tag>
+            
+            <tag> 资产配置 </tag>
             
         </tags>
       
