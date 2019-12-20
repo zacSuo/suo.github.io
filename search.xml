@@ -1164,9 +1164,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1224,11 +1224,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 所见所思 </tag>
             
             <tag> 大学生活 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -1695,11 +1695,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -2557,9 +2557,9 @@
       
         <tags>
             
-            <tag> 身份证 </tag>
-            
             <tag> 户口 </tag>
+            
+            <tag> 身份证 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -2590,11 +2590,11 @@
       
         <tags>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 亲人关系 </tag>
             
