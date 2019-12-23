@@ -654,11 +654,11 @@
             
             <tag> 金融学 </tag>
             
+            <tag> 经济学 </tag>
+            
             <tag> 入门 </tag>
             
             <tag> 基础 </tag>
-            
-            <tag> 经济学 </tag>
             
         </tags>
       
@@ -1164,9 +1164,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 动作片 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 动作片 </tag>
             
         </tags>
       
@@ -1255,9 +1255,9 @@
       
         <tags>
             
-            <tag> 电视剧 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 电视剧 </tag>
             
         </tags>
       
@@ -2083,9 +2083,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> hello world </tag>
             
@@ -2116,9 +2116,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -2860,9 +2860,9 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 沟通 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
             <tag> 听人说 </tag>
             
@@ -2963,13 +2963,13 @@
       
         <tags>
             
-            <tag> 金融学 </tag>
-            
-            <tag> 经济学 </tag>
-            
             <tag> 金融常识 </tag>
             
             <tag> 资产配置 </tag>
+            
+            <tag> 金融学 </tag>
+            
+            <tag> 经济学 </tag>
             
         </tags>
       
@@ -3099,9 +3099,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> mnist </tag>
             
