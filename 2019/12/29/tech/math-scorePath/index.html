@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="个人">
+
+
+
+<meta name="description" content="通过反射演示一下如何破坏单例模式，并优化单例模式的代码的过程...">
+<meta name="keywords" content="算法,数组,递归,循环,非递归,泛型集合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法 - 最大得分的路径数目">
+<meta property="og:url" content="https://www.zhenxiangsimple.com/2019/12/29/tech/math-scorePath/index.html">
+<meta property="og:site_name" content="真相很简单">
+<meta property="og:description" content="通过反射演示一下如何破坏单例模式，并优化单例模式的代码的过程...">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-29T11:34:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法 - 最大得分的路径数目">
+<meta name="twitter:description" content="通过反射演示一下如何破坏单例模式，并优化单例模式的代码的过程...">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="真相很简单" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>算法 - 最大得分的路径数目 | 真相很简单</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?56467b4a9bdbd6ba525198dabfb9fec0";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">生活点滴</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">记录生活和工作中的所见所思</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="文章搜索..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-topic">
+                        <ul class="topics" id="js-topics">
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/tech/"> 技术资料</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/tools/">工具相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/ai/">人工智能</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/embed/">嵌入式</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/tech/math/">算法</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/read/"> 读书笔记</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/nothing/">杂七杂八</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/work/">工作相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/commu/">沟通相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/read/story/">小说相关</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/life/"> 日常生活</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/think/">所思所察</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/movice/">观影感受</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/life/baby/">宝宝成长</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                                
+                                    
+                                        <li class="topic-chapter"><a href="/categories/project/"> 项目相关</a>
+                                        <ul class="topic-node">
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/iot/">物联网</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/img/">图像相关</a>
+                                    </li>
+                                    
+                                
+                                    
+                                    <li class="topic-node">
+                                        <a href="/categories/project/manage/">项目管理</a>
+                                    </li>
+                                    
+                                
+                                </ul></li>
+                            
+                        </ul>
+                    </nav>
+                    <hr>
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives/">历史文章</a></li>
+                        
+                            <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">/about</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">生活点滴</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">生活点滴</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">记录生活和工作中的所见所思</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives/">历史文章</a></li>
+                
+                    <li><a href="/tags/">分类 &amp; 标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-tech/math-scorePath" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/12/29/tech/math-scorePath/" class="article-date">
+      <time datetime="2019-12-29T11:34:29.000Z" itemprop="datePublished">2019年12月29日</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法 - 最大得分的路径数目
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/tech/">技术资料</a><a class="article-category-link" href="/categories/tech/math/">算法</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/循环/">循环</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数组/">数组</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/泛型集合/">泛型集合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/递归/">递归</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/非递归/">非递归</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给你一个正方形字符数组 board ，你从数组最右下方的字符 ‘S’ 出发。</p>
+<p>你的目标是到达数组最左上角的字符 ‘E’ ，数组剩余的部分为数字字符 1, 2, …, 9 或者障碍 ‘X’。在每一步移动中，你可以向上、向左或者左上方移动，可以移动的前提是到达的格子没有障碍。</p>
+<p>一条路径的 「得分」 定义为：路径上所有数字的和。</p>
+<p>请你返回一个列表，包含两个整数：第一个整数是 「得分」 的最大值，第二个整数是得到最大得分的方案数，请把结果对 10^9 + 7 取余。</p>
+<p>如果没有任何路径可以到达终点，请返回 [0, 0] 。</p>
+<p>示例 1：</p>
+<p>输入：board = [“E23”,”2X2”,”12S”]<br>输出：[7,1]<br>示例 2：</p>
+<p>输入：board = [“E12”,”1X1”,”21S”]<br>输出：[4,2]<br>示例 3：</p>
+<p>输入：board = [“E11”,”XXX”,”11S”]<br>输出：[0,0]</p>
+<p>提示：</p>
+<p>2 &lt;= board.length == board[i].length &lt;= 100</p>
+<h1 id="解法一（循环）"><a href="#解法一（循环）" class="headerlink" title="解法一（循环）"></a>解法一（循环）</h1><p>解法思路：直接使用循环，因为每个节点依赖于上一个节点，因此从最右下角的节点分别沿着横纵两个方向，一步一步移动到数组开始的左上角。</p>
+<p>本算法使用三维数组，在第三维保存对应索引位置的初始值、得分、路径数量和是否可达四个信息，实现算法如下（比赛之后实现的）：</p>
+<p>时间复杂度为O(n^2^)，空间复杂度O(n^2^)（由于使用三维数组存储）</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">long</span> [,,] intBoard;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">PathsWithMaxScore</span>(<span class="params">IList&lt;<span class="keyword">string</span>&gt; board</span>)</span> &#123;</span><br><span class="line">        <span class="comment">//1. 链表转存到数组中</span></span><br><span class="line">        <span class="keyword">int</span> row=board.Count,column=board[<span class="number">0</span>].Length;</span><br><span class="line">        intBoard = <span class="keyword">new</span> <span class="keyword">long</span> [row,column,<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;column;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] &gt;= <span class="string">'0'</span> &amp;&amp; board[i][j] &lt;= <span class="string">'9'</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    intBoard[i,j,<span class="number">0</span>] = Convert.ToInt64(board[i][j] - <span class="string">'0'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j] == <span class="string">'E'</span> || board[i][j] == <span class="string">'S'</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    intBoard[i,j,<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    intBoard[i,j,<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                intBoard[i,j,<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">                intBoard[i,j,<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        intBoard[row<span class="number">-1</span>,column<span class="number">-1</span>,<span class="number">2</span>] = <span class="number">1</span>;<span class="comment">//第一条路径</span></span><br><span class="line">        intBoard[row<span class="number">-1</span>,column<span class="number">-1</span>,<span class="number">3</span>] = <span class="number">1</span>;<span class="comment">//起点可达</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=row<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=column<span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(intBoard[i,j,<span class="number">0</span>] == <span class="number">-1</span>) <span class="keyword">continue</span>;<span class="comment">//不能访问</span></span><br><span class="line">                <span class="keyword">if</span>(intBoard[i,j,<span class="number">3</span>] == <span class="number">0</span>)  <span class="keyword">continue</span>;<span class="comment">//不可达</span></span><br><span class="line">                <span class="keyword">if</span>(i &gt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    updateData(i<span class="number">-1</span>,j,intBoard[i,j,<span class="number">1</span>],intBoard[i,j,<span class="number">2</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(j &gt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    updateData(i,j<span class="number">-1</span>,intBoard[i,j,<span class="number">1</span>],intBoard[i,j,<span class="number">2</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(i &gt; <span class="number">0</span>&amp;&amp;j &gt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    updateData(i<span class="number">-1</span>,j<span class="number">-1</span>,intBoard[i,j,<span class="number">1</span>],intBoard[i,j,<span class="number">2</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;(<span class="keyword">int</span>)intBoard[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>],(<span class="keyword">int</span>)intBoard[<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>]&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateData</span>(<span class="params"><span class="keyword">int</span> r,<span class="keyword">int</span> c,<span class="keyword">long</span> lastMaxVal,<span class="keyword">long</span> lastMaxCount</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(intBoard[r,c,<span class="number">3</span>] == <span class="number">0</span> || intBoard[r,c,<span class="number">1</span>] &lt; intBoard[r,c,<span class="number">0</span>] + lastMaxVal)</span><br><span class="line">        &#123;</span><br><span class="line">            intBoard[r,c,<span class="number">1</span>] = intBoard[r,c,<span class="number">0</span>] + lastMaxVal;        </span><br><span class="line">            intBoard[r,c,<span class="number">2</span>] = lastMaxCount;</span><br><span class="line">            intBoard[r,c,<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(intBoard[r,c,<span class="number">1</span>] == intBoard[r,c,<span class="number">0</span>] + lastMaxVal)</span><br><span class="line">        &#123;</span><br><span class="line">            intBoard[r,c,<span class="number">1</span>] = intBoard[r,c,<span class="number">0</span>] + lastMaxVal; </span><br><span class="line">            intBoard[r,c,<span class="number">2</span>] += lastMaxCount;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(intBoard[r,c,<span class="number">2</span>] &gt;= <span class="number">1000000007</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            intBoard[r,c,<span class="number">2</span>] %= <span class="number">1000000007</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="解法二（递归）"><a href="#解法二（递归）" class="headerlink" title="解法二（递归）"></a>解法二（递归）</h1><p>解法思路：由于满足递归三要素：1.任务可以分解（可以向左上遍历），2.分解后和原任务实现原理一样（都是向左上遍历），3.结束条件明确（到[0,0]位置），因此选择通过递归实现。</p>
+<ol>
+<li>为了增加访问效率，最开始申请一个数组，代替使用链表索引的方式访问</li>
+<li>通过递归将所有通路的得分，存储到一个新的结果链表中</li>
+<li>对结果链表中的得分进行统计，最终输出结果</li>
+</ol>
+<p>问题：方案本身可行，但时间复杂度有点高，有优化的空间，在参加比赛过程中，通过了一多半的测试用例，最终卡在了一个测试用例上，因为超时了，超时的测试用例及实现代码如下：</p>
+<blockquote>
+<p>[“E4789338X943596124X2676X552X587877X456943458X29735”,”611684759486631913932337237231351921X2152919376427”,”4499519117827344997451XX34X46693XX7181343557483669”,”414951X685152X89829782685X4912581351X3216914721551”,”X387271851925X3629265X99195X5897581179XX369637813X”,”1X8X2682518937289551X98X7983XX34993116413343558825”,”X92X12119593186X675113X682143777XX8981619298251984”,”X671798198463X5314971262X9392393XXX544537813812728”,”81856146535454X3678775784456289257XX8221X2488XXX68”,”77X3592XX94844399282X2X6336122XX7X18244862821X26XX”,”28885X948512X3585X27824186222X73X9X56441X9X4689517”,”344X495X682875968X82X9877379XX386748175X6293X44159”,”1924352186149295919715X27X555626X17798524189528625”,”3435681879X49727366745492X648X5952772978787143263X”,”412933788234154913356X2X9X144818X21XX5629259785133”,”489644765X456XX44XX2X5387637879X662941398337817381”,”7617826679176XX173173537173164967296764519X3427693”,”7X69X5466277665871135253486758156766536X5436X16728”,”318152574426X696X18X833396113X31862234511611X89691”,”X147492241256344555237X94772X9X5136226469551942X29”,”X29846X49419853778154XX636X35XX5232391787617416258”,”8885851X996538X163323347235993741926591X72X1761X14”,”226X8136988863232963682217521777419144333838517835”,”3197757518X241117949451X423XX55861XX6161938551X752”,”49X149355329X617X51X21965452X962X42762X25968X73754”,”X1176483834957794897816132X5X942366794665183797399”,”48294674492176X1X663644X58X17729X4482638X92X482422”,”51X16X157889846864X1436338776687677X44895154219626”,”782XX82XX432848434721692X55564975938X2649681569663”,”26792517214X8863X9896XX64619817916123168945761X526”,”X7XX319393797X184679X421943743279X1486126364341595”,”11425763X68563511X2496983325426X151456X5X459542989”,”89872654932254X5525587692326476X65562X59X635129314”,”6X944371656471737X9673645X4145X821X942995885X86522”,”64XX328X8243XX3445X6412955X87X42355234X73223243421”,”944391299X158X962X9X259552884441434XX9349X5XX79855”,”98422711429356771336494176X56X2584376X2354X72X5416”,”7135X7X9X3X699929714X61664916968X1896X5X1985386642”,”22969X77414X2154167176388X3313X918X1558161XX413862”,”4X141958614412616921588565488847635X837996835937X6”,”X416X64649X955369739187781488XX77129X6966899351X74”,”9X2349175X345X7469265842X591X4748167996963X63X7211”,”3117349374592412365636726147X52469X8921X1888159627”,”254513X73629359514989286822X7X89391797X357546X9145”,”8882877128738295914941X56995X243888XX595873XX99217”,”X947591X382X19613453263544415821689719794546655278”,”51X4565271954965486X492693X731844471486X149X7166X5”,”731X1816268181645946X2123376981X13X834338226X28X36”,”6X72X3599546159X378191718821X746789239488712584143”,”5982153336X61729X66339596838X77751396645929982913S”]</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    List&lt;<span class="keyword">int</span>&gt; scoreList;</span><br><span class="line">    <span class="keyword">int</span> idx =<span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">PathsWithMaxScore</span>(<span class="params">IList&lt;<span class="keyword">string</span>&gt; board</span>)</span> &#123;</span><br><span class="line">        scoreList = <span class="keyword">new</span> List&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">        <span class="comment">//1. 链表转存到数组中</span></span><br><span class="line">        <span class="keyword">int</span> row=board.Count,column=board[<span class="number">0</span>].Length;</span><br><span class="line">        <span class="keyword">int</span> [,] intBoard = <span class="keyword">new</span> <span class="keyword">int</span> [row,column];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;column;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                intBoard[i,j] = Convert.ToInt32(board[i][j] - <span class="string">'0'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        getPaths(intBoard, row- <span class="number">1</span>, column- <span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(scoreList.Count == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span> []&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="comment">// 3. 对结果进行统计</span></span><br><span class="line">        <span class="keyword">int</span> maxScore = scoreList[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;scoreList.Count;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(scoreList[i] &gt; maxScore)</span><br><span class="line">            &#123;</span><br><span class="line">                maxScore = scoreList[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;scoreList.Count;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(scoreList[i] == maxScore)</span><br><span class="line">            &#123;</span><br><span class="line">               count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span> []&#123;maxScore,count&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getPaths</span>(<span class="params"><span class="keyword">int</span> [,] board,<span class="keyword">int</span> row,<span class="keyword">int</span> colum,<span class="keyword">int</span> count</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span>(row == <span class="number">0</span> &amp;&amp; colum == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            scoreList.Add(count);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[row,colum] == <span class="number">40</span>)<span class="comment">//遇到X即退出</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(board[row,colum] != <span class="number">35</span>)&#123;<span class="comment">//不是起点S则累计</span></span><br><span class="line">            count += board[row,colum];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(row &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;<span class="comment">//向左递归</span></span><br><span class="line">            getPaths(board,row<span class="number">-1</span>,colum,count);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(colum &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;<span class="comment">//向上递归</span></span><br><span class="line">            getPaths(board,row,colum - <span class="number">1</span>,count);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(row &gt;<span class="number">0</span> &amp;&amp; colum &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;<span class="comment">//向左上递归</span></span><br><span class="line">            getPaths(board,row<span class="number">-1</span>,colum - <span class="number">1</span>,count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/12/29/tech/math-scorePath/">算法 - 最大得分的路径数目</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">个人</a></p>
+        <p><span>发布时间:</span>2019-12-29, 19:34:29</p>
+        <p><span>最后更新:</span>2019-12-29, 19:34:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/29/tech/math-scorePath/" title="算法 - 最大得分的路径数目">https://www.zhenxiangsimple.com/2019/12/29/tech/math-scorePath/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.zhenxiangsimple.com/2019/12/29/tech/math-scorePath/　　作者: 个人" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/12/24/tech/design-single/">
+                    单例模式攻防进阶（C#举例）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解法一（循环）"><span class="toc-number">2.</span> <span class="toc-text">解法一（循环）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解法二（递归）"><span class="toc-number">3.</span> <span class="toc-text">解法二（递归）</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-cloud bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"算法 - 最大得分的路径数目　| 真相很简单　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/12/24/tech/design-single/" title="下一篇: 单例模式攻防进阶（C#举例）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/29/tech/math-scorePath/">算法 - 最大得分的路径数目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single/">单例模式攻防进阶（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single-general/">基础单例模式（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/19/tech/c-array/">数组一般从0开始，而不是习惯的1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/12/books/一本有趣又有料的科学书/">读书笔记 之 《一本有趣又有料的科学书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/books/以眨眼干杯/">读书笔记 之 《以眨眼干杯》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech/c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech/c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech/c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech/c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech/c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech/c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech/c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/manage-510/">项目管理的过程和知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/yszc/">隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life/movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books/菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books/机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life/movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech/ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life/movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech/ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech/ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/books/名人传/">读书笔记 之 《名人传》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech/ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books/思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books/乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life/movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books/浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby/核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life/movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life/movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life/movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life/movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech/tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books/经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life/movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech/tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech/tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books/活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self/不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books/月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books/乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby/身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books/反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books/冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books/如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books/数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech/md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books/创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books/三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech/tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                真相很简单
+                <i class="fa fa-copyright"></i> 
+                2019
+            </div>
+            
+            <a href="http://beian.miit.gov.cn">粤ICP备19013521号</a>
+            
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+             title: "a.article-title, .article-more-link a", 
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
