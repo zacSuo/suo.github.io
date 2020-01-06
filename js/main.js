@@ -201,4 +201,10 @@ require([], function (){
         }
     })
 
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+    var myhost = window.location.host;
+    aTagArr.forEach(function (e, i) {
+      e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+
 })
