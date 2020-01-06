@@ -35,6 +35,76 @@
     
     
     <entry>
+      <title>嵌入式基础 - 实验教学方案</title>
+      <link href="/2020/01/01/proj/vejoeBal/"/>
+      <url>/2020/01/01/proj/vejoeBal/</url>
+      
+        <content type="html"><![CDATA[<p>以双轮自平衡机器人为载体，进行嵌入式基础知识的说明和介绍。</p><center><img src="/img/proj/20200106170059798.png" title="双轮自平衡机器人"></center><br>## 机械结构<br>1. 结构与材料<br><br><br>    <em> 航模级减震轮胎    </em> 电机固定支架<br>    <em> 车轮联轴器    </em> 4mm亚克力固定板<br><br><br>2. 物理参数<br><br><br>    <em> 尺寸：190</em>135<em>66mm    </em> 重量：约900克<br><br>## 硬件参数<br>1. 控制芯片<br>    <em> 主控芯片：STM32F103RCT6    </em> 独立可插拔电机驱动芯片：TB6612<br><br><br>2. 传感器<br><br><br>    <em> MPU6050陀螺仪传感器，角速度感测范围±250、±500、±1000与±2000°/sec (dps)    </em> HC-SR04超声波传感器，量程2CM-400CM，精度3MM.<br>    <em> 声波采样传感器（电容式，9MM</em>7MM，灵敏度52DB）<br>    <em> 循迹传感器（TSL1401线阵，线性CCD摄像头、铝合金支架）<br><br>3. 通信接口    </em> 1路CAN总线接口<br>    <em> 预留1路串口    </em> 蓝牙（CC2540）无线通信接口<br>    <em> 线性CCD模块接口<br><br>4. 器件    </em> 2600MAH大容量锂电池（3S）<br>    <em> 4.32W直流电机    </em> 0.96寸OLED液晶屏模块<br><br>5. 性能参数<br><br><br>    <em> 自平衡续航时间大于20个小时    </em> 高速运动续航时间约45分钟<br>    <em> 霍尔编码器分辨率0.23°<br><br>6. 配件参数    </em> B3AC智能充电器（输入电压110-240V，最大充电电流2.4A，可充2S/3S）<br>    <em> 循迹S线路径演示纸配件（50CM</em>250CM，PVC材质加增强网格）<br>    <em> 迷宫挡板配件（42CM</em>35CM，透明）<br>    <em> 铝合金工具箱（34 CM </em>27 CM *14.5CM）<br><br>## 实验支撑<br>#### 嵌入式程序设计实验<br>1. <a href="https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/">中断和串口操作实验</a><br>2. <a href="https://www.zhenxiangsimple.com/2019/09/27/tech/c-iic/">I2C总线实验</a><br>3. <a href="https://www.zhenxiangsimple.com/2019/09/25/tech/c-spi/">SPI通信模块</a><br>4. <a href="https://www.zhenxiangsimple.com/2019/09/19/tech/c-timer/">定时器实验</a><br>5. <a href="https://www.zhenxiangsimple.com/2019/09/23/tech/c-gpio-flash/">GPIO的配置与Flash读写实验</a><br>8. <a href="https://www.zhenxiangsimple.com/2019/09/26/tech/c-dma/">DMA控制器实验</a><br>6. OLED显示实验<br>7. PWM输出实验<br>9. ADC采样实验<br>10. AD变换实验<br>#### 传感器应用实验<br>1. <a href="https://www.zhenxiangsimple.com/2019/09/17/tech/c-ultra/">超声波传感器实验</a><br>2. <a href="https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/">霍尔传感器实验</a><br>3. <a href="https://www.zhenxiangsimple.com/2019/09/18/tech/c-gyro/">陀螺仪传感器实验</a><br>4. 语音信号的采集和频谱分析<br>5. 语音数值滤波系统设计<br>6. 卡尔曼滤波实验<br>7. 加速度计的倾角估计实验<br>8. 陀螺仪进行倾角估计实验<br>9. 卡尔曼滤波的倾角估计实验<br><br>#### 综合控制应用实验<br>1. 电流PID控制实验<br>2. 速度PID控制实验<br>3. 位置PID控制实验<br>4. 基于图像的循迹实验<br>5. 走迷宫实验<br>6. 上位机绘制串口数据折线图<br>7. 语音控制小车实验<br><br><center><img src="/img/proj/20200106170949302.png" title="机器人套装"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 物联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 嵌入式基础 </tag>
+            
+            <tag> 平衡车 </tag>
+            
+            <tag> 自平衡机器人 </tag>
+            
+            <tag> STM32 </tag>
+            
+            <tag> 103系列 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>嵌入式进阶 - 实验教学方案</title>
+      <link href="/2020/01/01/proj/vejoeMac/"/>
+      <url>/2020/01/01/proj/vejoeMac/</url>
+      
+        <content type="html"><![CDATA[<p>本实验箱以全向麦轮车为载体，将ARM和FPGA集成为一个实验平台进行联合实验，使用了更高配置的主控芯片，并引入实时多任务操作系统UCOS，便于学生基于当前实验平台进行更高阶的实验设计和应用开发。</p><center><img src="/img/proj/20200106173913262.png" title="全向麦轮车"></center><h2 id="机械结构"><a href="#机械结构" class="headerlink" title="机械结构"></a>机械结构</h2><ol><li>结构与材料<ul><li>铝合金底板</li><li>共轴摆式悬挂系统</li><li>4mm亚克力固定板</li><li>60mm带轴承麦轮*4</li></ul></li><li>物理参数<ul><li>尺寸267*230mm</li><li>重量约2.2kg</li><li>负载6kg<h2 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h2></li></ul></li><li>芯片<ul><li>主控芯片：STM32F407IGT6</li><li>MPU9250姿态传感器</li></ul></li><li>通信接口<ul><li>1路CAN总线通信接口</li><li>2路串口通信接口</li><li>1路蓝牙（CC2540）通信接口</li><li>1路Zigbee（CC2530）通信接口</li><li>2路232通信接口</li><li>4路42步进电机驱动接口</li></ul></li><li>核心器件<ul><li>3000MAH大容量锂电池（4S）</li><li>基于CAN总线的大功率直流电机驱动器（100W）</li><li>MG513编码器减速电机*4（减速比1:30，编码器分辨率22）</li><li>麦轮车主控板</li></ul></li><li>配件参数<ul><li>B6AC充电器（支持充放电、最大充电电流6A(80W)，最大放电电流2A(10W)，T型充电头，内置电源适配器、带背光液晶显示器、可充2S/3S/4S/5S/6S锂电池）</li><li>铝合金工具箱（55CM<em>37CM</em>22CM）<h2 id="实验支撑"><a href="#实验支撑" class="headerlink" title="实验支撑"></a>实验支撑</h2><h4 id="FPGA基础开发"><a href="#FPGA基础开发" class="headerlink" title="FPGA基础开发"></a>FPGA基础开发</h4></li></ul></li><li>FPGA GPIO输入输出实验</li><li>FPGA TCL脚本实验</li><li>FPGA Uart实验</li><li>FPGA FSMC接口实验</li><li>FPGA SDRAM读写实验</li><li>FPGA FIFO实验</li></ol><h4 id="UCOS实验"><a href="#UCOS实验" class="headerlink" title="UCOS实验"></a>UCOS实验</h4><ol><li>UCOS入门与单任务实验</li><li>UCOS任务处理相关实验</li><li>UCOS时间管理与软定时器实验</li><li>UCOS信号量相关实验</li><li>UCOS消息队列实验<h4 id="嵌入式系统实验"><a href="#嵌入式系统实验" class="headerlink" title="嵌入式系统实验"></a>嵌入式系统实验</h4></li><li>GPIO实验</li><li>KEY实验</li><li>EXTI实验</li><li>DELAY实验</li><li>USART实验</li><li>PWM实验</li><li>ADC实验</li><li>RTC实验</li><li>DMA实验</li><li>TIMER实验</li></ol><h4 id="综合控制应用实验"><a href="#综合控制应用实验" class="headerlink" title="综合控制应用实验"></a>综合控制应用实验</h4><ol><li>远程监控和巡视</li><li>多车编队实验</li><li>按照手绘曲线运动</li><li>颜色追踪与动作模式识别</li><li>动作模式识别与控制实验</li><li>运动控制（语音和APP控制）</li></ol><center><img src="/img/proj/20200106173955480.png" title="机器人套装"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 物联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> 嵌入式进阶 </tag>
+            
+            <tag> 麦克纳姆轮 </tag>
+            
+            <tag> 全向AGV </tag>
+            
+            <tag> 407系列 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>4个解法：判断回文数</title>
       <link href="/2020/01/01/tech/math-Palindrome/"/>
       <url>/2020/01/01/tech/math-Palindrome/</url>
@@ -53,9 +123,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 回文数 </tag>
             
@@ -88,9 +158,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 循环 </tag>
             
@@ -123,9 +193,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 循环 </tag>
             
@@ -871,11 +941,11 @@
       
         <tags>
             
+            <tag> 美国 </tag>
+            
             <tag> 剧情片 </tag>
             
             <tag> 种族歧视 </tag>
-            
-            <tag> 美国 </tag>
             
         </tags>
       
@@ -970,11 +1040,11 @@
       
         <tags>
             
-            <tag> 美国 </tag>
+            <tag> Zoe </tag>
             
             <tag> 家庭教育 </tag>
             
-            <tag> Zoe </tag>
+            <tag> 美国 </tag>
             
             <tag> 幼儿园老师 </tag>
             
@@ -1005,11 +1075,11 @@
       
         <tags>
             
+            <tag> 家庭教育 </tag>
+            
             <tag> Sunshine </tag>
             
             <tag> 学习型大脑 </tag>
-            
-            <tag> 家庭教育 </tag>
             
         </tags>
       
@@ -1102,11 +1172,11 @@
       
         <tags>
             
-            <tag> 家庭剧 </tag>
+            <tag> 文化 </tag>
             
             <tag> 剧情片 </tag>
             
-            <tag> 文化 </tag>
+            <tag> 家庭剧 </tag>
             
         </tags>
       
@@ -1133,11 +1203,11 @@
       
         <tags>
             
-            <tag> 文化 </tag>
-            
             <tag> 日本文化 </tag>
             
             <tag> 传统文化 </tag>
+            
+            <tag> 文化 </tag>
             
         </tags>
       
@@ -1288,9 +1358,9 @@
       
         <tags>
             
-            <tag> 机器学习 </tag>
-            
             <tag> 人工智能 </tag>
+            
+            <tag> 机器学习 </tag>
             
             <tag> 数学基础 </tag>
             
@@ -1474,11 +1544,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 所见所思 </tag>
             
             <tag> 大学生活 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -1505,9 +1575,9 @@
       
         <tags>
             
-            <tag> 电视剧 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 电视剧 </tag>
             
         </tags>
       
@@ -1945,11 +2015,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -2102,9 +2172,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 港台剧 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -2133,9 +2203,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 韩寒 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 韩寒 </tag>
             
         </tags>
       
@@ -3044,13 +3114,13 @@
       
         <tags>
             
-            <tag> 算法 </tag>
+            <tag> AI </tag>
             
             <tag> 人工智能 </tag>
             
-            <tag> AI </tag>
-            
             <tag> 李开复 </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -3110,9 +3180,9 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 沟通 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
             <tag> 听人说 </tag>
             
