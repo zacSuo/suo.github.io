@@ -16,7 +16,7 @@
 
 
 <meta name="description" content="以双轮平衡机器人作为载体，把硬件和嵌入式程序全部开源，由浅入深的设计了一系列嵌入式及控制相关的实验课程...">
-<meta name="keywords" content="嵌入式基础,平衡车,自平衡机器人,STM32,103系列">
+<meta name="keywords" content="STM32,嵌入式基础,平衡车,自平衡机器人,103系列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式基础 - 实验教学方案">
 <meta property="og:url" content="https://www.zhenxiangsimple.com/2020/01/01/proj/vejoeBal/index.html">
@@ -381,22 +381,95 @@
       
           
         <p>以双轮自平衡机器人为载体，进行嵌入式基础知识的说明和介绍。</p>
-<center><img src="/img/proj/20200106170059798.png" title="双轮自平衡机器人"></center><br>## 机械结构<br>1. 结构与材料<br><br><br>    <em> 航模级减震轮胎
-    </em> 电机固定支架<br>    <em> 车轮联轴器
-    </em> 4mm亚克力固定板<br><br><br>2. 物理参数<br><br><br>    <em> 尺寸：190</em>135<em>66mm
-    </em> 重量：约900克<br><br>## 硬件参数<br>1. 控制芯片<br>    <em> 主控芯片：STM32F103RCT6
-    </em> 独立可插拔电机驱动芯片：TB6612<br><br><br>2. 传感器<br><br><br>    <em> MPU6050陀螺仪传感器，角速度感测范围±250、±500、±1000与±2000°/sec (dps)
-    </em> HC-SR04超声波传感器，量程2CM-400CM，精度3MM.<br>    <em> 声波采样传感器（电容式，9MM</em>7MM，灵敏度52DB）<br>    <em> 循迹传感器（TSL1401线阵，线性CCD摄像头、铝合金支架）<br><br>3. 通信接口
+<center><img src="/img/proj/20200106170059798.png" title="双轮自平衡机器人"></center>
 
-
-    </em> 1路CAN总线接口<br>    <em> 预留1路串口
-    </em> 蓝牙（CC2540）无线通信接口<br>    <em> 线性CCD模块接口<br><br>4. 器件
-
-
-    </em> 2600MAH大容量锂电池（3S）<br>    <em> 4.32W直流电机
-    </em> 0.96寸OLED液晶屏模块<br><br>5. 性能参数<br><br><br>    <em> 自平衡续航时间大于20个小时
-    </em> 高速运动续航时间约45分钟<br>    <em> 霍尔编码器分辨率0.23°<br><br>6. 配件参数
-    </em> B3AC智能充电器（输入电压110-240V，最大充电电流2.4A，可充2S/3S）<br>    <em> 循迹S线路径演示纸配件（50CM</em>250CM，PVC材质加增强网格）<br>    <em> 迷宫挡板配件（42CM</em>35CM，透明）<br>    <em> 铝合金工具箱（34 CM </em>27 CM *14.5CM）<br><br>## 实验支撑<br>#### 嵌入式程序设计实验<br>1. <a href="https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/">中断和串口操作实验</a><br>2. <a href="https://www.zhenxiangsimple.com/2019/09/27/tech/c-iic/">I2C总线实验</a><br>3. <a href="https://www.zhenxiangsimple.com/2019/09/25/tech/c-spi/">SPI通信模块</a><br>4. <a href="https://www.zhenxiangsimple.com/2019/09/19/tech/c-timer/">定时器实验</a><br>5. <a href="https://www.zhenxiangsimple.com/2019/09/23/tech/c-gpio-flash/">GPIO的配置与Flash读写实验</a><br>8. <a href="https://www.zhenxiangsimple.com/2019/09/26/tech/c-dma/">DMA控制器实验</a><br>6. OLED显示实验<br>7. PWM输出实验<br>9. ADC采样实验<br>10. AD变换实验<br>#### 传感器应用实验<br>1. <a href="https://www.zhenxiangsimple.com/2019/09/17/tech/c-ultra/">超声波传感器实验</a><br>2. <a href="https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/">霍尔传感器实验</a><br>3. <a href="https://www.zhenxiangsimple.com/2019/09/18/tech/c-gyro/">陀螺仪传感器实验</a><br>4. 语音信号的采集和频谱分析<br>5. 语音数值滤波系统设计<br>6. 卡尔曼滤波实验<br>7. 加速度计的倾角估计实验<br>8. 陀螺仪进行倾角估计实验<br>9. 卡尔曼滤波的倾角估计实验<br><br>#### 综合控制应用实验<br>1. 电流PID控制实验<br>2. 速度PID控制实验<br>3. 位置PID控制实验<br>4. 基于图像的循迹实验<br>5. 走迷宫实验<br>6. 上位机绘制串口数据折线图<br>7. 语音控制小车实验<br><br><center><img src="/img/proj/20200106170949302.png" title="机器人套装"></center>
+<h2 id="机械结构"><a href="#机械结构" class="headerlink" title="机械结构"></a>机械结构</h2><ol>
+<li>结构与材料<ul>
+<li>航模级减震轮胎</li>
+<li>电机固定支架</li>
+<li>车轮联轴器</li>
+<li>4mm亚克力固定板</li>
+</ul>
+</li>
+<li>物理参数<ul>
+<li>尺寸：190<em>135</em>66mm</li>
+<li>重量：约900克</li>
+</ul>
+</li>
+</ol>
+<h2 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h2><ol>
+<li>控制芯片<ul>
+<li>主控芯片：STM32F103RCT6</li>
+<li>独立可插拔电机驱动芯片：TB6612</li>
+</ul>
+</li>
+<li>传感器<ul>
+<li>MPU6050陀螺仪传感器，角速度感测范围±250、±500、±1000与±2000°/sec (dps)</li>
+<li>HC-SR04超声波传感器，量程2CM-400CM，精度3MM.</li>
+<li>声波采样传感器（电容式，9MM*7MM，灵敏度52DB）</li>
+<li>循迹传感器（TSL1401线阵，线性CCD摄像头、铝合金支架）</li>
+</ul>
+</li>
+<li>通信接口<ul>
+<li>1路CAN总线接口</li>
+<li>预留1路串口</li>
+<li>蓝牙（CC2540）无线通信接口</li>
+<li>线性CCD模块接口</li>
+</ul>
+</li>
+<li>器件<ul>
+<li>2600MAH大容量锂电池（3S）</li>
+<li>4.32W直流电机</li>
+<li>0.96寸OLED液晶屏模块</li>
+</ul>
+</li>
+<li>性能参数<ul>
+<li>自平衡续航时间大于20个小时</li>
+<li>高速运动续航时间约45分钟</li>
+<li>霍尔编码器分辨率0.23°</li>
+</ul>
+</li>
+<li>配件参数<ul>
+<li>B3AC智能充电器（输入电压110-240V，最大充电电流2.4A，可充2S/3S）</li>
+<li>循迹S线路径演示纸配件（50CM*250CM，PVC材质加增强网格）</li>
+<li>迷宫挡板配件（42CM*35CM，透明）</li>
+<li>铝合金工具箱（34 CM <em>27 CM </em>14.5CM）</li>
+</ul>
+</li>
+</ol>
+<h2 id="实验支撑"><a href="#实验支撑" class="headerlink" title="实验支撑"></a>实验支撑</h2><h4 id="嵌入式程序设计实验"><a href="#嵌入式程序设计实验" class="headerlink" title="嵌入式程序设计实验"></a>嵌入式程序设计实验</h4><ol>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/24/tech/c-serial/">中断和串口操作实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/27/tech/c-iic/">I2C总线实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/25/tech/c-spi/">SPI通信模块</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/19/tech/c-timer/">定时器实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/23/tech/c-gpio-flash/">GPIO的配置与Flash读写实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/26/tech/c-dma/">DMA控制器实验</a></li>
+<li>OLED显示实验</li>
+<li>PWM输出实验</li>
+<li>ADC采样实验</li>
+<li>AD变换实验</li>
+</ol>
+<h4 id="传感器应用实验"><a href="#传感器应用实验" class="headerlink" title="传感器应用实验"></a>传感器应用实验</h4><ol>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/17/tech/c-ultra/">超声波传感器实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/10/tech/c-hall/">霍尔传感器实验</a></li>
+<li><a href="https://www.zhenxiangsimple.com/2019/09/18/tech/c-gyro/">陀螺仪传感器实验</a></li>
+<li>语音信号的采集和频谱分析</li>
+<li>语音数值滤波系统设计</li>
+<li>卡尔曼滤波实验</li>
+<li>加速度计的倾角估计实验</li>
+<li>陀螺仪进行倾角估计实验</li>
+<li>卡尔曼滤波的倾角估计实验</li>
+</ol>
+<h4 id="综合控制应用实验"><a href="#综合控制应用实验" class="headerlink" title="综合控制应用实验"></a>综合控制应用实验</h4><ol>
+<li>电流PID控制实验</li>
+<li>速度PID控制实验</li>
+<li>位置PID控制实验</li>
+<li>基于图像的循迹实验</li>
+<li>走迷宫实验</li>
+<li>上位机绘制串口数据折线图</li>
+<li>语音控制小车实验</li>
+</ol>
+<center><img src="/img/proj/20200106170949302.png" title="机器人套装"></center>
       
     </div>
     
@@ -423,8 +496,8 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/01/05/tech/math-arrayXor/">
-                    3个解法：子数组异或查询
+                <a href="/2020/01/01/proj/vejoeArm/">
+                    智能控制 - 实验教学方案
                 </a>
             </div>
         
@@ -443,7 +516,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机械结构"><span class="toc-number">1.</span> <span class="toc-text">机械结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件参数"><span class="toc-number">2.</span> <span class="toc-text">硬件参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验支撑"><span class="toc-number">3.</span> <span class="toc-text">实验支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#嵌入式程序设计实验"><span class="toc-number">3.0.1.</span> <span class="toc-text">嵌入式程序设计实验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传感器应用实验"><span class="toc-number">3.0.2.</span> <span class="toc-text">传感器应用实验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#综合控制应用实验"><span class="toc-number">3.0.3.</span> <span class="toc-text">综合控制应用实验</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -497,7 +570,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/01/05/tech/math-arrayXor/" title="上一篇: 3个解法：子数组异或查询">
+            <a href="/2020/01/01/proj/vejoeArm/" title="上一篇: 智能控制 - 实验教学方案">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -511,7 +584,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/tech/math-arrayXor/">3个解法：子数组异或查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/proj/vejoeBal/">嵌入式基础 - 实验教学方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/proj/vejoeMac/">嵌入式进阶 - 实验教学方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/tech/math-Palindrome/">4个解法：判断回文数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/30/tech/math-stringCalc/">3个解法：口算难题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/29/tech/math-scorePath/">2个解法：最大得分的路径数目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single/">单例模式攻防进阶（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single-general/">基础单例模式（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/19/tech/c-array/">数组一般从0开始，而不是习惯的1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/12/books/一本有趣又有料的科学书/">读书笔记 之 《一本有趣又有料的科学书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/books/以眨眼干杯/">读书笔记 之 《以眨眼干杯》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech/c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech/c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech/c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech/c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech/c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech/c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech/c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/manage-510/">项目管理的过程和知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/yszc/">隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life/movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books/菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books/机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life/movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech/ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life/movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech/ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech/ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/books/名人传/">读书笔记 之 《名人传》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech/ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books/思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books/乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life/movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books/浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby/核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life/movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life/movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life/movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life/movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech/tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books/经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life/movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech/tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech/tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books/活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self/不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books/月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books/乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby/身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books/反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books/冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books/如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books/数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech/md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books/创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books/三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech/tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/tech/math-arrayXor/">3个解法：子数组异或查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/proj/vejoeArm/">智能控制 - 实验教学方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/proj/vejoeBal/">嵌入式基础 - 实验教学方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/proj/vejoeMac/">嵌入式进阶 - 实验教学方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/01/tech/math-Palindrome/">4个解法：判断回文数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/30/tech/math-stringCalc/">3个解法：口算难题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/29/tech/math-scorePath/">2个解法：最大得分的路径数目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single/">单例模式攻防进阶（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/tech/design-single-general/">基础单例模式（C#举例）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/19/tech/c-array/">数组一般从0开始，而不是习惯的1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/12/books/一本有趣又有料的科学书/">读书笔记 之 《一本有趣又有料的科学书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/books/以眨眼干杯/">读书笔记 之 《以眨眼干杯》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/27/tech/c-iic/">嵌入式实验 之 I2C实验（IIC）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/26/tech/c-dma/">嵌入式实验 之 DMA控制器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/tech/c-spi/">嵌入式实验 之 SPI通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/tech/c-serial/">嵌入式课程 之 中断和串口通信实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/tech/c-gpio-flash/">嵌入式课程 之 GPIO的配置与FLASH编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tech/c-timer/">嵌入式课程 之 定时器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/tech/c-gyro/">嵌入式课程 之 陀螺仪传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/17/tech/c-ultra/">嵌入式课程 之 超声波传感器实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/tech/c-hall/">嵌入式课程 之 霍尔传感器（编码器）实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/tech/img-cal/">双目摄像头标定流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/img-sm/">测距方案 - 基于双目摄像头和特定颜色物体</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/proj/manage-510/">项目管理的过程和知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-shjcj/">物联网方案 - 数据采集和控制系统（Web+微信小程序）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/android-yszc/">华为应用市场 隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/tech/yszc/">隐私政策</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/proj/iot-autoup/">物联网方案 - 设备的自动化升级项目（某上市公司生产车间）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-jmtd/">影评 之 《九门提督》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-rjxj/">影评 之 《人间·喜剧》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/life/movice-lps/">影评 之 《绿皮书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/从零开始读懂金融学/">读书笔记 之 《从零开始读懂金融学》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/books/穷查理宝典/">读书笔记 之 《穷查理宝典》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/books/跟美国幼儿园老师学早教/">读书笔记 之 《跟美国幼儿园老师学早教》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/父母的语言/">读书笔记 之 《父母的语言 · 3000万词汇塑造更强大的学习型大脑》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/books/非暴力沟通/">读书笔记 之 《非暴力沟通》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/25/tech/git/">git版本管理工具，最简使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/life/movice-fsnv/">影评 之 《分手男女》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/16/books/菊与刀/">读书笔记 之 《菊与刀》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-qhxx/">机器学习 之 强化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gzxx/">机器学习 之 规则学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/tech/ml-gltmx/">机器学习 之 概率图模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-bjdxx/">机器学习 之 半监督学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/books/机器学习/">读书笔记 之 《机器学习》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/tech/ml-jsxxll/">机器学习 之 计算学习理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-tzxsxx/">机器学习 之 特征选择和稀疏学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/09/tech/ml-jwdlxx/">机器学习 之 降维与度量学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/life/movice-kld/">影评 之 《金刚：骷髅岛》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/tech/ml-jl/">机器学习 之 聚类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/life/life-俊做个好人/">大学日常 之 做个好人</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/life/movice-dth/">影评 之 《都挺好》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-bysflq/">机器学习 之 贝叶斯分类器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-jcxx/">机器学习 之 集成学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/tech/ml-zcxlj/">机器学习 之 支持向量机（SVM）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/tech/ml-sjwl/">机器学习 之 神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/tech/ml-jcs/">机器学习 之 决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/books/名人传/">读书笔记 之 《名人传》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/tech/ml-gn/">机器学习 之 基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/books/思考，快与慢/">读书笔记 之 《思考·快与慢》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/books/乔布斯全书/">读书笔记 之 《乔布斯全书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/life/life-抛硬币/">从抛硬币的实验中，看到的奋斗人生</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/07/life/movice-fj/">影评 之 《房间》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/books/浮生六记/">读书笔记 之 《浮生六记》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/life/life-俊带娃/">舅舅带外甥的一天日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/life/life-俊专升本/">计算机专业，专升本的在校日常</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/life/life-汽车天线/">从汽车的天线，说说其中的物理知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/19/baby/核桃油/">有必要因为补脑目的，为宝宝的辅食增加核桃油吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-xzgjl/">影评 之 《血战钢锯岭》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/life/movice-dhssjxzslc/">影评 之 《大汉十三将 之 血战疏勒城》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/life/movice-dmj/">影评 之 《夺命金》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/life/movice-fcrs/">影评 之 《飞驰人生》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/life/movice-tqyb/">影评 之 《天气预爆》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/life/movice-ydbt/">影评 之 《印度暴徒》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/30/tech/tensorflow-datatype/">tensorflow开发 之 基础概念及常用数据类型介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/29/books/经济学故事书/">读书笔记 之 《经济学故事书》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/life/movice-hyjzjwtx/">影评 之 《霍元甲之精武天下》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/24/tech/tensorflow-hello-world/">tensorflow开发 之 hello world</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/23/tech/tensorflow-环境配置/">tensorflow开发 之 搭建开发环境（Windows、Ubuntu）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/books/活着/">读书笔记 之 《活着》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/self/不要提建议/">self-不要提建议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-婷保险概念/">6年保险从业者告诉你，关于保险你应该知道的一些事</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/life/life-俊晨跑/">一日之计在于晨，晨跑带来的不止是健康，还有乐观积极的人生态度</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/17/books/月亮与六便士/">读书笔记 之 《月亮与六便士》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/谁带宝宝/">老人、保姆还是自己带宝宝</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/baby/老人带给钱吗/">老人带宝宝给钱吗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/14/books/乌合之众/">读书笔记 之 《乌合之众》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/哭怎么办/">宝宝哭怎么办</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/baby/维生素/">宝宝怎么吃维生素</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/09/baby/身份证/">宝宝办理身份证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/鱼肝油/">宝宝怎么吃鱼肝油</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/户口本/">宝宝办理户口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/baby/出生证/">宝宝办理出生证</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/社保（医保）/">宝宝办理社保（医保）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/自费疫苗/">宝宝怎么打自费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/07/baby/免费疫苗/">宝宝怎么打免费疫苗</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/25/books/反脆弱·做一个内心强大的人/">读书笔记 之 《反脆弱·做一个内心强大的人》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/22/books/冰与火之歌/">读书笔记 之 《冰与火之歌》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/AI·未来/">读书笔记 之 《AI·未来》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/books/好好说话2/">读书笔记 之 《好好说话2》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/books/如何说客户才会听，如何听客户才肯说/">读书笔记 之 《如何说客户才会听，如何听客户才肯说》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/15/books/数学之美/">读书笔记 之 《数学之美》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/13/tech/md流程图/">markdown 中流程图语法及示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/一本书读懂·金融常识/">读书笔记 之 《一本书读懂·金融常识》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/books/心理学入门/">读书笔记 之 《心理学入门》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/07/books/创能量·28位传奇企业家的口述创业史/">读书笔记 之 《创能量·28位传奇企业家的口述创业史》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/02/books/三体/">读书笔记 之 《三体》</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/tech/tensorflow-mnist/">tensorflow开发 之 mnist文件解析</a></li></ul>
 
 
 
