@@ -386,6 +386,7 @@
 <h2 id="机械结构"><a href="#机械结构" class="headerlink" title="机械结构"></a>机械结构</h2><ol>
 <li>四驱麦轮AGV<ul>
 <li>4个直径152.4mm的麦克纳姆轮</li>
+<li>12V 直流行星减速电机 × 4</li>
 <li>外壳为碳钢板，底盘为铝合金材质</li>
 <li>共轴摆式悬挂系统</li>
 <li>双层车体</li>
@@ -393,24 +394,25 @@
 </li>
 <li>两驱运输AGV<ul>
 <li>悬挂减震结构</li>
-<li>120mm的橡胶车轮</li>
+<li>125mm的橡胶车轮</li>
+<li>12V 直流直角减速电机 × 2</li>
 <li>自动充电模块</li>
 </ul>
 </li>
 </ol>
 <h2 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h2><ol>
-<li>ROS系统：<ul>
+<li>ROS系统<ul>
 <li>B4+树莓派，四核A72CPU，2GB，64位LPDDR4</li>
 </ul>
 </li>
-<li>STM32主控板：<ul>
+<li>STM32主控板<ul>
 <li>STM32F746NGH6主控芯片</li>
 <li>支持CAN总线，FSMC总线，IIC总线，UART接口</li>
 <li>支持组态LCD显示模块</li>
 <li>32M RAM，支持USB2.0通信</li>
 </ul>
 </li>
-<li>电机驱动：<ul>
+<li>电机驱动<ul>
 <li>STM32F1系列主芯片</li>
 <li>10AH锂电池</li>
 <li>具备过流、过压保护</li>
@@ -419,20 +421,20 @@
 <li>四驱AGV四块，两驱AGV两块</li>
 </ul>
 </li>
-<li>二维码导航传感器：<ul>
+<li>二维码导航传感器<ul>
 <li>图像分辨率达到752 x 480</li>
 <li>最大采集60fps，最大解码速率达到45个/秒</li>
 <li>有4个独立控制照明LED，和2个LED瞄准器</li>
 </ul>
 </li>
 <li>惯性导航：<ol>
-<li>四驱AGV（沙盘车）<ul>
+<li>四驱AGV<ul>
 <li>MPU9250九轴陀螺仪，精度0.1度</li>
 <li>支持UART和I2C通信协议</li>
 <li>输出可达200HZ，内置卡尔曼滤波融合算法</li>
 </ul>
 </li>
-<li>两驱AGV（模特车）<ul>
+<li>两驱AGV<ul>
 <li>MPU6050六轴陀螺仪，精度0.1度</li>
 <li>支持SPI和I2C通信协议</li>
 </ul>

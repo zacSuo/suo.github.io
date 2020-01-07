@@ -39,7 +39,7 @@
       <link href="/2020/01/01/proj/vejoeRos/"/>
       <url>/2020/01/01/proj/vejoeRos/</url>
       
-        <content type="html"><![CDATA[<p>本实验箱以大载重的全向麦轮车为载体，基于ROS系统作为开发平台，使用双驱和四驱两种不同的结构作为机器人本体，最终通过地面二维码实现导航机器人的精确方向和距离控制，可以选择任一种作为实验设备。</p><center><img src="/img/proj/20200106175221269.png" width="250" height="200" title="四驱AGV"><img src="/img/proj/20200106175342519.png" width="250" height="220" title="两驱AGV"></center><h2 id="机械结构"><a href="#机械结构" class="headerlink" title="机械结构"></a>机械结构</h2><ol><li>四驱麦轮AGV<ul><li>4个直径152.4mm的麦克纳姆轮</li><li>外壳为碳钢板，底盘为铝合金材质</li><li>共轴摆式悬挂系统</li><li>双层车体</li></ul></li><li>两驱运输AGV<ul><li>悬挂减震结构</li><li>120mm的橡胶车轮</li><li>自动充电模块</li></ul></li></ol><h2 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h2><ol><li>ROS系统：<ul><li>B4+树莓派，四核A72CPU，2GB，64位LPDDR4</li></ul></li><li>STM32主控板：<ul><li>STM32F746NGH6主控芯片</li><li>支持CAN总线，FSMC总线，IIC总线，UART接口</li><li>支持组态LCD显示模块</li><li>32M RAM，支持USB2.0通信</li></ul></li><li>电机驱动：<ul><li>STM32F1系列主芯片</li><li>10AH锂电池</li><li>具备过流、过压保护</li><li>支持CAN总线通信</li><li>带编码器直流减速电机</li><li>四驱AGV四块，两驱AGV两块</li></ul></li><li>二维码导航传感器：<ul><li>图像分辨率达到752 x 480</li><li>最大采集60fps，最大解码速率达到45个/秒</li><li>有4个独立控制照明LED，和2个LED瞄准器</li></ul></li><li>惯性导航：<ol><li>四驱AGV（沙盘车）<ul><li>MPU9250九轴陀螺仪，精度0.1度</li><li>支持UART和I2C通信协议</li><li>输出可达200HZ，内置卡尔曼滤波融合算法</li></ul></li><li>两驱AGV（模特车）<ul><li>MPU6050六轴陀螺仪，精度0.1度</li><li>支持SPI和I2C通信协议</li></ul></li></ol></li><li>避障传感器（四驱AGV）<ul><li>HC-SR04超声波传感器</li><li>红外避障传感器</li></ul></li><li>TFT液晶屏（四驱AGV）<ul><li>2.2寸串口TFT液晶屏，240 * 320分辨率</li></ul></li><li>尺寸：<ul><li>600mm * 556mm，高度约700mm（四驱AGV）</li><li>500mm * 500mm，高度约155mm（两驱AGV）</li></ul></li></ol><h2 id="实验支持"><a href="#实验支持" class="headerlink" title="实验支持"></a>实验支持</h2><h4 id="ROS基础开发"><a href="#ROS基础开发" class="headerlink" title="ROS基础开发"></a>ROS基础开发</h4><pre><code>1. ROS系统安装配置2. ROS系统内通信3. ROS自定义程序执行4. ROS仿真环境搭建</code></pre><h4 id="ROS应用开发"><a href="#ROS应用开发" class="headerlink" title="ROS应用开发"></a>ROS应用开发</h4><pre><code>1. 开机自动配置2. 拍照录像3. 为不同USB口指定名称4. 小车运动控制5. 距离角度控制6. 读取二维码信息7. 二维码校准8. 收发Zigbee信息9. 小车按照指定路线行走</code></pre><h4 id="嵌入式基础开发"><a href="#嵌入式基础开发" class="headerlink" title="嵌入式基础开发"></a>嵌入式基础开发</h4><pre><code>1. 定时器实验2. GPIO的配置与Flash读写实验3. 中断和串口操作实验4. SPI通信实验5. DMA控制器实验6. I²C通信实验7. AD变换实验8. ADC采样实验9. OLED实验10. PWM实验</code></pre><h4 id="嵌入式进阶开发"><a href="#嵌入式进阶开发" class="headerlink" title="嵌入式进阶开发"></a>嵌入式进阶开发</h4><pre><code>1. 串口屏通信实验2. CAN总线通信基本实验3. 麦克纳姆轮运动学实验4. 惯性导航实验5. ROS通信基本实验6. CAN 多节点通信实验</code></pre>]]></content>
+        <content type="html"><![CDATA[<p>本实验箱以大载重的全向麦轮车为载体，基于ROS系统作为开发平台，使用双驱和四驱两种不同的结构作为机器人本体，最终通过地面二维码实现导航机器人的精确方向和距离控制，可以选择任一种作为实验设备。</p><center><img src="/img/proj/20200106175221269.png" width="250" height="200" title="四驱AGV"><img src="/img/proj/20200106175342519.png" width="250" height="220" title="两驱AGV"></center><h2 id="机械结构"><a href="#机械结构" class="headerlink" title="机械结构"></a>机械结构</h2><ol><li>四驱麦轮AGV<ul><li>4个直径152.4mm的麦克纳姆轮</li><li>12V 直流行星减速电机 × 4</li><li>外壳为碳钢板，底盘为铝合金材质</li><li>共轴摆式悬挂系统</li><li>双层车体</li></ul></li><li>两驱运输AGV<ul><li>悬挂减震结构</li><li>125mm的橡胶车轮</li><li>12V 直流直角减速电机 × 2</li><li>自动充电模块</li></ul></li></ol><h2 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h2><ol><li>ROS系统<ul><li>B4+树莓派，四核A72CPU，2GB，64位LPDDR4</li></ul></li><li>STM32主控板<ul><li>STM32F746NGH6主控芯片</li><li>支持CAN总线，FSMC总线，IIC总线，UART接口</li><li>支持组态LCD显示模块</li><li>32M RAM，支持USB2.0通信</li></ul></li><li>电机驱动<ul><li>STM32F1系列主芯片</li><li>10AH锂电池</li><li>具备过流、过压保护</li><li>支持CAN总线通信</li><li>带编码器直流减速电机</li><li>四驱AGV四块，两驱AGV两块</li></ul></li><li>二维码导航传感器<ul><li>图像分辨率达到752 x 480</li><li>最大采集60fps，最大解码速率达到45个/秒</li><li>有4个独立控制照明LED，和2个LED瞄准器</li></ul></li><li>惯性导航：<ol><li>四驱AGV<ul><li>MPU9250九轴陀螺仪，精度0.1度</li><li>支持UART和I2C通信协议</li><li>输出可达200HZ，内置卡尔曼滤波融合算法</li></ul></li><li>两驱AGV<ul><li>MPU6050六轴陀螺仪，精度0.1度</li><li>支持SPI和I2C通信协议</li></ul></li></ol></li><li>避障传感器（四驱AGV）<ul><li>HC-SR04超声波传感器</li><li>红外避障传感器</li></ul></li><li>TFT液晶屏（四驱AGV）<ul><li>2.2寸串口TFT液晶屏，240 * 320分辨率</li></ul></li><li>尺寸：<ul><li>600mm * 556mm，高度约700mm（四驱AGV）</li><li>500mm * 500mm，高度约155mm（两驱AGV）</li></ul></li></ol><h2 id="实验支持"><a href="#实验支持" class="headerlink" title="实验支持"></a>实验支持</h2><h4 id="ROS基础开发"><a href="#ROS基础开发" class="headerlink" title="ROS基础开发"></a>ROS基础开发</h4><pre><code>1. ROS系统安装配置2. ROS系统内通信3. ROS自定义程序执行4. ROS仿真环境搭建</code></pre><h4 id="ROS应用开发"><a href="#ROS应用开发" class="headerlink" title="ROS应用开发"></a>ROS应用开发</h4><pre><code>1. 开机自动配置2. 拍照录像3. 为不同USB口指定名称4. 小车运动控制5. 距离角度控制6. 读取二维码信息7. 二维码校准8. 收发Zigbee信息9. 小车按照指定路线行走</code></pre><h4 id="嵌入式基础开发"><a href="#嵌入式基础开发" class="headerlink" title="嵌入式基础开发"></a>嵌入式基础开发</h4><pre><code>1. 定时器实验2. GPIO的配置与Flash读写实验3. 中断和串口操作实验4. SPI通信实验5. DMA控制器实验6. I²C通信实验7. AD变换实验8. ADC采样实验9. OLED实验10. PWM实验</code></pre><h4 id="嵌入式进阶开发"><a href="#嵌入式进阶开发" class="headerlink" title="嵌入式进阶开发"></a>嵌入式进阶开发</h4><pre><code>1. 串口屏通信实验2. CAN总线通信基本实验3. 麦克纳姆轮运动学实验4. 惯性导航实验5. ROS通信基本实验6. CAN 多节点通信实验</code></pre>]]></content>
       
       
       <categories>
@@ -86,15 +86,15 @@
       
         <tags>
             
-            <tag> STM32 </tag>
-            
-            <tag> 407系列 </tag>
-            
             <tag> 高精度机械臂 </tag>
             
             <tag> 步进电机 </tag>
             
             <tag> 步进伺服 </tag>
+            
+            <tag> STM32 </tag>
+            
+            <tag> 407系列 </tag>
             
         </tags>
       
@@ -121,13 +121,13 @@
       
         <tags>
             
+            <tag> STM32 </tag>
+            
             <tag> 嵌入式基础 </tag>
             
             <tag> 平衡车 </tag>
             
             <tag> 自平衡机器人 </tag>
-            
-            <tag> STM32 </tag>
             
             <tag> 103系列 </tag>
             
@@ -158,13 +158,13 @@
             
             <tag> STM32 </tag>
             
+            <tag> 407系列 </tag>
+            
             <tag> 嵌入式进阶 </tag>
             
             <tag> 麦克纳姆轮 </tag>
             
             <tag> 全向AGV </tag>
-            
-            <tag> 407系列 </tag>
             
         </tags>
       
@@ -1009,11 +1009,11 @@
       
         <tags>
             
-            <tag> 美国 </tag>
-            
             <tag> 剧情片 </tag>
             
             <tag> 种族歧视 </tag>
+            
+            <tag> 美国 </tag>
             
         </tags>
       
@@ -1108,11 +1108,11 @@
       
         <tags>
             
+            <tag> 美国 </tag>
+            
             <tag> 家庭教育 </tag>
             
             <tag> Zoe </tag>
-            
-            <tag> 美国 </tag>
             
             <tag> 幼儿园老师 </tag>
             
@@ -1240,11 +1240,11 @@
       
         <tags>
             
-            <tag> 文化 </tag>
+            <tag> 剧情片 </tag>
             
             <tag> 家庭剧 </tag>
             
-            <tag> 剧情片 </tag>
+            <tag> 文化 </tag>
             
         </tags>
       
@@ -1271,11 +1271,11 @@
       
         <tags>
             
+            <tag> 文化 </tag>
+            
             <tag> 日本文化 </tag>
             
             <tag> 传统文化 </tag>
-            
-            <tag> 文化 </tag>
             
         </tags>
       
@@ -1643,9 +1643,9 @@
       
         <tags>
             
-            <tag> 电视剧 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 电视剧 </tag>
             
         </tags>
       
@@ -2240,9 +2240,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 港台剧 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -2271,9 +2271,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 韩寒 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 韩寒 </tag>
             
         </tags>
       
