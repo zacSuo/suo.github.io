@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>2种解法：实现字符串相乘</title>
+      <link href="/2020/01/09/tech/math-Multiply/"/>
+      <url>/2020/01/09/tech/math-Multiply/</url>
+      
+        <content type="html"><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。</p><p>示例 1:</p><p>输入: num1 = “2”, num2 = “3”<br>输出: “6”<br>示例 2:</p><p>输入: num1 = “123”, num2 = “456”<br>输出: “56088”<br>说明：</p><p>num1 和 num2 的长度小于110。<br>num1 和 num2 只包含数字 0-9。<br>num1 和 num2 均不以零开头，除非是数字 0 本身。<br>不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。</p><hr><h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>思路：先将字符串转换为整型数组，完全类比常规用的乘法公式，对每一位进行计算。</p><p>说明：两个非零正整数相乘的最终长度，要么等于两个数长度和，要么等于和减一1。</p><ol><li>首先排除最特殊的字符为0的情况</li><li>将两个字符串分别存储到两个整型数组中</li><li>分别使用两个整型数组，进行按位计算，这时下标小的位置存储低位</li><li>将计算结果转换为字符，去掉最高位的0</li><li>将字符结果进行反转，即高位放前面</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Multiply</span>(<span class="params"><span class="keyword">string</span> num1, <span class="keyword">string</span> num2</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span>(num1 == <span class="string">"0"</span> || num2 == <span class="string">"0"</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> n1Len = num1.Length, n2Len = num2.Length;</span><br><span class="line">        <span class="keyword">int</span>[] n1 = <span class="keyword">new</span> <span class="keyword">int</span>[n1Len], n2 = <span class="keyword">new</span> <span class="keyword">int</span>[n2Len], nr = <span class="keyword">new</span> <span class="keyword">int</span>[n1Len + n2Len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1Len; i++)</span><br><span class="line">        &#123;<span class="comment">//字符串转为数值</span></span><br><span class="line">            n1[i] = num1[i] - <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2Len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            n2[i] = num2[i] - <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> t12, idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n1Len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--, idx++)</span><br><span class="line">        &#123;<span class="comment">//乘数</span></span><br><span class="line">            t12 = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = n2Len - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--, idx++)</span><br><span class="line">            &#123;<span class="comment">//被乘数</span></span><br><span class="line">                t12 += (n2[j] * n1[i]) + nr[idx];</span><br><span class="line">                nr[idx] = t12 % <span class="number">10</span>;</span><br><span class="line">                t12 /= <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            idx -= n2Len;</span><br><span class="line">            <span class="keyword">if</span> (t12 &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                nr[idx + n2Len] = t12;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (nr[n1Len + n2Len - <span class="number">1</span>] == <span class="number">0</span>)<span class="comment">//判断最后一位为0，则不使用</span></span><br><span class="line">            n2Len -= <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//数值转为字符串</span></span><br><span class="line">        <span class="keyword">char</span>[] c = <span class="keyword">new</span> <span class="keyword">char</span>[n1Len + n2Len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1Len + n2Len; i++)</span><br><span class="line">            c[i] = (<span class="keyword">char</span>)(nr[i] + <span class="string">'0'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">string</span>.Join(<span class="string">""</span>, c.Reverse());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><center><img src="/img/tech/20200109182033748.png" title="执行结果"></center><hr><h2 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h2><p>思路：基于解法一做了两个优化，按道理应该效率提高一点，但执行时间反而长了40毫秒。</p><ol><li>在存储的时候，直接将结果存储到对应位置，省去了最后的反转。</li><li>计算过程的进位直接给到最终值，取消临时变量idx及其对应的运算，也省去了内循环之后的判断。</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Multiply</span>(<span class="params"><span class="keyword">string</span> num1, <span class="keyword">string</span> num2</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span>(num1 == <span class="string">"0"</span> || num2 == <span class="string">"0"</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> n1Len = num1.Length, n2Len = num2.Length;</span><br><span class="line">        <span class="keyword">int</span>[] n1 = <span class="keyword">new</span> <span class="keyword">int</span>[n1Len], n2 = <span class="keyword">new</span> <span class="keyword">int</span>[n2Len], nr = <span class="keyword">new</span> <span class="keyword">int</span>[n1Len + n2Len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1Len; i++)</span><br><span class="line">        &#123;<span class="comment">//字符串转为数值</span></span><br><span class="line">            n1[i] = num1[i] - <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2Len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            n2[i] = num2[i] - <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> t12;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n1Len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        &#123;<span class="comment">//乘数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = n2Len - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">            &#123;<span class="comment">//被乘数</span></span><br><span class="line">                t12 = (n2[j] * n1[i]) + nr[i+j+<span class="number">1</span>];</span><br><span class="line">                nr[i+j+<span class="number">1</span>] = t12 % <span class="number">10</span>;</span><br><span class="line">                nr[i+j] += t12/<span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> jump = (nr[<span class="number">0</span>] == <span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>);<span class="comment">//判断第一位为0，则不使用</span></span><br><span class="line">        <span class="comment">//数值转为字符串</span></span><br><span class="line">        <span class="keyword">char</span>[] c = <span class="keyword">new</span> <span class="keyword">char</span>[n1Len + n2Len - jump];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = jump; i &lt; n1Len + n2Len; i++)</span><br><span class="line">            c[i-jump] = (<span class="keyword">char</span>)(nr[i] + <span class="string">'0'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">string</span>.Join(<span class="string">""</span>, c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><center><img src="/img/tech/20200109185355247.png" title="执行结果"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 字符串 </tag>
+            
+            <tag> 乘法 </tag>
+            
+            <tag> 乘法运算 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2个解法：整数转为罗马数字</title>
       <link href="/2020/01/07/tech/math-IntToRoman/"/>
       <url>/2020/01/07/tech/math-IntToRoman/</url>
@@ -329,11 +360,11 @@
             
             <tag> 数组 </tag>
             
+            <tag> 字符串 </tag>
+            
             <tag> 回文数 </tag>
             
             <tag> 循环 </tag>
-            
-            <tag> 字符串 </tag>
             
         </tags>
       
@@ -1000,11 +1031,11 @@
     
     
     <entry>
-      <title>隐私政策</title>
-      <link href="/2019/07/12/tech/yszc/"/>
-      <url>/2019/07/12/tech/yszc/</url>
+      <title>华为应用市场 隐私政策</title>
+      <link href="/2019/07/12/tech/android-yszc/"/>
+      <url>/2019/07/12/tech/android-yszc/</url>
       
-        <content type="html"><![CDATA[<p>欢迎您使用本移动应用（以下简称“本服务”），本移动应用是由深圳互动网络科技有限公司（以下简称“本公司”）向本移动应用用户提供的计算器工具。为保证您的权益，便于更好地使用本移动应用及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用本移动应用提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>本移动应用运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载本移动应用客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为本移动应用用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权本移动应用透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求本移动应用提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）本移动应用从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、本移动应用旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
+        <content type="html"><![CDATA[<p>欢迎您使用云计算器（以下简称“本服务”），云计算器是由深圳互动网络科技有限公司（以下简称“本公司”）向云计算器用户提供的计算器工具。为保证您的权益，便于更好地使用云计算器及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用云计算器提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>云计算器运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载云计算器客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为云计算器用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权云计算器透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求云计算器提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）云计算器从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、云计算器旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
       
       
       
@@ -1013,11 +1044,11 @@
     
     
     <entry>
-      <title>华为应用市场 隐私政策</title>
-      <link href="/2019/07/12/tech/android-yszc/"/>
-      <url>/2019/07/12/tech/android-yszc/</url>
+      <title>隐私政策</title>
+      <link href="/2019/07/12/tech/yszc/"/>
+      <url>/2019/07/12/tech/yszc/</url>
       
-        <content type="html"><![CDATA[<p>欢迎您使用云计算器（以下简称“本服务”），云计算器是由深圳互动网络科技有限公司（以下简称“本公司”）向云计算器用户提供的计算器工具。为保证您的权益，便于更好地使用云计算器及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用云计算器提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>云计算器运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载云计算器客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为云计算器用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权云计算器透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求云计算器提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）云计算器从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、云计算器旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
+        <content type="html"><![CDATA[<p>欢迎您使用本移动应用（以下简称“本服务”），本移动应用是由深圳互动网络科技有限公司（以下简称“本公司”）向本移动应用用户提供的计算器工具。为保证您的权益，便于更好地使用本移动应用及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用本移动应用提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>本移动应用运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载本移动应用客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为本移动应用用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权本移动应用透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求本移动应用提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）本移动应用从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、本移动应用旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
       
       
       
@@ -2436,9 +2467,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 神话故事 </tag>
-            
             <tag> 喜剧片 </tag>
+            
+            <tag> 神话故事 </tag>
             
         </tags>
       
@@ -3079,9 +3110,9 @@
       
         <tags>
             
-            <tag> 户口 </tag>
-            
             <tag> 身份证 </tag>
+            
+            <tag> 户口 </tag>
             
             <tag> 身份证号码 </tag>
             
@@ -3112,11 +3143,11 @@
       
         <tags>
             
-            <tag> 户口 </tag>
+            <tag> 出生证明 </tag>
             
             <tag> 身份证 </tag>
             
-            <tag> 出生证明 </tag>
+            <tag> 户口 </tag>
             
             <tag> 亲人关系 </tag>
             
