@@ -35,6 +35,39 @@
     
     
     <entry>
+      <title>2种解法：实现两数相除</title>
+      <link href="/2020/01/05/tech/math-Divide/"/>
+      <url>/2020/01/05/tech/math-Divide/</url>
+      
+        <content type="html"><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。</p><p>返回被除数 dividend 除以除数 divisor 得到的商。</p><p>示例 1:</p><p>输入: dividend = 10, divisor = 3<br>输出: 3<br>示例 2:</p><p>输入: dividend = 7, divisor = -3<br>输出: -2<br>说明:</p><p>被除数和除数均为 32 位有符号整数。<br>除数不为 0。<br>假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−231,  231 − 1]。本题中，如果除法结果溢出，则返回 231 − 1。</p><p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/divide-two-integers" target="_blank" rel="noopener">https://leetcode-cn.com/problems/divide-two-integers</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p><hr><h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>思路：直接暴力减法肯定会超时，比如被除数等于2^32^，除数等于1，那么用时就是2^32^，20亿次的运算，好点的CPU也得几秒钟，肯定超时，直接忽略这种做法，但这个思路是可以继承的。</p><p>不用每次只是减去除数，而是减去一个2的幂次，不能用乘法运算，但是可以用移位运算来形成2的幂次，然后使用被除数减去2的幂次来加快计算效率，实际执行如下：（search递归函数）</p><ol><li>被除数 = 除数 * 2^a^ + b</li><li>满足公式的最大a，然后递归将b作为被除数</li><li>直到被除数小于除数为止</li><li>将所有的2^a^进行求和<br>另外，为了防止整数溢出的情况，使用了负数进行减法运算。<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span>(<span class="params"><span class="keyword">int</span> m,<span class="keyword">int</span> n</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span>(m &gt; n) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//当被除数比除数的绝对值还小的时候结束</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">-1</span>, t = n;</span><br><span class="line">        <span class="keyword">while</span>(m &lt; t &amp;&amp; m - t &lt; t)</span><br><span class="line">        &#123;<span class="comment">//使用2的幂次进行求解</span></span><br><span class="line">            t &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  k + search(m - t,n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Divide</span>(<span class="params"><span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> mFlag = dividend&gt;<span class="number">0</span>?<span class="number">-1</span>:<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> nFlag = divisor&gt;<span class="number">0</span>?<span class="number">-1</span>:<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">-1</span>* mFlag * nFlag; </span><br><span class="line">        <span class="comment">//将值转换为负值进行计算</span></span><br><span class="line">        <span class="keyword">int</span> m = dividend * mFlag, n = divisor * nFlag;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> r = search(m,n);</span><br><span class="line">        <span class="keyword">if</span>(r == <span class="number">-2147483648</span> &amp;&amp; flag == <span class="number">-1</span>)</span><br><span class="line">        &#123;<span class="comment">//只有一种情况溢出，就是最小负值转换为正值时</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">2147483647</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> r * flag;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><center><img src="/img/proj/20200108214026952.png" title="执行结果"></center><h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><p>思路：<br>基于第一种解法的变种，商作为一个值，是由二进制组成，那么现在就是要寻找哪些二进制的值为1，只要将除数乘以2^i^可以被除，那其对应位置的值即为1，直到最后，这样就省去了递归的栈空间消耗，代码如下：<br>被除数 = 除数 * (2^n^+2^i^…+2^0^) + b</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Divide</span>(<span class="params"><span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> mFlag = dividend&gt;<span class="number">0</span>?<span class="number">-1</span>:<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> nFlag = divisor&gt;<span class="number">0</span>?<span class="number">-1</span>:<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">-1</span>* mFlag * nFlag; </span><br><span class="line">        <span class="comment">//将值转换为负值进行计算        </span></span><br><span class="line">        <span class="keyword">int</span> m = dividend * mFlag, n = divisor * nFlag;</span><br><span class="line">        <span class="keyword">int</span> r=<span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(m&lt;n &amp;&amp; m-n&lt;=n)</span><br><span class="line">        &#123;<span class="comment">//找最大的幂次</span></span><br><span class="line">            n &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            k ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(k&gt;=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(m&lt;=n)</span><br><span class="line">            &#123;<span class="comment">//第k个二进制位为1</span></span><br><span class="line">                m -= n;</span><br><span class="line">                r += (<span class="number">-1</span> &lt;&lt; k);</span><br><span class="line">            &#125;</span><br><span class="line">            n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(r == <span class="number">-2147483648</span> &amp;&amp; flag == <span class="number">-1</span>)</span><br><span class="line">        &#123;<span class="comment">//只有一种情况溢出，就是最小负值转换为正值时</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">2147483647</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> r * flag;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><center><img src="/img/proj/20200108223910174.png" title="执行结果"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 除法 </tag>
+            
+            <tag> 整数 </tag>
+            
+            <tag> 加减 </tag>
+            
+            <tag> 二进制 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>3个解法：子数组异或查询</title>
       <link href="/2020/01/05/tech/math-arrayXor/"/>
       <url>/2020/01/05/tech/math-arrayXor/</url>
@@ -66,6 +99,41 @@
     
     
     <entry>
+      <title>人工智能视觉 - 实验教学方案</title>
+      <link href="/2020/01/01/proj/vejoeVis/"/>
+      <url>/2020/01/01/proj/vejoeVis/</url>
+      
+        <content type="html"><![CDATA[<p>本实验箱以树莓派作为系统运行平台，通过对单目和双目摄像头进行图像采集，一方面，介绍传统基于C++的基础图像处理算法的使用，另一方面，基于Python语言掌握机器视觉中经典的双目测距和人脸识别的应用，进一步学习广泛用于机器学习算法的开源软件平台TensorFlow的使用。</p><h2 id="硬件模块"><a href="#硬件模块" class="headerlink" title="硬件模块"></a>硬件模块</h2><ol><li>树莓派B4+：  4核 A72 CPU，2GB 64位 LPDDR4</li><li>英伟达jetson nano：  4核 A72 CPU，4GB 64位 LPDDR4，128核GPU</li><li>摄像头<ol><li>单目</li><li>双目</li></ol></li><li>Kinect （可选）<center><img src="/img/proj/20200106180508259.png" width="250" height="200" title="树莓派"><img src="/img/proj/20200106180239188.png" width="250" height="220" title="jetson nano"></center></li></ol><h2 id="实验支持"><a href="#实验支持" class="headerlink" title="实验支持"></a>实验支持</h2><h4 id="图像处理基础开发"><a href="#图像处理基础开发" class="headerlink" title="图像处理基础开发"></a>图像处理基础开发</h4><pre><code>1. 图像采集实验2. 视频编码实验3. 视频解码实验4. 背景提取实验5. 图像直方图、图像增强6. 边缘提取算法7. 颜色识别8. 图像比较9. 图像滤波</code></pre><h4 id="Python基础开发"><a href="#Python基础开发" class="headerlink" title="Python基础开发"></a>Python基础开发</h4><pre><code>1. 第一个Hello World实验2. 基本语法概念介绍3. 类和对象实验4. 模块和包实验5. 数据库编程实验6. 并发编程实验7. 文档和测试实验8. 实现网络爬虫实验</code></pre><h4 id="树莓派基础教程"><a href="#树莓派基础教程" class="headerlink" title="树莓派基础教程"></a>树莓派基础教程</h4><pre><code>1. 树莓派硬件准备介绍2. 树莓派系统安装与备份实验3. 树莓派GPIO应用实验4. 树莓派Linux系统实验5. 树莓派账户管理及软件安装实验6. 树莓派安装ROS实验7. 树莓派实现机顶盒实验8. 树莓派搭建Web服务器实验9. 树莓派搭建网络摄像头实验10. 树莓派实现视频存储实验11. 树莓派实现Opencv应用实验</code></pre><h4 id="双目摄像头测距"><a href="#双目摄像头测距" class="headerlink" title="双目摄像头测距"></a>双目摄像头测距</h4><pre><code>1. 双目摄像头图像采集实验2. 双目摄像头视频存储实验3. 双目摄像头标定实验4. 双目摄像头颜色识别实验5. 双目摄像头距离计算实验6. 双目摄像头图像标注实验7. 多目标情况下的测距实验</code></pre><h4 id="Tenser-Flow基础开发"><a href="#Tenser-Flow基础开发" class="headerlink" title="Tenser Flow基础开发"></a>Tenser Flow基础开发</h4><pre><code>1. 第一个Hello World实验2. 基本语法概念介绍3. 损失函数和优化器实验4. 实现线性回归实验5. 单层多层感知机实验6. CNN卷积神经网络实验7. 卷积神经网络分类图片实验8. 深度学习提取特征及实现实验9. RNN循环神经网络实验10. RNN循环神经网络预测股市</code></pre><h4 id="人脸识别应用开发"><a href="#人脸识别应用开发" class="headerlink" title="人脸识别应用开发"></a>人脸识别应用开发</h4><pre><code>1. 树莓派采集图像2. 人脸检测实验3. 人脸特征提取实验4. 人脸特征对比实验5. 人脸识别实验6. 基于人脸实现测距实验7. 人脸角度计算实验</code></pre><h4 id="Jetson基础开发"><a href="#Jetson基础开发" class="headerlink" title="Jetson基础开发"></a>Jetson基础开发</h4><pre><code>1. 硬件及系统准备介绍2. nano连接及远程登录实验3. nano软件系统安装介绍4. 第一个tf的Hello World实验5. 构建神经网络识别手写数字实验6. 基于GoogleNet识别物体实验</code></pre><h4 id="Kinect（可选）"><a href="#Kinect（可选）" class="headerlink" title="Kinect（可选）"></a>Kinect（可选）</h4><pre><code>1. 彩色、深度图像获取2. 人体骨骼及动作识别3. 面部特征识别4. 手势控制彩灯5. 体感控制识别算法</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目相关 </category>
+          
+          <category> 物联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 树莓派 </tag>
+            
+            <tag> 英伟达 </tag>
+            
+            <tag> jetson nano </tag>
+            
+            <tag> TensorFlow </tag>
+            
+            <tag> 双目视觉 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ROS自主导航 - 实验教学方案</title>
       <link href="/2020/01/01/proj/vejoeRos/"/>
       <url>/2020/01/01/proj/vejoeRos/</url>
@@ -84,9 +152,9 @@
       
         <tags>
             
-            <tag> ROS机器人 </tag>
-            
             <tag> 麦克纳姆轮 </tag>
+            
+            <tag> ROS机器人 </tag>
             
             <tag> 四驱AGV </tag>
             
@@ -117,15 +185,15 @@
       
         <tags>
             
+            <tag> STM32 </tag>
+            
+            <tag> 407系列 </tag>
+            
             <tag> 高精度机械臂 </tag>
             
             <tag> 步进电机 </tag>
             
             <tag> 步进伺服 </tag>
-            
-            <tag> STM32 </tag>
-            
-            <tag> 407系列 </tag>
             
         </tags>
       
@@ -135,8 +203,8 @@
     
     <entry>
       <title>物联网学习 - 实验课程方案</title>
-      <link href="/2020/01/01/proj/VejoeHom/"/>
-      <url>/2020/01/01/proj/VejoeHom/</url>
+      <link href="/2020/01/01/proj/VejoeIot/"/>
+      <url>/2020/01/01/proj/VejoeIot/</url>
       
         <content type="html"><![CDATA[<p>本实验箱包含物联网通信板和智能家居控制方案两部分，物联网通信板集成了多种通信协议和接口，方便学生进行通信和转接实验，智能家居控制方案以彩灯为被控对象，来展示智能家居的核心控制原理。</p><h2 id="物联网通信板"><a href="#物联网通信板" class="headerlink" title="物联网通信板"></a>物联网通信板</h2><p><center><img src="/img/proj/20200107162847239.png" width="250" height="200" title="物联网通信板V1"><img src="/img/proj/20200107170532957.png" width="250" height="200" title="物联网通信板V2"></center><br>当前通信板，用于去了解各底层通信协议的实现机制，V~2~版本在V~1~版本上增加了4G和Lora芯片和协议。</p><p>当前通信板支持的主要协议如下：</p><pre><code>1. 蓝牙（CC2540）2. Zigbee（CC2530）3. WIFI 2.4G（CC3200）4. 有线网口（W5500）5. 继电器（2路）6. 串口（2路）7. USB通信口8. CAN总线（2路）9. OLED屏幕10. 蜂鸣器11. 可选（V~2~版本）    * Lora    * 4G</code></pre><h2 id="智能家居硬件"><a href="#智能家居硬件" class="headerlink" title="智能家居硬件"></a>智能家居硬件</h2><p><center><img src="/img/proj/20200106175529134.png" title="全向麦轮车"></center><br>基于红外和wifi的控制，对传统在家里可以使用遥控器，控制的所有家电产品进行控制，鉴于空调、冰箱等大件家电的搬运不便，本实验使用一款彩灯作为演示的智能家电的被控硬件。</p><pre><code>1. 路由器 2. 彩灯3. 红外遥控</code></pre><h2 id="实验支持"><a href="#实验支持" class="headerlink" title="实验支持"></a>实验支持</h2><h4 id="Android基础开发实验"><a href="#Android基础开发实验" class="headerlink" title="Android基础开发实验"></a>Android基础开发实验</h4><pre><code>1. Android开发环境配置2. Android新建工程3. Android常用控件的使用4. Android四大组件5. 消息和异步任务6. 数据本地化7. HTTP基础实验8. Socket通信实验9. Json实验10. 蓝牙通信实验</code></pre><h4 id="智能语音控制实验"><a href="#智能语音控制实验" class="headerlink" title="智能语音控制实验"></a>智能语音控制实验</h4><pre><code>1. 红外遥控配置及红外码学习2. 疲劳预警实验3. 语音转文字4. 文字转语音5. 语音控制6. 语音控制小车7. 语义理解8. 家居设备综合控制实验</code></pre><h4 id="物联网硬件通信"><a href="#物联网硬件通信" class="headerlink" title="物联网硬件通信"></a>物联网硬件通信</h4><pre><code>1. 蜂鸣器控制实验2. Zigbee协议通信实验3. OLED显示实验4. CAN总线通信实验5. 蓝牙4.0通信实验6. 串口通信实验7. 有线网络通信实验8. 继电器开关控制实验</code></pre><h4 id="物联网微信小程序"><a href="#物联网微信小程序" class="headerlink" title="物联网微信小程序"></a>物联网微信小程序</h4><pre><code>1. 微信小程序结构体系2. 账户注册登录实验3. 设备账户绑定实验4. 设备列表显示实验5. 设备状态查看实验6. 设备参数设置实验7. 设备远程控制实验</code></pre><h4 id="物联网管理后台"><a href="#物联网管理后台" class="headerlink" title="物联网管理后台"></a>物联网管理后台</h4><pre><code>1. 系统整体框架2. C#服务管理系统结构体系3. 设备模型管理实验4. 设备管理实验5. 设备报警管理实验6. Mysql关系数据库使用实验7. Redis实时数据库使用实验</code></pre><h4 id="物联网云平台"><a href="#物联网云平台" class="headerlink" title="物联网云平台"></a>物联网云平台</h4><pre><code>1. 物联网云平台框架介绍2. 腾讯云物联网Iot接入流程3. 百度天工物联网（Iot）接入流程4. 阿里云物联网Iot接入流程5. 物联网Iot云平台使用对比</code></pre>]]></content>
       
@@ -222,15 +290,15 @@
       
         <tags>
             
-            <tag> STM32 </tag>
-            
-            <tag> 407系列 </tag>
+            <tag> 嵌入式进阶 </tag>
             
             <tag> 麦克纳姆轮 </tag>
             
-            <tag> 嵌入式进阶 </tag>
-            
             <tag> 全向AGV </tag>
+            
+            <tag> STM32 </tag>
+            
+            <tag> 407系列 </tag>
             
         </tags>
       
@@ -1308,9 +1376,9 @@
             
             <tag> 文化 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 家庭剧 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -1678,11 +1746,11 @@
       
         <tags>
             
-            <tag> 阿俊 </tag>
-            
             <tag> 所见所思 </tag>
             
             <tag> 大学生活 </tag>
+            
+            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -2149,11 +2217,11 @@
       
         <tags>
             
+            <tag> 阿俊 </tag>
+            
             <tag> 专升本 </tag>
             
             <tag> 计算机专业 </tag>
-            
-            <tag> 阿俊 </tag>
             
         </tags>
       
@@ -2306,9 +2374,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 港台剧 </tag>
-            
             <tag> 剧情片 </tag>
+            
+            <tag> 港台剧 </tag>
             
         </tags>
       
@@ -2337,9 +2405,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 韩寒 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -2537,9 +2605,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> hello world </tag>
             
@@ -2570,9 +2638,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -3553,9 +3621,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> mnist </tag>
             
