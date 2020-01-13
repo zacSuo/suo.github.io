@@ -128,37 +128,6 @@
     
     
     <entry>
-      <title>3个解法：子数组异或查询</title>
-      <link href="/2020/01/05/tech/math-arrayXor/"/>
-      <url>/2020/01/05/tech/math-arrayXor/</url>
-      
-        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>有一个正整数数组 arr，现给你一个对应的查询数组 queries，其中 queries[i] = [Li, Ri]。</p><p>对于每个查询 i，请你计算从 Li 到 Ri 的 XOR 值（即 arr[Li] xor arr[Li+1] xor … xor arr[Ri]）作为本次查询的结果。</p><p>并返回一个包含给定查询 queries 所有结果的数组。</p><p>示例 1：</p><p>输入：arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]<br>输出：[2,7,14,8]<br>解释：<br>数组中元素的二进制表示形式是：<br>1 = 0001<br>3 = 0011<br>4 = 0100<br>8 = 1000<br>查询的 XOR 值为：<br>[0,1] = 1 xor 3 = 2<br>[1,2] = 3 xor 4 = 7<br>[0,3] = 1 xor 3 xor 4 xor 8 = 14<br>[3,3] = 8<br>示例 2：</p><p>输入：arr = [4,8,2,10], queries = [[2,3],[1,3],[0,0],[0,3]]<br>输出：[8,0,4,4]</p><p>提示：</p><p>1 &lt;= arr.length &lt;= 3 <em> 10^4<br>1 &lt;= arr[i] &lt;= 10^9<br>1 &lt;= queries.length &lt;= 3 </em> 10^4<br>queries[i].length == 2<br>0 &lt;= queries[i][0] &lt;= queries[i][1] &lt; arr.length</p><h1 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h1><p>思路：<br>最直接的思路，就是直接对区间执行两层循环，进行遍历，但实际执行最后一个测试用例时超时，代码及测试用例如下（测试用例有525kb，应该是一个29898个数据的数组和2万4千多个[0，29898]，太长了，文档中只放了一部分），可以通过这个地址查看这个极限测试用例：<a href="/files/tech/testCase20200105.txt?_blank">/files/tech/testCase20200105.txt</a>：<br>空间复杂度：O(1)<br>时间复杂度：O(k*m)，k为queries数组个数，m为数据差值</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[queries.Length];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;queries.Length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=queries[i][<span class="number">0</span>];j&lt;=queries[i][<span class="number">1</span>];j++)</span><br><span class="line">            &#123;</span><br><span class="line">                t = t^ arr[j];</span><br><span class="line">            &#125;</span><br><span class="line">            r[i] = t;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">64038788,905710003,961785464,588745940,342531091,30097968,737396012,134887383,51163244,155478113,866300423,933134785,734680393,698721082,581135646,988184934,232804274,641391582,......[0,29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>]]</span><br></pre></td></tr></table></figure><h1 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h1><p>思路：<br>由于解法一超时，想办法看看能否减少重复计算，当前算法使用空间换时间多思路，先将所有值计算出来，然后查找时候直接索引查找。但是，这种做法对内存消耗太大，对解法一超时的测试用例，当前解法超出了内存空间。事实上，程序在提交的时候，还没运行到最后一个测试用例，已经内存超出了，测试用例有668Kb，点击链接查看：<a href="/files/tech/testCase202001051.txt?_blank">/files/tech/testCase202001051.txt</a>。<br>1，行表示当前计算的数据个数<br>2，列表示当前计算多起始索引<br>因此，最终只需要获取数据数和索引即可，代码如下：</p><p>空间复杂度：O(N^2^)，N为arr数组数据<br>时间复杂度：O(N^2^ + k)，k为queries数组个数</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = queries.Length, lenA = arr.Length;</span><br><span class="line">        <span class="keyword">int</span> [,] t = <span class="keyword">new</span> <span class="keyword">int</span>[lenA,lenA];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;lenA;i++)</span><br><span class="line">        &#123;<span class="comment">//首行</span></span><br><span class="line">            t[<span class="number">0</span>,i] = arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;lenA;i++)</span><br><span class="line">        &#123;<span class="comment">//之后行</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;lenA-i;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                t[i,j] = t[i<span class="number">-1</span>,j] ^ arr[j+i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> rIdx=queries[i][<span class="number">1</span>] - queries[i][<span class="number">0</span>];</span><br><span class="line">            r[i] = t[rIdx,queries[i][<span class="number">0</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="解法三"><a href="#解法三" class="headerlink" title="解法三"></a>解法三</h1><p>思路：<br>使用前缀和的思路，即首先通过前缀累积，然后通过索引对应第值进行相减得到区间值，不过本算是多和改为异或，即进行前缀异或算法，索引N存储前N个数的异或值，并通过两个位置的和相减得到区间值。<br>对于异或来讲，加法和减法都是执行异或操作，即A xor A = 0或者 A xor B xor A = B。<br>代码如下：<br>空间复杂度：O(N)，N为arr数组数据<br>时间复杂度：O(N+k)，k为queries数组个数</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len=queries.Length, lenA = arr.Length;</span><br><span class="line">        <span class="keyword">int</span> [] t = <span class="keyword">new</span> <span class="keyword">int</span>[lenA+<span class="number">1</span>];</span><br><span class="line">        t[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lenA;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            t[i] = t[i<span class="number">-1</span>] ^ arr[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            r[i] = t[queries[i][<span class="number">1</span>]+<span class="number">1</span>] ^ t[queries[i][<span class="number">0</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><center><img src="/img/tech/20200105130424152.png" title="解法三"></center>]]></content>
-      
-      
-      <categories>
-          
-          <category> 技术资料 </category>
-          
-          <category> 算法 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 异或 </tag>
-            
-            <tag> 前缀和 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>2种解法：实现两数相除</title>
       <link href="/2020/01/05/tech/math-Divide/"/>
       <url>/2020/01/05/tech/math-Divide/</url>
@@ -184,6 +153,37 @@
             <tag> 加减 </tag>
             
             <tag> 二进制 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>3个解法：子数组异或查询</title>
+      <link href="/2020/01/05/tech/math-arrayXor/"/>
+      <url>/2020/01/05/tech/math-arrayXor/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>有一个正整数数组 arr，现给你一个对应的查询数组 queries，其中 queries[i] = [Li, Ri]。</p><p>对于每个查询 i，请你计算从 Li 到 Ri 的 XOR 值（即 arr[Li] xor arr[Li+1] xor … xor arr[Ri]）作为本次查询的结果。</p><p>并返回一个包含给定查询 queries 所有结果的数组。</p><p>示例 1：</p><p>输入：arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]<br>输出：[2,7,14,8]<br>解释：<br>数组中元素的二进制表示形式是：<br>1 = 0001<br>3 = 0011<br>4 = 0100<br>8 = 1000<br>查询的 XOR 值为：<br>[0,1] = 1 xor 3 = 2<br>[1,2] = 3 xor 4 = 7<br>[0,3] = 1 xor 3 xor 4 xor 8 = 14<br>[3,3] = 8<br>示例 2：</p><p>输入：arr = [4,8,2,10], queries = [[2,3],[1,3],[0,0],[0,3]]<br>输出：[8,0,4,4]</p><p>提示：</p><p>1 &lt;= arr.length &lt;= 3 <em> 10^4<br>1 &lt;= arr[i] &lt;= 10^9<br>1 &lt;= queries.length &lt;= 3 </em> 10^4<br>queries[i].length == 2<br>0 &lt;= queries[i][0] &lt;= queries[i][1] &lt; arr.length</p><h1 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h1><p>思路：<br>最直接的思路，就是直接对区间执行两层循环，进行遍历，但实际执行最后一个测试用例时超时，代码及测试用例如下（测试用例有525kb，应该是一个29898个数据的数组和2万4千多个[0，29898]，太长了，文档中只放了一部分），可以通过这个地址查看这个极限测试用例：<a href="/files/tech/testCase20200105.txt?_blank">/files/tech/testCase20200105.txt</a>：<br>空间复杂度：O(1)<br>时间复杂度：O(k*m)，k为queries数组个数，m为数据差值</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[queries.Length];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;queries.Length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=queries[i][<span class="number">0</span>];j&lt;=queries[i][<span class="number">1</span>];j++)</span><br><span class="line">            &#123;</span><br><span class="line">                t = t^ arr[j];</span><br><span class="line">            &#125;</span><br><span class="line">            r[i] = t;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">64038788,905710003,961785464,588745940,342531091,30097968,737396012,134887383,51163244,155478113,866300423,933134785,734680393,698721082,581135646,988184934,232804274,641391582,......[0,29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>],[<span class="number">0</span>,<span class="number">29898</span>]]</span><br></pre></td></tr></table></figure><h1 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h1><p>思路：<br>由于解法一超时，想办法看看能否减少重复计算，当前算法使用空间换时间多思路，先将所有值计算出来，然后查找时候直接索引查找。但是，这种做法对内存消耗太大，对解法一超时的测试用例，当前解法超出了内存空间。事实上，程序在提交的时候，还没运行到最后一个测试用例，已经内存超出了，测试用例有668Kb，点击链接查看：<a href="/files/tech/testCase202001051.txt?_blank">/files/tech/testCase202001051.txt</a>。<br>1，行表示当前计算的数据个数<br>2，列表示当前计算多起始索引<br>因此，最终只需要获取数据数和索引即可，代码如下：</p><p>空间复杂度：O(N^2^)，N为arr数组数据<br>时间复杂度：O(N^2^ + k)，k为queries数组个数</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = queries.Length, lenA = arr.Length;</span><br><span class="line">        <span class="keyword">int</span> [,] t = <span class="keyword">new</span> <span class="keyword">int</span>[lenA,lenA];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;lenA;i++)</span><br><span class="line">        &#123;<span class="comment">//首行</span></span><br><span class="line">            t[<span class="number">0</span>,i] = arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;lenA;i++)</span><br><span class="line">        &#123;<span class="comment">//之后行</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;lenA-i;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                t[i,j] = t[i<span class="number">-1</span>,j] ^ arr[j+i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> rIdx=queries[i][<span class="number">1</span>] - queries[i][<span class="number">0</span>];</span><br><span class="line">            r[i] = t[rIdx,queries[i][<span class="number">0</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="解法三"><a href="#解法三" class="headerlink" title="解法三"></a>解法三</h1><p>思路：<br>使用前缀和的思路，即首先通过前缀累积，然后通过索引对应第值进行相减得到区间值，不过本算是多和改为异或，即进行前缀异或算法，索引N存储前N个数的异或值，并通过两个位置的和相减得到区间值。<br>对于异或来讲，加法和减法都是执行异或操作，即A xor A = 0或者 A xor B xor A = B。<br>代码如下：<br>空间复杂度：O(N)，N为arr数组数据<br>时间复杂度：O(N+k)，k为queries数组个数</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">XorQueries</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span>[][] queries</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len=queries.Length, lenA = arr.Length;</span><br><span class="line">        <span class="keyword">int</span> [] t = <span class="keyword">new</span> <span class="keyword">int</span>[lenA+<span class="number">1</span>];</span><br><span class="line">        t[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lenA;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            t[i] = t[i<span class="number">-1</span>] ^ arr[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> [] r = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            r[i] = t[queries[i][<span class="number">1</span>]+<span class="number">1</span>] ^ t[queries[i][<span class="number">0</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><center><img src="/img/tech/20200105130424152.png" title="解法三"></center>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 异或 </tag>
+            
+            <tag> 前缀和 </tag>
             
         </tags>
       
@@ -457,9 +457,9 @@
             
             <tag> 数组 </tag>
             
-            <tag> 循环 </tag>
-            
             <tag> 递归 </tag>
+            
+            <tag> 循环 </tag>
             
             <tag> 多元一次方程 </tag>
             
@@ -492,9 +492,9 @@
             
             <tag> 数组 </tag>
             
-            <tag> 循环 </tag>
-            
             <tag> 递归 </tag>
+            
+            <tag> 循环 </tag>
             
             <tag> 非递归 </tag>
             
@@ -2698,9 +2698,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> hello world </tag>
             
@@ -2731,9 +2731,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> 环境搭建 </tag>
             
@@ -3714,9 +3714,9 @@
             
             <tag> 人工智能 </tag>
             
-            <tag> tensorflow </tag>
-            
             <tag> ai </tag>
+            
+            <tag> tensorflow </tag>
             
             <tag> mnist </tag>
             
