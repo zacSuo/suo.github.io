@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>3个解法：截取不同的循环子字符串</title>
+      <link href="/2020/01/12/tech/math-sDistinctEchoSubstrings/"/>
+      <url>/2020/01/12/tech/math-sDistinctEchoSubstrings/</url>
+      
+        <content type="html"><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串 text ，请你返回满足下述条件的 不同 非空子字符串的数目：这些子字符串可以写成某个字符串与其自身的串联。</p><p>示例 1：</p><p>输入：text = “abcabcabc”<br>输出：3<br>解释：3 个子字符串分别为 “abcabc” ， “bcabca” 和 “cabcab” 。<br>示例 2：</p><p>输入：text = “leetcodeleetcode”<br>输出：2<br>解释：2 个子字符串为 “ee” 和 “leetcodeleetcode” 。</p><p>提示：</p><p>1 &lt;= text.length &lt;= 2000<br>text 只包含小写英文字母。</p><h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>思路：使用两个游标，从前到后进行对比，直到字符串结束。</p><ol><li>最前面的for循环（7-17行），是为了在比赛时候处理超时特例，特例是2000个a：（<a href="https://www.zhenxiangsimple.com/files/tech/testCase20200112.txt">点击查看该测试用例</a>）</li><li>实际算法不应该这么写，很惭愧自己为了比赛欺骗电脑</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">DistinctEchoSubstrings</span>(<span class="params"><span class="keyword">string</span> text</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> t,count=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len = text.Length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(text[i] != text[<span class="number">0</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> len/<span class="number">2</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;<span class="keyword">string</span>&gt; rList = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        <span class="keyword">string</span> str;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>; j*<span class="number">2</span>-i&lt;=len;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(text[i] == text[j])</span><br><span class="line">                &#123;</span><br><span class="line">                    t = j - i;</span><br><span class="line">                    flag = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;t;k++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(text[i+k] != text[j+k])</span><br><span class="line">                        &#123;</span><br><span class="line">                            flag = <span class="literal">false</span>;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(flag)</span><br><span class="line">                    &#123;</span><br><span class="line">                        str = text.Substring(i,t);</span><br><span class="line">                        <span class="keyword">if</span>(!rList.Contains(str))</span><br><span class="line">                        &#123;</span><br><span class="line">                            rList.Add(str);</span><br><span class="line">                            count ++;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><p>思路：基于解法一做了下面优化</p><ol><li>首先，把作弊代码去掉（手动尴尬）</li><li>使用字符串剪切后对比，而不是一个字母一个字母的对比，省去了最里面的第三层循环（k）</li><li>将原来的两个游标模式，两个游标是一个前面一个后面，改为使用长度判断是的最外层循环减半，因为子字符串的长度不能超过总长度的一半。</li><li>尝试使用Hash表，字典代替List这种线性表，用于加快查找</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">DistinctEchoSubstrings</span>(<span class="params"><span class="keyword">string</span> text</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = text.Length,halfLen = len/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        Dictionary&lt;<span class="keyword">string</span>,<span class="keyword">bool</span>&gt; rDict = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>,<span class="keyword">bool</span>&gt;();</span><br><span class="line">        <span class="comment">//Hashtable rHash = new Hashtable();</span></span><br><span class="line">        <span class="comment">//List&lt;string&gt; rList = new List&lt;string&gt;();</span></span><br><span class="line">        <span class="keyword">string</span> str;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=halfLen;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j+i&lt;=len;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>((str = text.Substring(j-i,i)) == text.Substring(j,i) &amp;&amp; !rDict.ContainsKey(str))</span><br><span class="line">                &#123;</span><br><span class="line">                    rDict.Add(str,<span class="literal">true</span>);</span><br><span class="line">                &#125;                </span><br><span class="line">            &#125;            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rDict.Count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h2 id="解法三"><a href="#解法三" class="headerlink" title="解法三"></a>解法三</h2><p>思路：首先获取每个字符所在位置，直接使用位置进行字符串截取判断，而不用每次都要找字符串。</p><ol><li>获取字符及对应位置</li><li>遇到字符串直接定位到对应位置，然后两个位置相差的距离就是子字符串</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">DistinctEchoSubstrings</span>(<span class="params"><span class="keyword">string</span> text</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = text.Length;</span><br><span class="line"></span><br><span class="line">        List&lt;<span class="keyword">string</span>&gt; rList = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        Dictionary&lt;<span class="keyword">char</span>,List&lt;<span class="keyword">int</span>&gt;&gt; rDict = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">char</span>,List&lt;<span class="keyword">int</span>&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;<span class="comment">//将字符串的字符进行归类</span></span><br><span class="line">            <span class="keyword">if</span>(!rDict.ContainsKey(text[i]))</span><br><span class="line">            &#123;</span><br><span class="line">                rDict.Add(text[i],<span class="keyword">new</span> List&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            rDict[text[i]].Add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">string</span> str;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">int</span> j <span class="keyword">in</span> rDict[text[i]])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(j &lt;= i) <span class="keyword">continue</span>;<span class="comment">//仅查看后面位置的</span></span><br><span class="line">                <span class="keyword">if</span>(j*<span class="number">2</span>-i&gt;len) <span class="keyword">break</span>;<span class="comment">//越界之后不再看后面的</span></span><br><span class="line">                <span class="keyword">if</span>((str = text.Substring(j,j-i)) == text.Substring(i,j-i) &amp;&amp; !rList.Contains(str))</span><br><span class="line">                &#123;</span><br><span class="line">                    rList.Add(str);</span><br><span class="line">                &#125;                </span><br><span class="line">            &#125;            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rList.Count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>同样的原理，不同的写法：</p><ol><li>上面写法：对字符串的字符从前到后选字符，依次对位置进行判断和对比</li><li>下面写法：按归类的字符结果依次选择字符，依次对位置进行判断和对比</li></ol><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">DistinctEchoSubstrings</span>(<span class="params"><span class="keyword">string</span> text</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = text.Length,m,n;</span><br><span class="line"></span><br><span class="line">        List&lt;<span class="keyword">string</span>&gt; rList = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        Dictionary&lt;<span class="keyword">char</span>,List&lt;<span class="keyword">int</span>&gt;&gt; rDict = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">char</span>,List&lt;<span class="keyword">int</span>&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        &#123;<span class="comment">//将字符串的字符进行归类</span></span><br><span class="line">            <span class="keyword">if</span>(!rDict.ContainsKey(text[i]))</span><br><span class="line">            &#123;</span><br><span class="line">                rDict.Add(text[i],<span class="keyword">new</span> List&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            rDict[text[i]].Add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">string</span> str;</span><br><span class="line">        <span class="keyword">foreach</span>(KeyValuePair&lt;<span class="keyword">char</span>,List&lt;<span class="keyword">int</span>&gt;&gt; item <span class="keyword">in</span> rDict)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(item.Value.Count == <span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;item.Value.Count - <span class="number">1</span>;i++)</span><br><span class="line">            &#123;                </span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;item.Value.Count;j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    m = item.Value[i];</span><br><span class="line">                    n = item.Value[j];</span><br><span class="line">                    <span class="keyword">if</span>(n*<span class="number">2</span>-m&gt;len) <span class="keyword">break</span>;<span class="comment">//越界之后不再看后面的</span></span><br><span class="line">                    <span class="keyword">if</span>((str = text.Substring(n,n-m)) == text.Substring(m,n-m) &amp;&amp; !rList.Contains(str))</span><br><span class="line">                    &#123;</span><br><span class="line">                        rList.Add(str);</span><br><span class="line">                    &#125; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;         </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rList.Count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术资料 </category>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 子字符串 </tag>
+            
+            <tag> 循环字符串 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>3种解法：利用历史数据实现幂函数</title>
       <link href="/2020/01/10/tech/math-MyPow/"/>
       <url>/2020/01/10/tech/math-MyPow/</url>
@@ -214,9 +245,9 @@
       
         <tags>
             
-            <tag> 麦克纳姆轮 </tag>
-            
             <tag> ROS机器人 </tag>
+            
+            <tag> 麦克纳姆轮 </tag>
             
             <tag> 四驱AGV </tag>
             
@@ -354,11 +385,11 @@
             
             <tag> STM32 </tag>
             
+            <tag> 麦克纳姆轮 </tag>
+            
             <tag> 407系列 </tag>
             
             <tag> 嵌入式进阶 </tag>
-            
-            <tag> 麦克纳姆轮 </tag>
             
             <tag> 全向AGV </tag>
             
@@ -391,11 +422,11 @@
             
             <tag> 字符串 </tag>
             
-            <tag> 数组 </tag>
-            
             <tag> 回文数 </tag>
             
             <tag> 循环 </tag>
+            
+            <tag> 数组 </tag>
             
         </tags>
       
@@ -424,11 +455,11 @@
             
             <tag> 算法 </tag>
             
-            <tag> 递归 </tag>
+            <tag> 循环 </tag>
             
             <tag> 数组 </tag>
             
-            <tag> 循环 </tag>
+            <tag> 递归 </tag>
             
             <tag> 多元一次方程 </tag>
             
@@ -459,11 +490,11 @@
             
             <tag> 算法 </tag>
             
-            <tag> 递归 </tag>
+            <tag> 循环 </tag>
             
             <tag> 数组 </tag>
             
-            <tag> 循环 </tag>
+            <tag> 递归 </tag>
             
             <tag> 非递归 </tag>
             
@@ -1062,11 +1093,11 @@
     
     
     <entry>
-      <title>华为应用市场 隐私政策</title>
-      <link href="/2019/07/12/tech/android-yszc/"/>
-      <url>/2019/07/12/tech/android-yszc/</url>
+      <title>隐私政策</title>
+      <link href="/2019/07/12/tech/yszc/"/>
+      <url>/2019/07/12/tech/yszc/</url>
       
-        <content type="html"><![CDATA[<p>欢迎您使用云计算器（以下简称“本服务”），云计算器是由深圳互动网络科技有限公司（以下简称“本公司”）向云计算器用户提供的计算器工具。为保证您的权益，便于更好地使用云计算器及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用云计算器提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>云计算器运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载云计算器客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为云计算器用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权云计算器透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求云计算器提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）云计算器从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、云计算器旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
+        <content type="html"><![CDATA[<p>欢迎您使用本移动应用（以下简称“本服务”），本移动应用是由深圳互动网络科技有限公司（以下简称“本公司”）向本移动应用用户提供的计算器工具。为保证您的权益，便于更好地使用本移动应用及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用本移动应用提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>本移动应用运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载本移动应用客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为本移动应用用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权本移动应用透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求本移动应用提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）本移动应用从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、本移动应用旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
       
       
       
@@ -1075,11 +1106,11 @@
     
     
     <entry>
-      <title>隐私政策</title>
-      <link href="/2019/07/12/tech/yszc/"/>
-      <url>/2019/07/12/tech/yszc/</url>
+      <title>华为应用市场 隐私政策</title>
+      <link href="/2019/07/12/tech/android-yszc/"/>
+      <url>/2019/07/12/tech/android-yszc/</url>
       
-        <content type="html"><![CDATA[<p>欢迎您使用本移动应用（以下简称“本服务”），本移动应用是由深圳互动网络科技有限公司（以下简称“本公司”）向本移动应用用户提供的计算器工具。为保证您的权益，便于更好地使用本移动应用及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用本移动应用提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>本移动应用运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载本移动应用客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为本移动应用用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权本移动应用透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求本移动应用提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）本移动应用从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、本移动应用旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
+        <content type="html"><![CDATA[<p>欢迎您使用云计算器（以下简称“本服务”），云计算器是由深圳互动网络科技有限公司（以下简称“本公司”）向云计算器用户提供的计算器工具。为保证您的权益，便于更好地使用云计算器及相应的配套服务，请您务必在注册前认真阅读本协议，若您阅读并接受本协议，使用云计算器提供的产品和服务，即视为您受本协议的约束，若您不同意本协议，请勿使用本网站任何产品和服务。<br>一、服务内容<br>云计算器运用自己的系统通过互联网络为用户提供语音、图片及传统手动输入等计算服务。用户使用本服务需要下载云计算器客户端软件，同时，用户必须：<br>1、自行配备上网所需设备，包括个人电脑、调制解调器或其他必备上网装置。<br>2、自行负担个人上网所支付的与此服务有关的电话费用、网络费用。<br>二、服务的提供、修改及终止<br>1、您保证在您同意接受本协议并注册成为云计算器用户时，您是具备完全民事权利能力和完全民事行为能力的自然人。<br>三、用户隐私制度<br>1、本公司将会采取合法、合理的措施保护用户的个人信息，非经法定原因或用户事先许可，本公司不会向任何第三方透露您的非公开信息。以下情况除外：<br>1）用户授权云计算器透露这些信息。<br>2）相关的法律法规或监管机构、司法机构要求云计算器提供您的个人资料；国家司法机关符合法律规定并经法定程序的检查及其他操作。<br>3）任何第三方盗用、冒用或未经许可擅自披露、使用或对外公开您的个人隐私资料。<br>4）由您要求网站提供特定服务时，需要把您的姓名和地址提供给第三方的。<br>5）您在使用本服务、参加网站活动或访问网站网页时，自动接收并记录的浏览器端或手机客户端数据，包括但不限于IP地址、网站Cookie中的资料及您要求取用的网页记录。<br>6）云计算器从商业伙伴处合法获取的个人信息。<br>2、在适合的情况下，并在您同意的前提下，我们会利用您的信息来联络您，为您发送信息。<br>3、您应当妥善保管您的设备和密码及身份信息，对于因密码泄露、身份信息泄露、设备丢失所致的损失，由您自行承担。<br>四、用户行为规范除非法律允许或本公司书面许可，您使用本软件过程中不得从事下列行为：<br>1、删除本软件及其副本上关于著作权的信息。<br>2、对本软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现本软件的源代码。<br>3、对本公司拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等。<br>4、对本软件或者本软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及本软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非本公司经授权的第三方工具/服务接入本软件和相关系统。<br>5、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>6、通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播，无论这些行为是否为商业目的。<br>7、自行或者授权他人、第三方软件对本软件及其组件、模块、数据进行干扰。<br>8、其他未经本公司明示授权的行为。<br>五、适用法律和管辖权<br>1、企鹅外汇注册所在地法律、法规应规范本协议以及本协议各方之间引起的争议，除非存在法律指定适用其他管辖法律。<br>2、在合约一方寻求实现本协议下的权利，或寻求宣告本协议下的任何权利或义务的任何民事诉讼或其他诉讼过程中，各合约方应承担其代理律师的费用和支出。<br>3、本协议的解释语言应为中文。<br>4、本公司可能通过多种语言将本协议或任何其他文件、信息和消息提供给合作方。本协议规定，合作方应当承认及确认本公司工作语言为中文。如果任何文件、信息和消息的非中文表述和中文表述之间出现矛盾和不一致的情况下，双方将以中文文件、信息和消息为标准。<br>六、免责条款<br>1、云计算器旨在为客户提供计算器工具服务。<br>2、本软件语音和图像识别所提供的信息来自科大讯飞，计算结果仅供参考，不能作为单一依据<br>3、任何由于黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营的不可抗力而造成的个人资料泄露、丢失、被盗用或被窜改等，平台应及时采取补救措施，不承担任何责任。</p>]]></content>
       
       
       
@@ -1748,9 +1779,9 @@
             
             <tag> 影评 </tag>
             
-            <tag> 剧情片 </tag>
-            
             <tag> 动作片 </tag>
+            
+            <tag> 剧情片 </tag>
             
         </tags>
       
@@ -3308,13 +3339,13 @@
       
         <tags>
             
-            <tag> 心灵鸡汤 </tag>
-            
             <tag> 反脆弱 </tag>
             
             <tag> 心态 </tag>
             
             <tag> 最重要的事，只有一件 </tag>
+            
+            <tag> 心灵鸡汤 </tag>
             
         </tags>
       
@@ -3444,13 +3475,13 @@
       
         <tags>
             
+            <tag> 心灵鸡汤 </tag>
+            
             <tag> 沟通 </tag>
             
             <tag> 听人说 </tag>
             
             <tag> 商务交流 </tag>
-            
-            <tag> 心灵鸡汤 </tag>
             
         </tags>
       
